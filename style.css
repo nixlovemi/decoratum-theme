@@ -1,5 +1,5 @@
 /*
-Theme Name: Sonho de Trufa v1
+Theme Name: Decoratum
 Theme URI: 
 Author: Leandro Nix
 Author URI: http://about.me/leandro.nix
@@ -222,8 +222,9 @@ Table Of Content
 =============================================== 
 */
 .header-wrapper .wrap-header {
-  background: url('images/background-cake.png') repeat;
-  height: 100%;
+    /*background: url('images/background-cake.png') repeat;*/
+    background: url('http://crochepassoapasso.com.br/decoratum/wp-content/themes/decoratum/images/background-coracao-v3.jpg') repeat;
+    height: 100%;
 }
 .header-wrapper .wrap-header.purple-top-dot {
   background: url('images/dot-purple-1.png') repeat;
@@ -566,7 +567,8 @@ Table Of Content
 }
 .header-wrapper .top-header {
   background-color: #f4f3ef;
-  height: 130px;
+  height: 148px;
+  /*height: 130px;*/
 }
 .header-wrapper .top-header.show-mega {
   height: auto;
@@ -575,7 +577,8 @@ Table Of Content
   display: block;
   margin: 0 auto;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 0;
+  /*margin-top: 20px;*/
 }
 .header-wrapper .top-header .header-nav li {
   vertical-align: top;
@@ -585,7 +588,8 @@ Table Of Content
   font-size: 16px;
   padding-right: 20px;
   padding-left: 25px;
-  padding-top: 40px;
+  /*padding-top: 40px;*/
+  padding-top: 61px;
   letter-spacing: 1px;
 }
 .header-wrapper .top-header .header-nav li a {
