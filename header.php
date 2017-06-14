@@ -79,7 +79,6 @@ switch ($current_page_slug) {
         <?php wp_head(); ?>
 
         <style>
-            
         </style>
     </head>
     <body class="demo-1">
@@ -190,64 +189,64 @@ switch ($current_page_slug) {
                                                         </li>
                                                     </ul>
                                                 </div>
-<?php
-/*
-  <div class="col-sm-4">
-  <ul class="list-mega">
-  <li class="bottom-red-border">
-  Blog
-  </li>
-  <li>
-  <a href="blog.html">Blog Left Content</a>
-  </li>
-  <li>
-  <a href="blog-right-content.html">Blog Right Content</a>
-  </li>
-  <li>
-  <a href="blog-center.html">Blog Center</a>
-  </li>
-  </ul>
-  </div>
-  <div class="col-sm-4">
-  <ul class="list-mega">
-  <li class="bottom-red-border">
-  Gallery
-  </li>
-  <li>
-  <a href="gallery.html">Gallery 3 Column</a>
-  </li>
-  <li>
-  <a href="gallery-4-column.html">Gallery 4 Column</a>
-  </li>
-  <li>
-  <a href="gallery-dot.html">Gallery With Text</a>
-  </li>
-  </ul>
-  </div>
-  <div class="col-sm-4">
-  <ul class="list-mega">
-  <li class="bottom-red-border">
-  OTHER PAGEs
-  </li>
-  <li>
-  <a href="chart-page.html">Chart Page</a>
-  </li>
-  <li>
-  <a href="product-details-page.html">Product Details</a>
-  </li>
-  <li>
-  <a href="privacy-policy.html">Privacy Policy</a>
-  </li>
-  <li>
-  <a href="terms-of-use.html">Terms Of Use</a>
-  </li>
-  <li>
-  <a href="404.html">404</a>
-  </li>
-  </ul>
-  </div>
- */
-?>
+                                                <?php
+                                                /*
+                                                  <div class="col-sm-4">
+                                                  <ul class="list-mega">
+                                                  <li class="bottom-red-border">
+                                                  Blog
+                                                  </li>
+                                                  <li>
+                                                  <a href="blog.html">Blog Left Content</a>
+                                                  </li>
+                                                  <li>
+                                                  <a href="blog-right-content.html">Blog Right Content</a>
+                                                  </li>
+                                                  <li>
+                                                  <a href="blog-center.html">Blog Center</a>
+                                                  </li>
+                                                  </ul>
+                                                  </div>
+                                                  <div class="col-sm-4">
+                                                  <ul class="list-mega">
+                                                  <li class="bottom-red-border">
+                                                  Gallery
+                                                  </li>
+                                                  <li>
+                                                  <a href="gallery.html">Gallery 3 Column</a>
+                                                  </li>
+                                                  <li>
+                                                  <a href="gallery-4-column.html">Gallery 4 Column</a>
+                                                  </li>
+                                                  <li>
+                                                  <a href="gallery-dot.html">Gallery With Text</a>
+                                                  </li>
+                                                  </ul>
+                                                  </div>
+                                                  <div class="col-sm-4">
+                                                  <ul class="list-mega">
+                                                  <li class="bottom-red-border">
+                                                  OTHER PAGEs
+                                                  </li>
+                                                  <li>
+                                                  <a href="chart-page.html">Chart Page</a>
+                                                  </li>
+                                                  <li>
+                                                  <a href="product-details-page.html">Product Details</a>
+                                                  </li>
+                                                  <li>
+                                                  <a href="privacy-policy.html">Privacy Policy</a>
+                                                  </li>
+                                                  <li>
+                                                  <a href="terms-of-use.html">Terms Of Use</a>
+                                                  </li>
+                                                  <li>
+                                                  <a href="404.html">404</a>
+                                                  </li>
+                                                  </ul>
+                                                  </div>
+                                                 */
+                                                ?>
                                             </div>
                                             <div class="div text-center">
                                                 <button class="btn btn-pink-cake mar-top-20 close-menu">Fechar Menu</button>
@@ -274,80 +273,84 @@ if (is_home()) {
                                     </h1>
                                 </div>
                             </div>
-                            <div class="slider-cake">
+                            <div class="slider-cake2">
                                 <div class="container pad-md-100">
-                                    <div class="center">
+                                    <div class="center2">
                                         <div class="img-relative">
-                                            <img alt="Trufa Tradicional" src="<?php bloginfo('template_url'); ?>/images/trufa-teste-1.png" />
-    <?php
-    /*
-      <div class="price-cake hidden-xs">
-      <p>
-      R$3,50
-      </p>
-      </div>
-     */
-    ?>
-                                        </div>
-                                        <div class="img-relative">
-                                            <img alt="Trufa Tradicional - Menta" src="<?php bloginfo('template_url'); ?>/images/trufa-teste-2.png" />
-    <?php
-    /*
-      <div class="price-cake hidden-xs">
-      <p>
-      R$3,50
-      </p>
-      </div>
-     */
-    ?>
-                                        </div>
-                                        <div class="img-relative">
-                                            <img alt="Trufa Tradicional - Cereja" src="<?php bloginfo('template_url'); ?>/images/trufa-teste-3.png" />
-    <?php
-    /*
-      <div class="price-cake hidden-xs">
-      <p>
-      R$3,50
-      </p>
-      </div>
-     */
-    ?>
-                                        </div>
-                                        <div class="img-relative">
-                                            <img alt="Trufa Tradicional - Côco" src="<?php bloginfo('template_url'); ?>/images/trufa-teste-4.png" />
-    <?php
-    /*
-      <div class="price-cake hidden-xs">
-      <p>
-      R$3,50
-      </p>
-      </div>
-     */
-    ?>
-                                        </div>
+                                            <img alt="Trufa Tradicional" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" />
                                             <?php
                                             /*
-                                              <div>
-                                              <img alt="Cake-Two" src="images/cake-two.png" />
-                                              </div>
-                                              <div>
-                                              <img alt="Cake-Three" src="images/cake-three.png" />
-                                              </div>
-                                              <div>
-                                              <img alt="Cake-Four" src="images/cake-four.png" />
-                                              </div>
-
-                                              <div>
-                                              <img alt="Cake-Five" src="images/cake-five.png" />
+                                              <div class="price-cake hidden-xs">
+                                              <p>
+                                              R$3,50
+                                              </p>
                                               </div>
                                              */
                                             ?>
+                                        </div>
+                                        <div class="img-relative">
+                                            <img alt="Trufa Tradicional - Menta" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png" />
+                                            <?php
+                                            /*
+                                              <div class="price-cake hidden-xs">
+                                              <p>
+                                              R$3,50
+                                              </p>
+                                              </div>
+                                             */
+                                            ?>
+                                        </div>
+                                        <div class="img-relative">
+                                            <img alt="Trufa Tradicional - Cereja" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3.png" />
+                                            <?php
+                                            /*
+                                              <div class="price-cake hidden-xs">
+                                              <p>
+                                              R$3,50
+                                              </p>
+                                              </div>
+                                             */
+                                            ?>
+                                        </div>
+                                        <!--
+                                        <div class="img-relative">
+                                            <img alt="Trufa Tradicional - Côco" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" />
+                                            <?php
+                                            /*
+                                              <div class="price-cake hidden-xs">
+                                              <p>
+                                              R$3,50
+                                              </p>
+                                              </div>
+                                             */
+                                            ?>
+                                        </div>
+                                        -->
+                                        <?php
+                                        /*
+                                          <div>
+                                          <img alt="Cake-Two" src="images/cake-two.png" />
+                                          </div>
+                                          <div>
+                                          <img alt="Cake-Three" src="images/cake-three.png" />
+                                          </div>
+                                          <div>
+                                          <img alt="Cake-Four" src="images/cake-four.png" />
+                                          </div>
+
+                                          <div>
+                                          <img alt="Cake-Five" src="images/cake-five.png" />
+                                          </div>
+                                         */
+                                        ?>
                                     </div>
                                 </div>
                             </div>
+                            <!--
                             <div class="gray-table mar-to-top border-brown">
                                 &nbsp;
                             </div>
+                            -->
     <?php
     /*
       <div class="green-arrow">

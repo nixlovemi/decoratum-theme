@@ -223,7 +223,7 @@ Table Of Content
 */
 .header-wrapper .wrap-header {
     /*background: url('images/background-cake.png') repeat;*/
-    background: url('http://crochepassoapasso.com.br/decoratum/wp-content/themes/decoratum/images/background-coracao-v3.jpg') repeat;
+    background: url('http://crochepassoapasso.com.br/decoratum/wp-content/themes/decoratum/images/background-coracao-v5.jpg') repeat;
     height: 100%;
 }
 .header-wrapper .wrap-header.purple-top-dot {
@@ -741,11 +741,20 @@ Table Of Content
 .tittle-cake {
   color: #ffffff;
 }
+.tittle-cake .container h2{
+  text-shadow: 2px 3px 0px #480f0d;
+}
+.slider-cake2 .center2 .img-relative img{
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
 .tittle-cake h1 {
   letter-spacing: 7px;
   margin-top: 0;
   margin-bottom: 0;
-  text-shadow: -1px 3px 0px #f57f7f;
+  /*text-shadow: -1px 3px 0px #f57f7f;*/
+  text-shadow: -1px 3px 0px #480f0d;
 }
 .tittle-cake h2 {
   position: relative;
