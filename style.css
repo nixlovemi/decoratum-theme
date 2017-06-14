@@ -904,11 +904,7 @@ Table Of Content
 =============================================== 
 */
 .about-cake {
-  /*background-color: #a593c2;*/
-
-  /* ALTEREI */
-  background-color: #503e3e;
-  /* ====== */
+  background-color: #4b0e0d;
 }
 .about-content,
 .product-tittle {
@@ -1009,12 +1005,12 @@ Table Of Content
 =============================================== 
 */
 .product-tittle h2 {
-  color: #a593c2;
+  color: #ff7573;
   margin-bottom: 40px;
 }
 .product-tittle h2:before,
 .product-tittle h2:after {
-  background-color: #a593c2;
+  background-color: #ff7573;
 }
 .wrap-product {
   background-color: #ffffff;
@@ -1034,8 +1030,18 @@ Table Of Content
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: #ffffff;
-  height: 200px;
+  /*height: 200px;*/
+  height: 250px;
   padding: 20px;
+}
+.wrap-product .top-product .img-produto{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.wrap-product .preco-produto{
+    font-size: 26px;
 }
 .wrap-product .top-product.blue-cake {
   /*background: url('images/cake-blue.png') no-repeat right;*/

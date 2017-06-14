@@ -1,3 +1,10 @@
+$(document).ready(function(){
+    $('.slider-cake2 .center2').slick({
+       infinite: true,
+       centerMode: true
+    });
+});
+
 function valida_cpf(strCPF) {
   strCPF = strCPF.replace(/\./g, '');
   strCPF = strCPF.replace(/\-/g, '');

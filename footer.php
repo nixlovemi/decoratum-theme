@@ -145,6 +145,7 @@
     <script src="<?php bloginfo('template_url'); ?>/js/PgwModal/pgwmodal.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/jquery.maskedinput/dist/jquery.maskedinput.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/main.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/master.js"></script>
     <script type="text/javascript">
       new WOW().init();
     </script>

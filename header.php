@@ -73,9 +73,8 @@ switch ($current_page_slug) {
         <link href="<?php bloginfo('template_url'); ?>/css/global.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/effect2.css" rel="stylesheet" type="text/css" />
         <link href="<?php bloginfo('template_url'); ?>/js/PgwModal/pgwmodal.min.css" rel="stylesheet" type="text/css" />
-
-        <script src="<?php bloginfo('template_url'); ?>/js/modernizr.custom.js"></script>
-        <script src="<?php bloginfo('template_url'); ?>/master.js"></script>
+        <!--<script src="<?php bloginfo('template_url'); ?>/js/modernizr.custom.js"></script>-->
+        
         <?php wp_head(); ?>
 
         <style>
@@ -84,14 +83,14 @@ switch ($current_page_slug) {
     <body class="demo-1">
         <div class="ip-container" id="ip-container">
             <!--initial header-->
-            <header class="ip-header">
+            <!--<header class="ip-header">
                 <div class="ip-loader">
                     <svg class="ip-inner" height="60px" viewbox="0 0 80 80" width="60px">
                     <path class="ip-loader-circlebg" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z"></path>
                     <path class="ip-loader-circle" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z" id="ip-loader-circle"></path>
                     </svg>
                 </div>
-            </header>
+            </header>-->
             <!--main content-->
             <div class="ip-main">
                 <div class="top-highlight hide">

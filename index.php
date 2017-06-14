@@ -6,9 +6,9 @@
             <h2 class="hide">&nbsp;
             </h2>
             <div class="about-content">
-              <img alt="Trufa White" src="<?php bloginfo('template_url'); ?>/images/trufa-white.png" />
+              <img alt="Trufa White" src="<?php bloginfo('template_url'); ?>/images/decoratum-white.png" />
               <p>
-                Conheçam nossas maravilhosas <strong>Trufas Tradicionais</strong> ao leite belga Callebaut envolta em cacau em pó. Excelente opção que agrada ao mais exigente paladar. Presenteie quem você mais gosta!
+                Aqui vai um texto explicando o quão lindos e maravilhosos são os produtos que vendemos!
               </p>
             </div>
           </div>
@@ -19,13 +19,170 @@
           <div class="container">
             <!-- Product Tittle -->
             <div class="product-tittle">
-              <img alt="Trufa Purple" src="<?php bloginfo('template_url'); ?>/images/trufa-purple.png" />
+              <img alt="Trufa Purple" src="<?php bloginfo('template_url'); ?>/images/decoratum-pink.png" />
               <h2>
                 Produtos
               </h2>
             </div>
             <!-- Product Content -->
             <div class="product-content">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="wrap-product">
+                          <div class="top-product">
+                              <img class="img-produto" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png">
+                          </div>
+                          <div class="bottom-product bottom-red">
+                            <div class="bottom-product-abs pink-dot">
+                              <div class="button-cake">
+                                <div class="blue-button-cake">
+                                  <button class="button-d-cake pink-button-cake">Comprar</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="wrap-bottom-cake">
+                              <p>
+                                Produto muito lindo e maravilhoso, feito com material rosa e com detalhe com fita.
+                              </p>
+                              <div class="red-line"></div>
+                              <br />
+                              <span class="preco-produto">R$125</span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="wrap-product">
+                          <div class="top-product">
+                              <img class="img-produto" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png">
+                          </div>
+                          <div class="bottom-product bottom-red">
+                            <div class="bottom-product-abs pink-dot">
+                              <div class="button-cake">
+                                <div class="blue-button-cake">
+                                  <button class="button-d-cake pink-button-cake">Comprar</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="wrap-bottom-cake">
+                              <p>
+                                Lindo fichário com detalhes vermelho com bolinhas, para você suas receitas..
+                              </p>
+                              <div class="red-line"></div>
+                              <br />
+                              <span class="preco-produto">R$100</span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="wrap-product">
+                          <div class="top-product">
+                              <img class="img-produto" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3.png">
+                          </div>
+                          <div class="bottom-product bottom-red">
+                            <div class="bottom-product-abs pink-dot">
+                              <div class="button-cake">
+                                <div class="blue-button-cake">
+                                  <button class="button-d-cake pink-button-cake">Comprar</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="wrap-bottom-cake">
+                              <p>
+                                Caixa linda com detalhe verde e detalhes em vermelho, perfeito para guardar suas coisas.
+                              </p>
+                              <div class="red-line"></div>
+                              <br />
+                              <span class="preco-produto">R$98</span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4">
+                        <div class="wrap-product">
+                          <div class="top-product">
+                              <img class="img-produto" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3.png">
+                          </div>
+                          <div class="bottom-product bottom-red">
+                            <div class="bottom-product-abs pink-dot">
+                              <div class="button-cake">
+                                <div class="blue-button-cake">
+                                  <button class="button-d-cake pink-button-cake">Comprar</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="wrap-bottom-cake">
+                              <p>
+                                Produto muito lindo e maravilhoso, feito com material rosa e com detalhe com fita.
+                              </p>
+                              <div class="red-line"></div>
+                              <br />
+                              <span class="preco-produto">R$125</span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="wrap-product">
+                          <div class="top-product">
+                              <img class="img-produto" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png">
+                          </div>
+                          <div class="bottom-product bottom-red">
+                            <div class="bottom-product-abs pink-dot">
+                              <div class="button-cake">
+                                <div class="blue-button-cake">
+                                  <button class="button-d-cake pink-button-cake">Comprar</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="wrap-bottom-cake">
+                              <p>
+                                Lindo fichário com detalhes vermelho com bolinhas, para você suas receitas..
+                              </p>
+                              <div class="red-line"></div>
+                              <br />
+                              <span class="preco-produto">R$100</span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="wrap-product">
+                          <div class="top-product">
+                              <img class="img-produto" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png">
+                          </div>
+                          <div class="bottom-product bottom-red">
+                            <div class="bottom-product-abs pink-dot">
+                              <div class="button-cake">
+                                <div class="blue-button-cake">
+                                  <button class="button-d-cake pink-button-cake">Comprar</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="wrap-bottom-cake">
+                              <p>
+                                Caixa linda com detalhe verde e detalhes em vermelho, perfeito para guardar suas coisas.
+                              </p>
+                              <div class="red-line"></div>
+                              <br />
+                              <span class="preco-produto">R$98</span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+              <?php
+              /*
               <div class="row">
                 <!-- Column -->
                 <div class="col-sm-4">
@@ -121,11 +278,15 @@
                   </p>
                 </div>
               </div>
+               */
+              ?>
             </div>
           </div>
         </section>
         <!-- End Product Cake -->
         <!-- Start Option Cake -->
+        <?php
+        /*
         <section class="option">
           <!-- Tittle Option -->
           <div class="about-cake pad-top-10 pad-btm-10 border-brown">
@@ -191,8 +352,7 @@
                 </p>
               </div>
               <!-- Column -->
-              <?php
-							/*
+              <!--
               <div class="col-sm-4">
                 <div class="messes">
                   <div class="messes-show"></div>
@@ -208,7 +368,6 @@
                   Cookie apple pie donut gingerbread sweet roll pudding topping marshmallow.
                 </p>
               </div>
-              <!-- Column -->
               <div class="col-sm-4">
                 <div class="messes">
                   <div class="messes-show"></div>
@@ -224,7 +383,6 @@
                   Cookie apple pie donut gingerbread sweet roll pudding topping marshmallow.
                 </p>
               </div>
-              <!-- Column -->
               <div class="col-sm-4">
                 <div class="messes">
                   <div class="messes-show"></div>
@@ -240,13 +398,16 @@
                   Cookie apple pie donut gingerbread sweet roll pudding topping marshmallow.
                 </p>
               </div>
-							*/
-							?>
+              -->
             </div>
           </div>
         </section>
+        */
+        ?>
         <!-- End Option Cake -->
         <!-- Start Pricing Cake -->
+        <?php
+        /*
         <section class="pricing-cake">
           <div class="triangle-no-animate">
             &nbsp;
@@ -408,6 +569,8 @@
             &nbsp;
           </div>
         </section>
+        */
+        ?>
         <!-- End Pricing Cake -->
         <!-- Start Team Cake -->
         <section class="abouts-cake">

@@ -55,11 +55,6 @@ Slider Cake CSS
 		centerPadding: '0px',
 		slidesToShow: 1
 	});
-        
-        $('.slider-cake2 .center2').slick({
-           infinite: true,
-           centerMode: true
-        });
 
 /* 
 =============================================== 
