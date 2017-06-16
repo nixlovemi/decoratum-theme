@@ -5,13 +5,17 @@
             &nbsp;
           </div>
           <div class="container">
+            <?php
+            /*
             <div class="abs-logo-footer">
               <img alt="Logo Sonho de Trufa" src="<?php bloginfo('template_url'); ?>/images/logo.png" />
             </div>
+             */
+            ?>
             <div class="top-footer">
               <div class="row">
                 <div class="col-sm-6">
-                  <img alt="Logo White" class="img-cake-center-res mar-btm-20" src="<?php bloginfo('template_url'); ?>/images/logo-white.png" />
+                  <img alt="Logo White" class="img-cake-center-res" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-white.png" />
                 </div>
                 <div class="col-sm-6 text-right">
                   <ul class="sosmed-cake">
@@ -56,44 +60,44 @@
               <!-- Column -->
               <div class="col-sm-4">
                 <h4>
-                  Sonho de Trufa
+                  Decoratum
                 </h4>
                 <p class="mar-btm-20">
-                  Trufas tradicionais caseiras feitas com chocolate belga e um sabor irresistível.
+                  Produtos incríveis feito com amor para você.
                 </p>
                 <p class="mar-btm-20">
-                  contato@sonhodetrufa.com.br
+                  contato@decoratum.com.br
                 </p>
                 <p class="mar-btm-20">
-                  Telp : <strong>019 2222-3333</strong>
+                  Tel: <strong>019 2222-3333</strong>
                 </p>
               </div>
               <!-- Column -->
               <div class="col-sm-4 hidden-xs">
                 <ul class="list-picture-footer">
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-1.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/galeria-trufa-1.jpg" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-1.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-2.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/galeria-trufa-2.jpg" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-2.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-3.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/galeria-trufa-3.jpg" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-3.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-4.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/galeria-trufa-4.jpg" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-4.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-5.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/galeria-trufa-5.jpg" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-5.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-6.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/galeria-trufa-6.jpg" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-6.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-7.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/galeria-trufa-7.jpg" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-7.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-8.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/galeria-trufa-8.jpg" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-8.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png" /></a>
                   </li>
                 </ul>
                 <div class="clear"></div>

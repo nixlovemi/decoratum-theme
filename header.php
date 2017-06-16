@@ -4,33 +4,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (isset($_GET["a"]) && $_GET["a"] != "") {
-    if ($_GET["a"] == "clearCart") {
-        limparCarrinho();
-
-        $redirect = esc_url(home_url('/')).'produtos';
-        header("location:$redirect");
-    }
-} else if (isset($_POST["stringfyJSON"]) && $_POST["stringfyJSON"] != "") {
-    $stringJSON = urldecode($_POST["stringfyJSON"]);
-    $arrayJSON  = json_decode($stringJSON, 1);
-
-    foreach ($arrayJSON["produtos"] as $produto) {
-        $ID_prod = $produto["id_prod"];
-        $qtde    = $produto["qtde"];
-
-        changeQtdItemCart($ID_prod, $qtde);
-    }
-
-    $redirect = esc_url(home_url('/')).'carrinho';
-    header("location:$redirect");
-} else if (isset($_POST["ID_PROD_DEL"]) && $_POST["ID_PROD_DEL"] != "") {
-    $ID_prod = $_POST["ID_PROD_DEL"];
-    changeQtdItemCart($ID_prod, 0);
-
-    $redirect = esc_url(home_url('/')).'carrinho';
-    header("location:$redirect");
-}
+include("header_actions.php");
 
 // get current page slug
 global $post;
@@ -67,10 +41,10 @@ switch ($current_page_slug) {
         <link href="<?php bloginfo('template_url'); ?>/css/font-family.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/slick.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/slick-theme.css" rel="stylesheet" />
+        <link href="<?php bloginfo('template_url'); ?>/css/global.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/style.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/animate.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/jquery.fancybox.css" rel="stylesheet" type="text/css" />
-        <link href="<?php bloginfo('template_url'); ?>/css/global.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/effect2.css" rel="stylesheet" type="text/css" />
         <link href="<?php bloginfo('template_url'); ?>/js/PgwModal/pgwmodal.min.css" rel="stylesheet" type="text/css" />
         <!--<script src="<?php bloginfo('template_url'); ?>/js/modernizr.custom.js"></script>-->
@@ -78,19 +52,55 @@ switch ($current_page_slug) {
         <?php wp_head(); ?>
 
         <style>
+            .wrap-product .bottom-product.bottom-red {
+              /*background-color: #fba1a1;*/
+              background-color: #ff726e;
+            }
+            .wrap-header .tittle-cake .container h2{
+              text-shadow: 2px 3px 0px #480f0d;
+            }
+            .btn-pink-cake {
+              background-color: #ff726e;
+            }
+            .pink-color{
+              color: #ff726e;
+            }
+            .abouts-cake h2:before,
+            .abouts-cake h2:after {
+              /*background-color: #fba1a1;*/
+              background-color: #ff726e;
+            }
+            .abouts-cake {
+              padding: 40px 0;
+              /*padding-bottom: 150px;*/
+              padding-bottom: 50px;
+            }
+            footer {
+              /*background-color: #f88c91;*/
+              background-color: #ff726e;
+              color: #ffffff;
+            }
+            .sosmed-cake {
+              /*margin-top: 77px;*/
+              margin-top: 32px;
+            }
         </style>
     </head>
     <body class="demo-1">
         <div class="ip-container" id="ip-container">
             <!--initial header-->
-            <!--<header class="ip-header">
+            <?php
+            /*
+            <header class="ip-header">
                 <div class="ip-loader">
                     <svg class="ip-inner" height="60px" viewbox="0 0 80 80" width="60px">
                     <path class="ip-loader-circlebg" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z"></path>
                     <path class="ip-loader-circle" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z" id="ip-loader-circle"></path>
                     </svg>
                 </div>
-            </header>-->
+            </header>
+            */
+            ?>
             <!--main content-->
             <div class="ip-main">
                 <div class="top-highlight hide">
@@ -259,9 +269,9 @@ switch ($current_page_slug) {
                                 &nbsp;
                             </div>
                         </div>
-<?php
-if (is_home()) {
-    ?>
+                        <?php
+                        if (is_home()) {
+                            ?>
                             <div class="tittle-cake text-center pad-top-150">
                                 <div class="container">
                                     <h2>
@@ -311,23 +321,19 @@ if (is_home()) {
                                              */
                                             ?>
                                         </div>
-                                        <!--
+                                        <?php
+                                        /*
                                         <div class="img-relative">
                                             <img alt="Trufa Tradicional - Côco" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" />
-                                            <?php
-                                            /*
+                                            
                                               <div class="price-cake hidden-xs">
                                               <p>
                                               R$3,50
                                               </p>
                                               </div>
-                                             */
-                                            ?>
                                         </div>
-                                        -->
-                                        <?php
-                                        /*
-                                          <div>
+
+                                        <div>
                                           <img alt="Cake-Two" src="images/cake-two.png" />
                                           </div>
                                           <div>
@@ -339,23 +345,22 @@ if (is_home()) {
 
                                           <div>
                                           <img alt="Cake-Five" src="images/cake-five.png" />
-                                          </div>
-                                         */
+                                        </div>
+                                        */
                                         ?>
                                     </div>
                                 </div>
                             </div>
-                            <!--
+                            <?php
+                            /*
                             <div class="gray-table mar-to-top border-brown">
                                 &nbsp;
                             </div>
-                            -->
-    <?php
-    /*
-      <div class="green-arrow">
-      &nbsp;
-      </div>
-     */
+    
+                            <div class="green-arrow">
+                            &nbsp;
+                            </div>
+                            */
 } else if ($current_page_slug == 'produtos' || $current_page_slug == 'carrinho') {
     ?>
                             <div class="tittle-sub-top pad-top-150">

@@ -738,10 +738,13 @@ Table Of Content
 3. Banner Section CSS
 =============================================== 
 */
+.pink-color{
+  color: #ff726e;
+}
 .tittle-cake {
   color: #ffffff;
 }
-.tittle-cake .container h2{
+.wrap-header .tittle-cake .container h2{
   text-shadow: 2px 3px 0px #480f0d;
 }
 .slider-cake2 .center2 .img-relative img{
@@ -938,6 +941,9 @@ Table Of Content
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+}
+.btn-pink-cake {
+    background-color: #ff726e;
 }
 /* 
 =============================================== 
@@ -1200,7 +1206,8 @@ Table Of Content
   background-color: #0099bb;
 }
 .wrap-product .bottom-product.bottom-red {
-  background-color: #fba1a1;
+  /*background-color: #fba1a1;*/
+  background-color: #ff726e;
 }
 .wrap-product .bottom-product.bottom-orange {
   background-color: #ffbb63;
@@ -1792,11 +1799,13 @@ Table Of Content
 */
 .abouts-cake {
   padding: 40px 0;
-  padding-bottom: 150px;
+  /*padding-bottom: 150px;*/
+  padding-bottom: 50px;
 }
 .abouts-cake h2:before,
 .abouts-cake h2:after {
-  background-color: #fba1a1;
+  /*background-color: #fba1a1;*/
+  background-color: #ff726e;
 }
 .abouts-cake h4 {
   font-family: 'montserratbold';
@@ -1926,7 +1935,8 @@ Table Of Content
 =============================================== 
 */
 footer {
-  background-color: #f88c91;
+  /*background-color: #f88c91;*/
+  background-color: #ff726e;
   color: #ffffff;
 }
 footer .abs-logo-footer {
@@ -2017,7 +2027,8 @@ footer .list-link-home li a:hover {
   text-decoration: none;
 }
 .sosmed-cake {
-  margin-top: 77px;
+  /*margin-top: 77px;*/
+  margin-top: 32px;
 }
 @media (max-width: 768px) {
   .sosmed-cake {

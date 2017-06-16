@@ -578,7 +578,7 @@
           <!-- xxxxxxxxxxxxxxxxxxxx -->
           <div class="tittle-cake text-center mar-top-20">
             <div class="container">
-              <img alt="Trufa Pink" src="<?php bloginfo('template_url'); ?>/images/trufa-pink.png" />
+              <img alt="Trufa Pink" src="<?php bloginfo('template_url'); ?>/images/decoratum-pink.png" />
               <h2 class="pink-color">
                 Contato
               </h2>
@@ -592,7 +592,9 @@
               <div class="form-group">
                 <input class="form-control form-default-cakes" placeholder="Email" type="email" />
               </div>
-              <textarea class="form-control form-default-cakes" placeholder="Sua Mensagem"></textarea>
+              <div class="form-group">
+                <textarea class="form-control form-default-cakes" placeholder="Sua Mensagem"></textarea>
+              </div>
               <div class="form-group">
                 <button class="btn btn-lg btn-pink-cake btn-send mar-top-20">Enviar</button>
               </div>
