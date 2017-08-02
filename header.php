@@ -1,6 +1,9 @@
 <?php
 // header("Expires: ".gmdate('D, d M Y H:i:s', strtotime('+5 minutes')));
 // header("Cache-Control: max-age=".strtotime('+365 days'));
+// https://www.iconfinder.com/icons/343415/facebook_icon#size=128
+// http://www.oppa.com.br/almofada-ourico-40x40
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -13,7 +16,6 @@ $class_wrap_header = "";
 
 switch ($current_page_slug) {
     case 'produtos':
-    case 'carrinho':
         $class_wrap_header = "purple-top-dot";
         break;
     default:
@@ -37,6 +39,7 @@ switch ($current_page_slug) {
             <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
         <?php endif; ?>
 
+        <link href="<?php bloginfo('template_url'); ?>/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/bootstrap.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/font-family.css" rel="stylesheet" />
         <link href="<?php bloginfo('template_url'); ?>/css/slick.css" rel="stylesheet" />
@@ -48,43 +51,90 @@ switch ($current_page_slug) {
         <link href="<?php bloginfo('template_url'); ?>/css/effect2.css" rel="stylesheet" type="text/css" />
         <link href="<?php bloginfo('template_url'); ?>/js/PgwModal/pgwmodal.min.css" rel="stylesheet" type="text/css" />
         <!--<script src="<?php bloginfo('template_url'); ?>/js/modernizr.custom.js"></script>-->
-        
+
         <?php wp_head(); ?>
 
         <style>
-            .wrap-product .bottom-product.bottom-red {
-              /*background-color: #fba1a1;*/
-              background-color: #ff726e;
-            }
-            .wrap-header .tittle-cake .container h2{
-              text-shadow: 2px 3px 0px #480f0d;
-            }
-            .btn-pink-cake {
-              background-color: #ff726e;
-            }
-            .pink-color{
-              color: #ff726e;
-            }
-            .abouts-cake h2:before,
-            .abouts-cake h2:after {
-              /*background-color: #fba1a1;*/
-              background-color: #ff726e;
-            }
-            .abouts-cake {
-              padding: 40px 0;
-              /*padding-bottom: 150px;*/
-              padding-bottom: 50px;
-            }
-            footer {
-              /*background-color: #f88c91;*/
-              background-color: #ff726e;
-              color: #ffffff;
-            }
-            .sosmed-cake {
-              /*margin-top: 77px;*/
-              margin-top: 32px;
-            }
-        </style>
+        .mais-info .conteudo ul.comentarios li{
+          border-top: solid 1px #CCC;
+          padding: 15px 0 15px 0;
+        }
+        .mais-info .conteudo ul.comentarios li:last-child{
+          border-bottom: solid 1px #CCC;
+        }
+        .mais-info .conteudo ul.comentarios li .title{
+          font-weight: bold;
+        }
+        .mais-info .conteudo ul.comentarios li .autor{
+          margin-bottom: 0;
+        }
+        .sec-carrinho{
+          margin: 32px 0 25px 0;
+        }
+        .sec-carrinho #tb-carrinho{
+          width: 100%;
+          border-collapse: collapse;
+          table-layout: auto;
+          color: #550503;
+          font-family: "Helvetica Neue",Helvetica,sans-serif;
+          font-weight: 300;
+          background-color: #FFF;
+        }
+        .sec-carrinho #tb-carrinho, .sec-carrinho #tb-carrinho th, .sec-carrinho #tb-carrinho td{
+          border: 1px solid #DDD;
+          padding: 0.5rem 0.625rem 0.625rem;
+        }
+        .sec-carrinho #tb-carrinho th, .sec-carrinho #tb-carrinho td{
+          padding: 12px 5px;
+        }
+        .sec-carrinho #tb-carrinho .product-price{
+          text-align: center;
+          padding: 0 10px;
+          white-space: nowrap;
+          min-width: 100px;
+        }
+        .sec-carrinho #tb-carrinho .qtde_carrinho{
+          font-size: 18px;
+          padding: 10px 4px;
+          text-align: center;
+          height: 38px;
+        }
+        .sec-carrinho .ul-subtotal-list{
+          float:right;
+          width:40%;
+        }
+        .sec-carrinho .ul-subtotal-list li{
+          display: block;
+          overflow: hidden;
+        }
+        .sec-carrinho .subtotal .tb-subtotal{
+          width:100%;
+          border-bottom:solid 1px #DDD;
+          padding-bottom:10px;
+          margin-bottom:10px;
+          font-size: 18px;
+        }
+        .sec-carrinho .subtotal .tb-subtotal th, .sec-carrinho .subtotal .tb-subtotal td{
+          padding: 12px 5px;
+        }
+        .sec-carrinho .subtotal .tb-subtotal .texto{
+          text-align:left;
+          font-weight:bold;
+        }
+        .sec-carrinho .subtotal .tb-subtotal .valor{
+          text-align:center;
+          width: 40%;
+        }
+        .sec-prod-single .sec-frete .inpt-frete, .sec-carrinho .inpt-frete{
+          width: 110px;
+          height: 35px;
+          line-height: 30px\9;
+          float: left;
+          text-align: center;
+          font-size: 16px;
+          padding: 0;
+        }
+				</style>
     </head>
     <body class="demo-1">
         <div class="ip-container" id="ip-container">
@@ -126,7 +176,7 @@ switch ($current_page_slug) {
                                     <nav>
                                         <ul class="header-nav hidden-xs">
                                             <li class="pad-top-0i">
-                                                <img alt="Logo Decoratum" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-268-150.png" />
+                                                <img alt="Logo Decoratum" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-188-105.png" />
                                             </li>
 
                                             <li>
@@ -139,10 +189,10 @@ switch ($current_page_slug) {
 
                                             <li>
                                                 <?php
-                                                $qtItensCarrinho = getQtItensCarrinho();
-                                                $strCarrinho     = ($qtItensCarrinho == 0) ? "vazio" : "$qtItensCarrinho item(ns)";
+                                                // $qtItensCarrinho = getQtItensCarrinho();
+                                                // $strCarrinho     = ($qtItensCarrinho == 0) ? "vazio" : "$qtItensCarrinho item(ns)";
                                                 ?>
-                                                <a href="<?php echo esc_url(home_url('/')).'carrinho'; ?>">Carrinho<br /><small>[<?php echo $strCarrinho; ?>]</small></a>
+                                                <a href="<?php echo esc_url(home_url('/')).'carrinho'; ?>">Carrinho</a>
                                             </li>
                                             <li>
                                                 <a href="blog-center.html">Contato</a>
@@ -162,8 +212,8 @@ switch ($current_page_slug) {
                                             </li>
                                             <li>
                                                 <?php
-                                                $qtItensCarrinho = getQtItensCarrinho();
-                                                $strCarrinho     = ($qtItensCarrinho == 0) ? "vazio" : "$qtItensCarrinho item(ns)";
+                                                // $qtItensCarrinho = getQtItensCarrinho();
+                                                // $strCarrinho     = ($qtItensCarrinho == 0) ? "vazio" : "$qtItensCarrinho item(ns)";
                                                 ?>
                                                 <a href="<?php echo esc_url(home_url('/')).'carrinho'; ?>">Carrinho<br /><small>[<?php echo $strCarrinho; ?>]</small></a>
                                             </li>
@@ -274,12 +324,24 @@ switch ($current_page_slug) {
                             ?>
                             <div class="tittle-cake text-center pad-top-150">
                                 <div class="container">
+                                   <?php
+																	 /*
+                                   <h1>
+                                   	Produtos feitos PRA VOCÊ
+                                   </h1>
+																		*/
+																		?>
+
+																		<?php
+																		 /*
                                     <h2>
                                         Produtos feitos
                                     </h2>
                                     <h1>
                                         PRA VOCÊ
                                     </h1>
+																		*/
+																		?>
                                 </div>
                             </div>
                             <div class="slider-cake2">
@@ -325,7 +387,7 @@ switch ($current_page_slug) {
                                         /*
                                         <div class="img-relative">
                                             <img alt="Trufa Tradicional - Côco" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" />
-                                            
+
                                               <div class="price-cake hidden-xs">
                                               <p>
                                               R$3,50
@@ -356,12 +418,12 @@ switch ($current_page_slug) {
                             <div class="gray-table mar-to-top border-brown">
                                 &nbsp;
                             </div>
-    
+
                             <div class="green-arrow">
                             &nbsp;
                             </div>
                             */
-} else if ($current_page_slug == 'produtos' || $current_page_slug == 'carrinho') {
+} else if ($current_page_slug == 'produtos' || $current_page_slug == 'carrinho' || $current_page_slug == 'produto') {
     ?>
                             <div class="tittle-sub-top pad-top-150">
                                 <div class="container">

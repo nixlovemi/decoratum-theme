@@ -6,7 +6,7 @@
             <h2 class="hide">&nbsp;
             </h2>
             <div class="about-content">
-              <img alt="Trufa White" src="<?php bloginfo('template_url'); ?>/images/decoratum-white.png" />
+              <img alt="Trufa White" src="<?php bloginfo('template_url'); ?>/images/decoratum-white-v2.png" />
               <p>
                 Aqui vai um texto explicando o quão lindos e maravilhosos são os produtos que vendemos!
               </p>
@@ -19,7 +19,7 @@
           <div class="container">
             <!-- Product Tittle -->
             <div class="product-tittle">
-              <img alt="Trufa Purple" src="<?php bloginfo('template_url'); ?>/images/decoratum-pink.png" />
+              <img alt="Trufa Purple" src="<?php bloginfo('template_url'); ?>/images/decoratum-pink-v2.png" />
               <h2>
                 Produtos
               </h2>
@@ -578,7 +578,7 @@
           <!-- xxxxxxxxxxxxxxxxxxxx -->
           <div class="tittle-cake text-center mar-top-20">
             <div class="container">
-              <img alt="Trufa Pink" src="<?php bloginfo('template_url'); ?>/images/decoratum-pink.png" />
+              <img alt="Trufa Pink" src="<?php bloginfo('template_url'); ?>/images/decoratum-pink-v2.png" />
               <h2 class="pink-color">
                 Contato
               </h2>

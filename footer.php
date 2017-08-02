@@ -15,7 +15,7 @@
             <div class="top-footer">
               <div class="row">
                 <div class="col-sm-6">
-                  <img alt="Logo White" class="img-cake-center-res" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-white.png" />
+                  <img alt="Logo White" class="img-cake-center-res" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-white-v2.png?random=123" />
                 </div>
                 <div class="col-sm-6 text-right">
                   <ul class="sosmed-cake">
@@ -59,9 +59,15 @@
             <div class="content-about-footer">
               <!-- Column -->
               <div class="col-sm-4">
+                <?php
+								/*
                 <h4>
                   Decoratum
                 </h4>
+								*/
+								?>
+                
+                <br />
                 <p class="mar-btm-20">
                   Produtos incríveis feito com amor para você.
                 </p>
@@ -118,7 +124,13 @@
                     <a href="<?php echo esc_url(home_url( '/' )) . 'carrinho'; ?>">Carrinho</a>
                   </li>
                   <li>
-                    <a href="terms-of-use.html">Contato</a>
+                    <a href="javascript:;">Política de privacidade</a>
+                  </li>
+                  <li>
+                    <a href="javascript:;">Trocas e Devoluções</a>
+                  </li>
+                  <li>
+                    <a href="javascript:;">Prazo de Entrega</a>
                   </li>
                   <!--
                   <li>
@@ -148,6 +160,8 @@
     <script src="<?php bloginfo('template_url'); ?>/js/pathLoader.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/PgwModal/pgwmodal.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/jquery.maskedinput/dist/jquery.maskedinput.min.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/js/galleria/galleria-1.5.7.min.js"></script>
+    
     <script src="<?php bloginfo('template_url'); ?>/js/main.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/master.js"></script>
     <script type="text/javascript">

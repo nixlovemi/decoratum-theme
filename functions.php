@@ -11,18 +11,18 @@ function getThumbByID($thumb_ID, $size="thumbnail"){
 }
 
 function getQtItensCarrinho(){
-	return sizeof(jigoshop_cart::$cart_contents);
+	// return sizeof(jigoshop_cart::$cart_contents);
 }
 
 function getIDFromCart($ID_prod){
-	foreach (jigoshop_cart::$cart_contents as $cart_item_key => $cart_item) {
+	/*foreach (jigoshop_cart::$cart_contents as $cart_item_key => $cart_item) {
 		$_arr_product = (array) $cart_item["data"];
 		if($_arr_product["ID"] == $ID_prod){
 			return $cart_item_key;
 		}
 	}
 	
-	return false;
+	return false;*/
 }
 
 /**
@@ -49,7 +49,7 @@ function getFreteIDProd($tp_frete=1){
 }
 
 function changeQtdItemCart($ID_prod, $qtde=1){
-	
+	/*
 	$key_cart_prod = getIDFromCart($ID_prod);
 	
 	if($key_cart_prod != ""){
@@ -59,21 +59,22 @@ function changeQtdItemCart($ID_prod, $qtde=1){
 	else{
 		return false;
 	}
+	*/
 }
 
 function removeCartItem($ID_prod){
-	changeQtdItemCart($ID_prod, 0);
+	// changeQtdItemCart($ID_prod, 0);
 }
 
 function limparCarrinho(){
-	jigoshop_cart::empty_cart();
-	return true;
+	/*jigoshop_cart::empty_cart();
+	return true;*/
 }
 
 function getArrProdutos($ID = ''){
-	global $wpdb;
+	/*global $wpdb;
 	do_action('jigoshop_before_shop_loop');
-	ob_start();
+	ob_start();*/
 	
 	/*
 	$querystr = "
@@ -89,6 +90,7 @@ function getArrProdutos($ID = ''){
 	";
 	*/
 	
+	/*
 	$and_ID = (is_numeric($ID)) ? " AND $wpdb->posts.ID = $ID ": "";
 	
 	$querystr = "
@@ -147,6 +149,7 @@ function getArrProdutos($ID = ''){
 			array_push($arr_resp_produtos, $arr_Produto);
 		endforeach;
 	}
+	*/
 	
 	// if (have_posts()) : while (have_posts()) : the_post();
 		/*

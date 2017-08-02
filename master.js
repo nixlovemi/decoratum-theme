@@ -3,6 +3,14 @@ $(document).ready(function(){
        infinite: true,
        centerMode: true
     });
+		
+		$('.slider-prod-single').slick({
+			dots: true,
+			infinite: true,
+			speed: 500,
+			fade: true,
+			cssEase: 'linear'
+		});
 });
 
 function valida_cpf(strCPF) {
