@@ -584,7 +584,7 @@
               </h2>
             </div>
           </div>
-          <div class="container mar-top-20">
+          <div class="container mar-top-20" id="home-contato">
             <div class="col-sm-offset-3 col-sm-6">
               <div class="form-group">
                 <input class="form-control form-default-cakes" placeholder="Nome Completo" type="text" />

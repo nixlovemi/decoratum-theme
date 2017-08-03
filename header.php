@@ -209,6 +209,155 @@ $class_wrap_header = "";
                 color: red;
                 font-size: 13px;
             }
+            .top-header #logo-decoratum-mobile{
+                margin-top: -10px;
+            }
+            .top-header .container .navbar-header{
+                padding-bottom: 63px;
+            }
+            .header-wrapper .mega-menu {
+                text-transform: uppercase;
+                margin-top: 15px;
+                margin-bottom: 40px;
+            }
+            .wrap-product .top-product .img-produto {
+                max-width: 100%;
+                /*height: 100%;*/
+                height: auto;
+                display: block;
+                margin: 0 auto;
+            }
+            #home-contato input[type="text"], #home-contato input[type="password"], #home-contato input[type="email"]{
+                height: auto;
+                font-size: 14px;
+            }
+            .tittle-cake h2::before,  .tittle-cake h2::after{
+                content: '';
+                position: absolute;
+                background-color: #ffffff;
+                width: 0;
+                height: 0;
+                top: 20px;
+                border-radius: 0;
+            }
+            .sec-produtos #slc-categoria-produtos{
+                display: none;
+                width: 100%;
+                padding: 10px 4px;
+                margin-bottom: 50px;
+
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                appearance: none !important;
+                height: auto;
+                background-color: #fff;
+
+                -webkit-border-radius: 0px;
+                background-color: #fafafa;
+                background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMTJweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCA2IDMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gcG9pbnRzPSI1Ljk5MiwwIDIuOTkyLDMgLTAuMDA4LDAgIi8+PC9zdmc+);
+                background-position: 100% center;
+                background-repeat: no-repeat;
+                border: 1px solid #ccc;
+                padding: 0.5rem;
+                line-height: normal;
+                border-radius: 0;
+            }
+            .button {
+                border-style: solid;
+                border-width: 0px;
+                cursor: pointer;
+                font-weight: normal;
+                line-height: normal;
+                margin: 0 0 1.25rem;
+                position: relative;
+                text-decoration: none;
+                text-align: center;
+                -webkit-appearance: none;
+                -webkit-border-radius: 0;
+                display: inline-block;
+                padding-top: 1rem;
+                padding-right: 2rem;
+                padding-bottom: 1.0625rem;
+                padding-left: 2rem;
+                font-size: inherit;
+                /*font-size: 1rem;*/
+                background-color: #ff726e;
+                border-color: #8d2d2b;
+                color: #fff;
+                transition: background-color 300ms ease-out;
+                -webkit-transition: background-color 300ms ease-out;
+                -moz-transition: background-color 300ms ease-out;
+                -ms-transition: background-color 300ms ease-out;
+                -o-transition: background-color 300ms ease-out;
+            }
+            .sec-carrinho #label-deslize{
+                display: none;
+            }
+
+            @media (max-width: 655px) {
+                .sec-produtos .dv-titulo-coluna{
+                    text-align: center;
+                }
+                .sec-produtos #filtros-produtos{
+                    float: none;
+                }
+                .sec-produtos #filtros-produtos li{
+                    display: block;
+                    margin-top: 30px;
+                    margin-bottom: 30px;
+                    margin-right: 0;
+                }
+                .sec-carrinho #label-deslize{
+                    display: block;
+                }
+                .sec-carrinho #holder-tb-carrinho{
+                    overflow-x: auto;
+                    display: block;
+                }
+                .sec-carrinho #holder-tb-carrinho #tb-carrinho{
+                    min-width: 550px;
+                }
+                .sec-carrinho .ul-subtotal-list {
+                    width: 80% !important;
+                }
+            }
+            @media (max-width: 994px) {
+                .sec-prod-single .slider-prod-single{
+                    margin-bottom: 15px;
+                }
+                .sec-prod-single #col-dir-info-prod{
+                    margin-left: 15px;
+                    margin-right: 15px;
+                    margin-bottom: 15px;
+                }
+                .sec-prod-single .mais-info{
+                    margin-right: 0;
+                }
+                .sec-produtos #slc-categoria-produtos{
+                    display: block;
+                }
+                .sec-produtos #categoria-produtos{
+                    display: none;
+                }
+                .header-wrapper .top-header .header-nav li {
+                    padding-left: 12px;
+                    padding-right: 12px;
+                }
+                .sec-carrinho .ul-subtotal-list {
+                    width: 65%;
+                }
+            }
+            @media (max-width: 1200px) {
+                .sec-prod-single .sec-frete .btn-frete {
+                    width: 56.3%;
+                }
+                .sec-prod-single .sec-preco .btn-cart {
+                    width: 76%;
+                }
+                .sec-prod-single .sec-preco .btn-cart .fa{
+                    margin-left: -12px;
+                }
+            }
         </style>
     </head>
     <body class="demo-1">
@@ -245,7 +394,7 @@ $class_wrap_header = "";
                                             <span class="icon-bar"></span>
                                         </button>
                                         <a class="navbar-brand navbar-cake" href="#">
-                                            <img alt="Logo Decoratum" src="<?php bloginfo('template_url'); ?>/images/logo-100.png" />
+                                            <img id="logo-decoratum-mobile" alt="Logo Decoratum" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-188-105.png" />
                                         </a>
                                     </div>
                                     <nav>
@@ -316,7 +465,7 @@ $class_wrap_header = "";
                                                             <a href="<?php echo esc_url(home_url('/')).'produtos'; ?>">Produtos</a>
                                                         </li>
                                                         <li>
-                                                            <a href="<?php echo esc_url(home_url('/')).'carrinho'; ?>">Carrinho <small>[<?php echo $strCarrinho; ?>]</small></a>
+                                                            <a href="<?php echo esc_url(home_url('/')).'carrinho'; ?>">Carrinho</a>
                                                         </li>
                                                         <li>
                                                             <a href="blog-center.html">Contato</a>

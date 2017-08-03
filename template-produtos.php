@@ -9,6 +9,28 @@ get_header();
         <div class="row mt-20 mb-20">
             <div class="col-md-3">
                 <div class="dv-titulo-coluna mb-20">CATEGORIAS</div>
+
+                <select id="slc-categoria-produtos">
+                    <optgroup label="Categoria 1">
+                        <option value="Item 1">Item 1</option>
+                        <option value="Item 2">Item 2</option>
+                        <option value="Item 3">Item 3</option>
+                        <option value="Item 4">Item 4</option>
+                    </optgroup>
+
+                    <optgroup label="Categoria 2">
+                        <option value="Item 5">Item 5</option>
+                        <option value="Item 6">Item 6</option>
+                        <option value="Item 7">Item 7</option>
+                    </optgroup>
+
+                    <optgroup label="Categoria 3">
+                        <option value="Item 8">Item 8</option>
+                        <option value="Item 9">Item 9</option>
+                        <option value="Item 10">Item 10</option>
+                    </optgroup>
+                </select>
+
                 <ul id="categoria-produtos">
                     <li>
                         <strong>Categoria 1</strong>
@@ -55,7 +77,7 @@ get_header();
 
                 <div class="row" id="lista-produtos">
                     <div class="col-md-4 mb-25 item-produto">
-                        <img src="<?php bloginfo('template_url'); ?>/images/produtos-image-1.jpg" />
+                        <a href="<?php echo esc_url(home_url('/')).'produto'; ?>"><img src="<?php bloginfo('template_url'); ?>/images/produtos-image-1.jpg" /></a>
                         <div class="info-produto mt-15">
                             <div class="nome">Teste de Nome Um Pouco Maior Sim</div>
                             <div class="preco">
@@ -66,7 +88,7 @@ get_header();
                         </div>
                     </div>
                     <div class="col-md-4 mb-25 item-produto">
-                        <img src="<?php bloginfo('template_url'); ?>/images/produtos-image-2.jpg" />
+                        <a href="<?php echo esc_url(home_url('/')).'produto'; ?>"><img src="<?php bloginfo('template_url'); ?>/images/produtos-image-2.jpg" /></a>
                         <div class="info-produto mt-15">
                             <div class="nome">Teste de Nome Um Pouco Maior Sim</div>
                             <div class="preco">
@@ -77,7 +99,7 @@ get_header();
                         </div>
                     </div>
                     <div class="col-md-4 mb-25 item-produto">
-                        <img src="<?php bloginfo('template_url'); ?>/images/produtos-image-3.jpg" />
+                        <a href="<?php echo esc_url(home_url('/')).'produto'; ?>"><img src="<?php bloginfo('template_url'); ?>/images/produtos-image-3.jpg" /></a>
                         <div class="info-produto mt-15">
                             <div class="nome">Teste de Nome Um Pouco Maior Sim</div>
                             <div class="preco">

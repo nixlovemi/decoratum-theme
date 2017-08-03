@@ -31,7 +31,7 @@
                         </p>
                       </div>
                     </li>
-                    <li>
+                    <!--<li>
                       <div class="center-sosmed">
                         <p class="icon icon-behance">&nbsp;
                         </p>
@@ -42,7 +42,7 @@
                         <p class="icon icon-dribbble">&nbsp;
                         </p>
                       </div>
-                    </li>
+                    </li>-->
                     <li>
                       <div class="center-sosmed">
                         <p class="icon icon-pinterest">&nbsp;
@@ -82,28 +82,28 @@
               <div class="col-sm-4 hidden-xs">
                 <ul class="list-picture-footer">
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-1.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-1-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1-footer.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-2.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-2-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2-footer.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-3.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3.png" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-3-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3-footer.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-4.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-1-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1-footer.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-5.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-2-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2-footer.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-6.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3.png" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-3-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3-footer.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-7.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-1-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1-footer.png" /></a>
                   </li>
                   <li>
-                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/galeria-trufa-8.jpg"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png" /></a>
+                    <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-2-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2-footer.png" /></a>
                   </li>
                 </ul>
                 <div class="clear"></div>
