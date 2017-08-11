@@ -31,7 +31,7 @@ $class_wrap_header = "";
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <meta content="Decoratum - Trufas Tradicionais" name="description" />
+        <meta content="Decoratum - Produtos feitos para você" name="description" />
         <link href="<?php bloginfo('template_url'); ?>/images/favicon-32x32.png" rel="shortcut icon" />
 
         <title><?php bloginfo('blogname'); ?><?php wp_title(' | '); ?></title>

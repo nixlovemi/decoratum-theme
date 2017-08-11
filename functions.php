@@ -27,6 +27,7 @@ class DecoratumProduct{
     private $_shortDescription;
     private $_price;
     private $_regularPrice;
+    private $_salePrice;
     private $_imageId;
     private $_galleryIds;
     private $_wcProduct;
@@ -62,6 +63,9 @@ class DecoratumProduct{
     }
     public function getRegularPrice(){
         return $this->_regularPrice;
+    }
+    public function getSalePrice(){
+        return $this->_salePrice;
     }
     public function getImageId(){
         return $this->_imageId;
@@ -112,6 +116,10 @@ class DecoratumProduct{
         $this->_regularPrice = $value;
         return $this;
     }
+    public function setSalePrice($value){
+        $this->_salePrice = $value;
+        return $this;
+    }
     public function setImageId($value){
         $this->_imageId = $value;
         return $this;
@@ -152,6 +160,7 @@ function getAllProducts($category = "", $productId = "")
         $DecoratumProduct->setShortDescription( $product->get_short_description() );
         $DecoratumProduct->setPrice( $product->get_price() );
         $DecoratumProduct->setRegularPrice( $product->get_regular_price() );
+        $DecoratumProduct->setSalePrice( $product->get_sale_price() );
         $DecoratumProduct->setImageId( $product->get_image_id() );
         $DecoratumProduct->setGalleryIds( $product->get_gallery_image_ids() );
         $DecoratumProduct->setWcProduct($product);

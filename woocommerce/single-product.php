@@ -4,6 +4,7 @@ get_header();
 
 global $post;
 $productId  = $post->ID;
+$permalink  = get_permalink($productId);
 $retProduct = getAllProducts("", $productId);
 $Product    = $retProduct[0];
 ?>
@@ -36,6 +37,7 @@ $Product    = $retProduct[0];
             <div id="col-dir-info-prod" class="col-md-5">
                 <div class="pt-15 pb-2">
                     <section class="">
+                        <!-- nao sei como fazer ainda -->
                         <h4 class="mt-0">Cores disponíveis:</h4>
 
                         <ul id="lista-variacoes">
@@ -47,8 +49,16 @@ $Product    = $retProduct[0];
                     <section class="sec-preco">
                         <h4 class="mt-0">Preço:</h4>
 
-                        <p class="preco-de">de R$99</p>
-                        <p class="preco">por <span>R$59</span> à vista</p>
+                        <?php
+                        $precoDe  = ($Product->getSalePrice() > 0) ? $Product->getRegularPrice(): "";
+                        $precoPor = $Product->getPrice();
+
+                        if($precoDe > 0){
+                            echo "<p class='preco-de'>de R$$precoDe</p>";
+                        }
+                        ?>
+                        
+                        <p class="preco">por <span>R$<?php echo $precoPor; ?></span> à vista</p>
 
                         <input id="qty" name="qty" class="qntdd_prod" value="1" maxlength="2" title="O campo de quantidade aceita apenas números, de 1 até 99." type="text">
                         <button type="button" title="Adicionar ao carrinho" class="button btn-cart" id="btn-add-cart" onclick="alert(1)">
@@ -76,7 +86,7 @@ $Product    = $retProduct[0];
                     <section class="sec-frete">
                         Compartilhe:
                         &nbsp;
-                        <a href="javascript:;"><img alt="Compartilhe Maleta Porta Maquiagem no Facebook" src="<?php bloginfo('template_url'); ?>/images/compartilhar-fcbk.png"></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($permalink); ?>" target="_blank"><img alt="Compartilhe <?php echo $Product->getTitle(); ?>" src="<?php bloginfo('template_url'); ?>/images/compartilhar-fcbk.png"></a>
                         <?php
                         #https://www.iconfinder.com/icons/343415/facebook_icon#size=128
                         ?>
@@ -88,22 +98,24 @@ $Product    = $retProduct[0];
         <div class="row mais-info mb-15">
             <div class="conteudo pb-0">
                 <h3>Descrição</h3>
-                <p>Nada como ter em casa um ambiente agradável, aconchegante e bem decorado, não é?</p>
-                <p>Por isso que a Almofada Ouriço faz o maior sucesso e decora com praticidade.</p>
-                <p>Produzida com enchimento de fibra siliconizada, ela tem a capa feita em tecido 100% algodão e acabamento com zíper. A aparencia rústica dela é por conta da estampa, que é feita manualmente. Já o contraste de suas cores fortes e vibrantes, fica bem bacana misturado com peças neutras.</p>
-                <p>Como ela é indicada para áreas internas ou externas cobertas, também pode ser uma boa oportunidade para você redecorar a sua varanda.</p>
 
-                <h3>Especificações</h3>
-                <p><strong>Altura</strong>: 40cm</p>
-                <p><strong>Largura</strong>: 42cm</p>
-                <p><strong>Profundidade</strong>: 44cm</p>
-                <p><strong>Peso</strong>: 0,470KG</p>
-                <p><strong>Tecidos</strong>: a escolher após a compra diretamente com a vendedora</p>
+                <div class="mb-15">
+                    <?php
+                    echo nl2br($Product->getDescription());
+
+                    // echo wp_kses_post( $package_name );
+                    // $Shipping = new WC_Shipping();
+                    // $teste = $Shipping->get_shipping_methods();
+
+                    // var_dump( $teste );
+                    ?>
+                </div>
             </div>
         </div>
 
         <div class="row mais-info">
             <div class="conteudo">
+                <!-- nao sei como fazer ainda -->
                 <h3 class="mt-0 mb-20">Comentários</h3>
                 <ul class="comentarios">
                     <li>
