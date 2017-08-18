@@ -257,6 +257,16 @@ body {
 .sec-prod-single .sec-preco .preco span{
   font-size: 28px;
 }
+.tb-frete {
+    width: 100%;
+    border-collapse: collapse;
+}
+.tb-frete td{
+    padding: 4px 1px;
+}
+.tb-frete .header{
+    font-weight: bold;
+}
 .button {
   border-style: solid;
   border-width: 0px;
@@ -364,6 +374,8 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 }
 .sec-prod-single #col-dir-info-prod{
   background-color:#FFF;
+  max-height: 505px;
+  min-height: 505px;
 }
 .sec-prod-single #col-dir-info-prod section{
   border-bottom: dotted 1px #CCC;
@@ -586,6 +598,12 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 }
 .sec-carrinho #label-deslize{
     display: none;
+}
+#commentform input[type="text"], #commentform input[type="password"], #commentform textarea {
+    padding: 8px 4px;
+    color: #333;
+    font-size: 16px;
+    height: auto;
 }
 
 @media (max-width: 655px) {

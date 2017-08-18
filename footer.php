@@ -150,19 +150,22 @@
         <!-- End Option Cake -->
       </div>
     </div>
+
     <script src="<?php bloginfo('template_url'); ?>/js/jquery.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/jquery.fancybox.pack.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/js/modernizr.custom.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/slick.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/wow.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/custom.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/bootstrap.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/classie.js"></script>
-    <script src="<?php bloginfo('template_url'); ?>/js/pathLoader.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/PgwModal/pgwmodal.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/jquery.maskedinput/dist/jquery.maskedinput.min.js"></script>
-    <script src="<?php bloginfo('template_url'); ?>/js/galleria/galleria-1.5.7.min.js"></script>
+
+    <!--<script src="<?php bloginfo('template_url'); ?>/js/pathLoader.js"></script>-->
+    <!--<script src="<?php bloginfo('template_url'); ?>/js/galleria/galleria-1.5.7.min.js"></script>-->
     
-    <script src="<?php bloginfo('template_url'); ?>/js/main.js"></script>
+    <!--<script src="<?php bloginfo('template_url'); ?>/js/main.js"></script>-->
     <script src="<?php bloginfo('template_url'); ?>/master.js"></script>
     <script type="text/javascript">
       new WOW().init();

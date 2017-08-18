@@ -51,7 +51,6 @@ $class_wrap_header = "";
         <link href="<?php bloginfo('template_url'); ?>/css/jquery.fancybox.css" rel="stylesheet" type="text/css" />
         <link href="<?php bloginfo('template_url'); ?>/css/effect2.css" rel="stylesheet" type="text/css" />
         <link href="<?php bloginfo('template_url'); ?>/js/PgwModal/pgwmodal.min.css" rel="stylesheet" type="text/css" />
-        <!--<script src="<?php bloginfo('template_url'); ?>/js/modernizr.custom.js"></script>-->
 
         <?php wp_head(); ?>
 

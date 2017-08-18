@@ -4,27 +4,33 @@ get_header();
 
 global $post;
 $productId  = $post->ID;
+$product = new WC_Product($productId);
+
 $permalink  = get_permalink($productId);
 $retProduct = getAllProducts("", $productId);
-$Product    = $retProduct[0];
+$vProduct   = $retProduct[0];
 ?>
 
 <section class="product-cake sec-prod-single">
     <div class="container">
+        <?php
+        // echo do_shortcode("[product_page id='$productId']");
+        ?>
+
         <div id="hold-nome-produto">
-            <h1><?php echo $Product->getTitle(); ?></h1>
+            <h1><?php echo $vProduct->getTitle(); ?></h1>
         </div>
         <div class="row">
             <div class="col-md-7">
                 <div class="slider-prod-single">
                     <?php
-                    $arrGalleryUrl = $Product->getGallerySingleUrl();
+                    $arrGalleryUrl = $vProduct->getGallerySingleUrl();
                     $count = 1;
                     foreach($arrGalleryUrl as $imageUrl){
                         ?>
 
                         <div class="img-relative">
-                            <img alt="<?php echo $Product->getTitle(); ?> - Imagem <?php echo $count; ?>" src="<?php echo $imageUrl; ?>" />
+                            <img alt="<?php echo $vProduct->getTitle(); ?> - Imagem <?php echo $count; ?>" src="<?php echo $imageUrl; ?>" />
                         </div>
 
                         <?php
@@ -50,8 +56,8 @@ $Product    = $retProduct[0];
                         <h4 class="mt-0">Preço:</h4>
 
                         <?php
-                        $precoDe  = ($Product->getSalePrice() > 0) ? $Product->getRegularPrice(): "";
-                        $precoPor = $Product->getPrice();
+                        $precoDe  = ($vProduct->getSalePrice() > 0) ? $vProduct->getRegularPrice(): "";
+                        $precoPor = $vProduct->getPrice();
 
                         if($precoDe > 0){
                             echo "<p class='preco-de'>de R$$precoDe</p>";
@@ -76,17 +82,19 @@ $Product    = $retProduct[0];
                     <section class="sec-frete">
                         <h4 class="mt-0">Frete:</h4>
 
-                        <input id="frete" name="frete" class="inpt-frete" value="" maxlength="8" title="" type="text">
-                        <button type="button" title="Consultar" class="button btn-frete" id="btn-cons-frete" onclick="alert(2)">
+                        <input id="inptFrete" name="frete" class="inpt-frete mask-cep" value="" type="text">
+                        <button type="button" title="Consultar" class="button btn-frete" id="btn-cons-frete" onclick=" calculaFrete('<?php echo $productId; ?>', $('#inptFrete').val(), 'retConsFrete'); ">
                             &nbsp;
                             Consultar Frete
                         </button>
+
+                        <div class="mt-15" id="retConsFrete"></div>
                     </section>
 
                     <section class="sec-frete">
                         Compartilhe:
                         &nbsp;
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($permalink); ?>" target="_blank"><img alt="Compartilhe <?php echo $Product->getTitle(); ?>" src="<?php bloginfo('template_url'); ?>/images/compartilhar-fcbk.png"></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($permalink); ?>" target="_blank"><img alt="Compartilhe <?php echo $vProduct->getTitle(); ?>" src="<?php bloginfo('template_url'); ?>/images/compartilhar-fcbk.png"></a>
                         <?php
                         #https://www.iconfinder.com/icons/343415/facebook_icon#size=128
                         ?>
@@ -101,13 +109,7 @@ $Product    = $retProduct[0];
 
                 <div class="mb-15">
                     <?php
-                    echo nl2br($Product->getDescription());
-
-                    // echo wp_kses_post( $package_name );
-                    // $Shipping = new WC_Shipping();
-                    // $teste = $Shipping->get_shipping_methods();
-
-                    // var_dump( $teste );
+                    echo nl2br($vProduct->getDescription());
                     ?>
                 </div>
             </div>
@@ -115,8 +117,125 @@ $Product    = $retProduct[0];
 
         <div class="row mais-info">
             <div class="conteudo">
+
+                <?php
+                $args = array (
+                    'post_type' => 'product',
+                    'post_ID' =>$product->id,  // Product Id
+                    'status' => array("approve", "hold"), // Status you can also use 'hold', 'spam', 'trash',
+                    //'number' => 1  // Number of comment you want to fetch I want latest approved post soi have use 1
+                    );
+                $comments = get_comments($args);
+                $temComments = count($comments) > 0;
+                ?>
+
                 <!-- nao sei como fazer ainda -->
-                <h3 class="mt-0 mb-20">Comentários</h3>
+                <h3 class="mt-0 mb-15">Avaliações</h3>
+
+                <?php
+                if( $vProduct->getReviewCount() > 0 ){
+                    ?>
+                    <p style="font-size: 12px;" class="mb-15">
+                        Quantidade: <?php echo $vProduct->getReviewCount(); ?>
+                        <br />
+                        Média: <?php echo $vProduct->getReviewAvg(); ?>
+                    </p>
+                    <?php
+                }
+                ?>
+
+                <?php
+                if($temComments){
+                    ?>
+
+                    <ul class="comentarios">
+                        <?php
+                        foreach($comments as $comment) :
+                            $rating = get_comment_meta( $comment->comment_ID, "rating", true );
+                            ?>
+
+                            <li>
+                                <p class="title">Avaliação: <?php echo ratingToString($rating); ?></p>
+                                <p><?php echo $comment->comment_content; ?></p>
+                                <p class="autor"><?php echo $comment->comment_author; ?></p>
+                            </li>
+
+                            <?php
+                        endforeach;
+                        ?>
+                    </ul>
+
+                    <?php
+                }
+                ?>
+
+                <div class="mt-30">
+                    <?php
+                    if (get_option('woocommerce_review_rating_verification_required')
+                        === 'no' || wc_customer_bought_product('',
+                            get_current_user_id(), $product->get_id())) :
+
+                        $commenter = wp_get_current_commenter();
+
+                        $comment_form = array(
+                            'title_reply' => $temComments ? __('Avalie o produto ' . $vProduct->getTitle(),
+                                'woocommerce') : __('Seja o primeiro a avaliar o produto ',
+                                'woocommerce').' &ldquo;'.get_the_title().'&rdquo;',
+                            'title_reply_to' => __('Deixe um comentário: %s',
+                                'woocommerce'),
+                            'comment_notes_before' => '',
+                            'comment_notes_after' => '',
+                            'fields' => array(
+                                'author' => '<p class="comment-form-author">'.'<label for="author">'.__('Nome',
+                                    'woocommerce').' <span class="required">*</span></label> '.
+                                '<input id="author" name="author" type="text" value="'.esc_attr($commenter['comment_author']).'" size="30" aria-required="true" /></p>',
+                                'email' => '<p class="comment-form-email"><label for="email">'.__('Email',
+                                    'woocommerce').' <span class="required">*</span></label> '.
+                                '<input id="email" name="email" type="text" value="'.esc_attr($commenter['comment_author_email']).'" size="30" aria-required="true" /></p>',
+                            ),
+                            'label_submit' => __('Submit', 'woocommerce'),
+                            'logged_in_as' => '',
+                            'comment_field' => ''
+                        );
+
+                        if (get_option('woocommerce_enable_review_rating') === 'yes') {
+                            $comment_form['comment_field'] = '
+                                <p class="comment-form-rating"><label for="rating">'.__('Nota do Produto',
+                                    'woocommerce').'</label>
+                                    <select name="rating" id="">
+                                        <option value="">'.__('Rate&hellip;',
+                                    'woocommerce').'</option>
+                                        <option value="5">'.__('Perfeito',
+                                    'woocommerce').'</option>
+                                        <option value="4">'.__('Bom',
+                                    'woocommerce').'</option>
+                                        <option value="3">'.__('Razoável',
+                                    'woocommerce').'</option>
+                                        <option value="2">'.__('Ruim',
+                                    'woocommerce').'</option>
+                                        <option value="1">'.__('Péssimo',
+                                    'woocommerce').'</option>
+                                    </select>
+                                </p>';
+                        }
+
+                        $comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">'.__('Sua opinião',
+                                'woocommerce').'</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>';
+
+                        comment_form(apply_filters('woocommerce_product_review_comment_form_args',
+                                $comment_form));
+
+                    else :
+                        ?>
+
+                        <p class="woocommerce-verification-required"><?php _e('Only logged in customers who have purchased this product may leave a review.',
+                        'woocommerce');
+                        ?></p>
+
+                    <?php endif; ?>
+                </div>
+                
+                <!--
                 <ul class="comentarios">
                     <li>
                         <p class="title">Ótimo produto</p>
@@ -136,10 +255,9 @@ $Product    = $retProduct[0];
                         <p class="autor">Claudia</p>
                     </li>
                 </ul>
+                -->
             </div>
         </div>
-    </div>
-</section>
 
 <?php
 get_footer();
