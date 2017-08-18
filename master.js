@@ -15,6 +15,12 @@ $(document).ready(function () {
     initPlugins();
 });
 
+function addToCart_SP(){
+    var proId = $("#hddnSpProId").val();
+}
+
+
+
 function calculaFrete(produtoIds, cepDestino, idResp) {
     $.ajax({
         type: "POST",
@@ -74,7 +80,7 @@ function initPlugins() {
 }
 
 function clearCart() {
-    var url = document.location.href;
+    /*var url = document.location.href;
     var idx = url.indexOf('?');
 
     if (idx > 0) {
@@ -83,32 +89,33 @@ function clearCart() {
     }
 
     url = url + '?a=clearCart';
-    document.location.href = url;
+    document.location.href = url;*/
 }
 
 function continueShop() {
-    var href = '';
+    /*var href = '';
     $('a[href*="/produtos"]').each(function (index, element) {
         href = $(this).attr("href");
     });
 
     if (href != '') {
         document.location.href = href;
-    }
+    }*/
 }
 
 function removeCartItem(id_prod) {
-    if (confirm('Deseja retirar esse item do carrinho?')) {
+    /*if (confirm('Deseja retirar esse item do carrinho?')) {
         var htmlForm = '<form action="" method="POST" id="frmDeletaItemCarrinho">';
         htmlForm += "  <input type='hidden' name='ID_PROD_DEL' value='" + id_prod + "' />";
         htmlForm += '</form>';
 
         $('body').append(htmlForm);
         setTimeout(" $('form#frmDeletaItemCarrinho').submit(); ", 500);
-    }
+    }*/
 }
 
 function updateCart() {
+    /*
     // pega todas as selects com a qtdes
     var arr_valores = new Array();
 
@@ -134,9 +141,11 @@ function updateCart() {
 
     $('body').append(htmlForm);
     setTimeout(" $('form#frmAtualizaCarrinho').submit(); ", 500);
+    */
 }
 
 function finishShop(pg) {
+    /*
     $.ajax({
         type: "POST",
         url: 'http://crochepassoapasso.com.br/sonhodetrufa/wp-content/themes/sonhodetrufa-v1/ajax-finalizaModalPg.php',
@@ -151,9 +160,11 @@ function finishShop(pg) {
             setTimeout("initPlugins();", 500);
         }
     });
+    */
 }
 
 function finishNextPage(pg_atual) {
+    /*
     if (pg_atual == 1) {
         // checa se está na prim pg
         var div_1_visible = $('div#compraModal-1').is(':visible');
@@ -201,18 +212,19 @@ function finishNextPage(pg_atual) {
         }
         // ========================
     }
+    */
 }
 
 function finishPrevPage(pg_atual) {
-    if (pg_atual == 2) {
+    /*if (pg_atual == 2) {
         $('div#compraModal-1').show();
         $('div#compraModal-2').hide();
         $('div#compraModal-3').hide();
-    }
+    }*/
 }
 
 function buscaCep(cep) {
-    $.ajax({
+    /*$.ajax({
         type: "POST",
         url: 'http://crochepassoapasso.com.br/sonhodetrufa/wp-content/themes/sonhodetrufa-v1/ajax-pesquisaCep.php',
         data: 'cep=' + cep,
@@ -222,5 +234,5 @@ function buscaCep(cep) {
         success: function (msg) {
             console.log(msg);
         }
-    });
+    });*/
 }

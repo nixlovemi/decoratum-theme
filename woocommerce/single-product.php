@@ -1,5 +1,6 @@
 <?php
 /* https://getbootstrap.com/examples/grid/ */
+/* ?add-to-cart=[PRODUCT-ID]&variation_id=[VARIATION-ID]&attribute_[ATTRIBUTE-NAME]=[ATTRIBUTE-SLUG]&attribute_[ATTRIBUTE-NAME]=[ATTRIBUTE-SLUG]&quantity=[VALUE] */
 get_header();
 
 global $post;
@@ -66,8 +67,9 @@ $vProduct   = $retProduct[0];
                         
                         <p class="preco">por <span>R$<?php echo $precoPor; ?></span> à vista</p>
 
-                        <input id="qty" name="qty" class="qntdd_prod" value="1" maxlength="2" title="O campo de quantidade aceita apenas números, de 1 até 99." type="text">
-                        <button type="button" title="Adicionar ao carrinho" class="button btn-cart" id="btn-add-cart" onclick="alert(1)">
+                        <input type="hidden" id="hddnSpProId" value="<?php echo $productId; ?>" />
+                        <input id="qty" name="qty" class="qntdd_prod" value="1" maxlength="2" title="O campo de quantidade aceita apenas números, de 1 até 99." type="text" />
+                        <button type="button" title="Adicionar ao carrinho" class="button btn-cart" id="btn-add-cart" onclick=" addToCart_SP(); " />
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             &nbsp;
                             Adicionar ao Carrinho <span class="ajax-loader">
