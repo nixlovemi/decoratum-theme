@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // setup basico pra temas woo commerce
 add_action('after_setup_theme', 'woocommerce_support');
 
@@ -15,6 +19,30 @@ class DecoratumShipping
     private $_correiosCodSedex = '40010';
     private $_correiosCodPac   = '41106';
     private $_cepOrigem        = '13477708';
+
+    private function getTotalFromArrProd($arrProdutos){
+        $totM3 = 0;
+        $totKG = 0;
+
+        foreach($arrProdutos as $item){
+            $Product = $item["Product"];
+            $qty     = $item["qty"];
+
+            $vA  = $Product->getHeight() / 100;
+            $vL  = $Product->getWidth() / 100;
+            $vC  = $Product->getLength() / 100;
+            $vM3 = $vA * $vL * $vC;
+
+            $totM3 += $vM3 * $qty;
+            $totKG += $Product->getWeight() * $qty;
+        }
+
+        $arrTot = array();
+        $arrTot["totM3"] = $totM3;
+        $arrTot["totKG"] = $totKG;
+
+        return $arrTot;
+    }
 
     private function getCodigosTxt()
     {
@@ -63,20 +91,57 @@ class DecoratumShipping
         return $arrRet;
     }
 
+    public function generateArrProducts($productIds, $qtys, $fromCart="N"){
+        $arrProducts = array();
+        
+        if($fromCart == "S"){
+            $cartProd = getCartProducts();
+            foreach($cartProd as $item){
+                $arrItem = array();
+                $arrItem["Product"] = $item["product"];
+                $arrItem["qty"]     = (int) $item["qty"];
+
+                $arrProducts[] = $arrItem;
+            }
+        } else {
+            $arrProdIds = explode(",", $productIds);
+            $arrQtys    = explode(",", $qtys);
+
+            for($i=0; $i < count($arrProdIds); $i++){
+                $ret = getAllProducts("", $arrProdIds[$i]);
+                $Product = $ret[0];
+
+                $arrItem = array();
+                $arrItem["Product"] = $Product;
+                $arrItem["qty"]     = (int) $arrQtys[$i];
+
+                $arrProducts[] = $arrItem;
+            }
+        }
+
+        return $arrProducts;
+    }
+
     public function execConsultaFrete($arrProdutos, $cep)
     {
         // https://www.correios.com.br/para-voce/correios-de-a-a-z/pdf/calculador-remoto-de-precos-e-prazos/manual-de-implementacao-do-calculo-remoto-de-precos-e-prazos
+        // 1 forma: calcular a soma dos m3 dos itens do carrinho; tirar a raiz cubica e enviar como AxLxC;
+        // 2 forma: passar sempre as medidas minimas e somar o peso dos itens;
+
+        $arrTotProducts = $this->getTotalFromArrProd($arrProdutos);
+        $vTotKG         = (isset($arrTotProducts["totKG"])) ? $arrTotProducts["totKG"]: 1;
+        //$vTotM3       = $arrTotProducts["totM3"];
 
         $data['nCdEmpresa']          = ''; // Código da sua empresa, se você tiver contrato com os correios saberá qual é esse código. (opcional)
         $data['sDsSenha']            = ''; // Senha de acesso ao serviço. (opcional)
         $data['sCepOrigem']          = $this->_cepOrigem;
         $data['sCepDestino']         = str_replace(array(".", "-"), "", $cep);
-        $data['nVlPeso']             = '1'; // O peso do produto deverá ser enviado em quilogramas
-        $data['nCdFormato']          = '1'; // Formato da encomenda, nesse caso tem apenas duas opções: 1 para caixa / pacote e 2 para rolo/prisma.
-        $data['nVlComprimento']      = '16'; // informado em centímetros e somente números
-        $data['nVlAltura']           = '5'; // informado em centímetros e somente números
-        $data['nVlLargura']          = '15'; // informado em centímetros e somente números
-        $data['nVlDiametro']         = '0'; // informado em centímetros e somente números
+        $data['nVlPeso']             = $vTotKG; // O peso do produto deverá ser enviado em quilogramas
+        $data['nCdFormato']          = '2'; // Formato da encomenda, nesse caso tem apenas duas opções: 1 para caixa / pacote e 2 para rolo/prisma.
+        $data['nVlComprimento']      = '18'; // informado em centímetros e somente números (valor minimo 16)
+        $data['nVlAltura']           = '0'; // informado em centímetros e somente números (valor minimo 2)
+        $data['nVlLargura']          = '0'; // informado em centímetros e somente números (valor minimo 11)
+        $data['nVlDiametro']         = '5'; // informado em centímetros e somente números
         $data['sCdMaoPropria']       = 'n'; // Mão própria, nesse parâmetro você informa se quer a encomenda deverá ser entregue somente para uma determinada pessoa após confirmação por RG
         $data['nVlValorDeclarado']   = '0'; // O valor declarado serve para o caso de sua encomenda extraviar, então você poderá recuperar o valor dela. Vale lembrar que o valor da encomenda interfere no valor do frete. Se não quiser declarar pode passar 0
         $data['sCdAvisoRecebimento'] = 'n'; // No parâmetro aviso de recebimento, você informa se quer ser avisado sobre a entrega da encomenda. Para não avisar use “n”, para avisar use “s”.
@@ -429,6 +494,24 @@ function ratingToString($rating)
     }
 
     return $strRating;
+}
+
+function getCartSubtotal()
+{
+    global $woocommerce;
+
+    $items    = $woocommerce->cart->get_cart();
+    $subtotal = 0;
+
+    foreach ($items as $values) {
+        $productId = $values['data']->get_id();
+        $ret       = getAllProducts("", $productId);
+        $Product   = $ret[0];
+
+        $subtotal += $Product->getPrice() * $values['quantity'];
+    }
+
+    return $subtotal;
 }
 
 function getCartProducts()

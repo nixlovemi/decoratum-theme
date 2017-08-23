@@ -114,15 +114,18 @@ get_header();
                                         <td class="texto">Frete</td>
                                         <td class="">
                                             <div style="float: right;">
-                                                <input style="width: 100%" id="frete_carrinho" name="frete_carrinho" class="inpt-frete" value="" maxlength="8" title="" type="text">
+                                                <input style="width: 100%" id="frete_carrinho" name="frete_carrinho" class="inpt-frete mask-cep" value="" maxlength="8" title="" type="text">
                                                 <br />
-                                                <button style="width: 100%;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="alert(2)">
+                                                <button style="width: 100%;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="calculaFrete('', '', $('#frete_carrinho').val(), 'ret-frete-cart', 'S')">
                                                     &nbsp;
                                                     Consultar
                                                 </button>
-                                                <br />
-                                                <small style="width:100%; text-align:center; display:block;">Frete R$10,00
                                             </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <small id="ret-frete-cart" style="width:100%; text-align:center; display:block;"></small>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -145,7 +148,7 @@ get_header();
                                                     Adicionar
                                                 </button>
                                                 <br />
-                                                <small style="width:100%; text-align:center; display:block;">Desconto -R$5,00
+                                                <small style="width:100%; text-align:center; display:block;">Desconto -R$5,00</small>
                                             </div>
                                         </td>
                                     </tr>
@@ -160,7 +163,7 @@ get_header();
                                 <tbody>
                                     <tr>
                                         <td class="texto">TOTAL</td>
-                                        <td class="valor" style="font-weight:bold;">R$204,98</td>
+                                        <td class="valor" style="font-weight:bold;"><span id="spn-cart-total">R$<?php echo number_format($cartTotal, 2, ",", "."); ?></span></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="texto">

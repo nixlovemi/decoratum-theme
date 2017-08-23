@@ -68,9 +68,9 @@ $vProduct   = $retProduct[0];
 
                     <section class="sec-frete">
                         <h4 class="mt-0">Frete:</h4>
-
+                        
                         <input id="inptFrete" name="frete" class="inpt-frete mask-cep" value="" type="text">
-                        <button type="button" title="Consultar" class="button btn-frete" id="btn-cons-frete" onclick=" calculaFrete('<?php echo $productId; ?>', $('#inptFrete').val(), 'retConsFrete'); ">
+                        <button type="button" title="Consultar" class="button btn-frete" id="btn-cons-frete" onclick=" calculaFrete('<?php echo $productId; ?>', '' + $('#qtdeItem').val(), $('#inptFrete').val(), 'retConsFrete'); ">
                             &nbsp;
                             Consultar Frete
                         </button>

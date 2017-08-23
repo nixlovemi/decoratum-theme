@@ -15,6 +15,25 @@ $(document).ready(function () {
     initPlugins();
 });
 
+$(document).on("click", ".rad-slc-frete", function(){
+   var value = $(this).val();
+   
+   $.ajax({
+        type: "POST",
+        url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-selecShippingCart.php',
+        data: 'valueRd=' + value,
+        beforeSend: function () {
+            $("#spn-cart-total").html("Calculando...");
+        },
+        error: function (a, b, c) {
+            $("#spn-cart-total").html("Erro ao calcular frete. Tente novamente mais tarde!");
+        },
+        success: function (retorno) {
+            $("#spn-cart-total").html(retorno);
+        }
+    });
+});
+
 function addToCart_SP(){
     var proId = $("#hddnSpProId").val();
     var qtde  = $("#qtdeItem").val();
@@ -50,11 +69,13 @@ function changeCartItem(productId){
     document.location.href = arrHref[0] + '?change-qty='+productId+'&quantity=' + qty;
 }
 
-function calculaFrete(produtoIds, cepDestino, idResp) {
+function calculaFrete(produtoIds, quantidades, cepDestino, idResp, freteCarrinho) {
+    freteCarrinho = typeof freteCarrinho !== 'undefined' ? freteCarrinho : 'N';
+    
     $.ajax({
         type: "POST",
         url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaFrete.php',
-        data: 'produtoIds=' + produtoIds + '&cepDestino=' + cepDestino,
+        data: 'produtoIds=' + produtoIds + '&quantidades=' + quantidades + '&cepDestino=' + cepDestino + '&freteCarrinho=' + freteCarrinho,
         beforeSend: function () {
             $("#" + idResp).html("Processando...");
         },
