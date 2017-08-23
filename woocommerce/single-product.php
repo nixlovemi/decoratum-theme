@@ -43,16 +43,6 @@ $vProduct   = $retProduct[0];
 
             <div id="col-dir-info-prod" class="col-md-5">
                 <div class="pt-15 pb-2">
-                    <section class="">
-                        <!-- nao sei como fazer ainda -->
-                        <h4 class="mt-0">Cores disponíveis:</h4>
-
-                        <ul id="lista-variacoes">
-                            <li> <a style="cursor: auto;"> <img data-id="7109" src="<?php bloginfo('template_url'); ?>/images/almofada_ourico_40x40_1.jpg" alt="Almofada Ouriço - 40x40"> </a> </li>
-                            <li> <a style="cursor: auto;"> <img data-id="7109" src="<?php bloginfo('template_url'); ?>/images/almofada_ourico_40x40_2.jpg" alt="Almofada Ouriço - 40x40"> </a> </li>
-                        </ul>
-                    </section>
-
                     <section class="sec-preco">
                         <h4 class="mt-0">Preço:</h4>
 
@@ -64,22 +54,17 @@ $vProduct   = $retProduct[0];
                             echo "<p class='preco-de'>de R$$precoDe</p>";
                         }
                         ?>
-                        
+
                         <p class="preco">por <span>R$<?php echo $precoPor; ?></span> à vista</p>
 
                         <input type="hidden" id="hddnSpProId" value="<?php echo $productId; ?>" />
-                        <input id="qty" name="qty" class="qntdd_prod" value="1" maxlength="2" title="O campo de quantidade aceita apenas números, de 1 até 99." type="text" />
+                        <input id="qtdeItem" name="qty" class="qntdd_prod mask-qty-prod" value="01" maxlength="2" title="O campo de quantidade aceita apenas números, de 1 até 99." type="text" />
                         <button type="button" title="Adicionar ao carrinho" class="button btn-cart" id="btn-add-cart" onclick=" addToCart_SP(); " />
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             &nbsp;
                             Adicionar ao Carrinho <span class="ajax-loader">
                         </button>
                     </section>
-
-                    <!--
-                    <section class="sec-qdd-qtde" style="display: flex;">
-                    </section>
-                    -->
 
                     <section class="sec-frete">
                         <h4 class="mt-0">Frete:</h4>
@@ -92,6 +77,24 @@ $vProduct   = $retProduct[0];
 
                         <div class="mt-15" id="retConsFrete"></div>
                     </section>
+
+                    <section class="">
+                        <!-- nao sei como fazer ainda -->
+                        <h4 class="mt-0">Cores disponíveis:</h4>
+                        <p>As cores do produto são apenas uma sugestão de composé. Após a compra do item  entraremos em contato para conversarmos sobre as estampas =)</p>
+
+                        <!--
+                        <ul id="lista-variacoes">
+                            <li> <a style="cursor: auto;"> <img data-id="7109" src="<?php bloginfo('template_url'); ?>/images/almofada_ourico_40x40_1.jpg" alt="Almofada Ouriço - 40x40"> </a> </li>
+                            <li> <a style="cursor: auto;"> <img data-id="7109" src="<?php bloginfo('template_url'); ?>/images/almofada_ourico_40x40_2.jpg" alt="Almofada Ouriço - 40x40"> </a> </li>
+                        </ul>
+                        -->
+                    </section>
+
+                    <!--
+                    <section class="sec-qdd-qtde" style="display: flex;">
+                    </section>
+                    -->
 
                     <section class="sec-frete">
                         Compartilhe:

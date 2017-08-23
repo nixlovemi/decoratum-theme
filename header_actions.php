@@ -25,4 +25,33 @@ if (isset($_GET["a"]) && $_GET["a"] != "") {
 
     $redirect = esc_url(home_url('/')).'carrinho';
     header("location:$redirect");
+} else if(isset($_GET["remove_cart"]) && $_GET["remove_cart"] > 0){
+    removeCartItem( $_GET["remove_cart"] );
+    ?>
+
+    <script>
+    document.location.href = '<?php echo getCartURL(); ?>';
+    </script>
+
+    <?php
+} else if(isset($_GET["change-qty"]) && $_GET["change-qty"] > 0){
+    $productId = $_GET["change-qty"];
+    $qty       = $_GET["quantity"];
+
+    changeCartItem($productId, $qty);
+    ?>
+
+    <script>
+    document.location.href = '<?php echo getCartURL(); ?>';
+    </script>
+    
+    <?php
+} else if(isset($_GET["add-to-cart"]) && $_GET["add-to-cart"] > 0){
+    ?>
+
+    <script>
+    document.location.href = '<?php echo getCartURL(); ?>';
+    </script>
+    
+    <?php
 }

@@ -17,9 +17,38 @@ $(document).ready(function () {
 
 function addToCart_SP(){
     var proId = $("#hddnSpProId").val();
+    var qtde  = $("#qtdeItem").val();
+    
+    if(!proId > 0){
+        alert("Erro ao inserir produto no carrinho. Tente novamente em breve!");
+        return;
+    }
+    
+    if(!qtde > 0){
+        alert("Por favor, digite uma quantidade entre 01 e 99!");
+        return;
+    }
+    
+    var arrHref = document.location.href.split("?");
+    document.location.href = arrHref[0] + '?add-to-cart='+proId+'&quantity=' + qtde;
 }
 
-
+function changeCartItem(productId){
+    var qty = $("#qty_" + productId).val();
+    
+    if(!productId > 0){
+        alert("Erro ao alterar quantidade. Tente novamente em breve!");
+        return;
+    }
+    
+    if(!qty > 0){
+        alert("Por favor, digite uma quantidade entre 01 e 99!");
+        return;
+    }
+    
+    var arrHref = document.location.href.split("?");
+    document.location.href = arrHref[0] + '?change-qty='+productId+'&quantity=' + qty;
+}
 
 function calculaFrete(produtoIds, cepDestino, idResp) {
     $.ajax({
@@ -77,6 +106,7 @@ function valida_email(email) {
 function initPlugins() {
     $(".mask-cpf").mask("999.999.999-99");
     $(".mask-cep").mask("99999-999");
+    $(".mask-qty-prod").mask("99");
 }
 
 function clearCart() {

@@ -178,6 +178,12 @@ body {
 .pb-80 {
   padding-bottom: 80px !important;
 }
+.ft-l{
+    float: left;
+}
+.ft-r{
+    float: right;
+}
 .slick-slider {
   margin-top: 30px;
   margin-bottom: 44px; /*14px a mais por causa do serrilhado no top*/
@@ -604,6 +610,10 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
     color: #333;
     font-size: 16px;
     height: auto;
+}
+.prod-title-cart{
+    color: inherit;
+    font-size: 17px;
 }
 
 @media (max-width: 655px) {

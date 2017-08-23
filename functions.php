@@ -8,24 +8,26 @@ function woocommerce_support()
 }
 
 // ===================================
-
 // classe da Entrega =================
-class DecoratumShipping{
+class DecoratumShipping
+{
     // private $_correiosCodSedex10 = '40215';
     private $_correiosCodSedex = '40010';
-    private $_correiosCodPac = '41106';
-    private $_cepOrigem = '13477708';
+    private $_correiosCodPac   = '41106';
+    private $_cepOrigem        = '13477708';
 
-    private function getCodigosTxt(){
-        $arrCodigos = array();
+    private function getCodigosTxt()
+    {
+        $arrCodigos   = array();
         $arrCodigos[] = $this->_correiosCodPac;
         $arrCodigos[] = $this->_correiosCodSedex;
         // $arrCodigos[] = $this->_correiosCodSedex10;
-        
+
         return implode(",", $arrCodigos);
     }
 
-    public function getNomeFromCodigoCorreios($correioCod){
+    public function getNomeFromCodigoCorreios($correioCod)
+    {
         $strNome = "";
 
         switch ($correioCod) {
@@ -39,19 +41,20 @@ class DecoratumShipping{
 
         return $strNome;
     }
-    
-    private function processArrRet($returnCurl){
+
+    private function processArrRet($returnCurl)
+    {
         $arrRet = array();
-        
-        foreach($returnCurl -> cServico as $row) {
+
+        foreach ($returnCurl->cServico as $row) {
             $vRow = (array) $row;
 
-            if($vRow["Erro"] == 0) {
-               $arrItem = array();
+            if ($vRow["Erro"] == 0) {
+                $arrItem           = array();
                 $arrItem["codigo"] = $vRow["Codigo"];
-                $arrItem["nome"] = $this->getNomeFromCodigoCorreios($vRow["Codigo"]);
-                $arrItem["prazo"] = $vRow["PrazoEntrega"];
-                $arrItem["valor"] = $vRow["Valor"];
+                $arrItem["nome"]   = $this->getNomeFromCodigoCorreios($vRow["Codigo"]);
+                $arrItem["prazo"]  = $vRow["PrazoEntrega"];
+                $arrItem["valor"]  = $vRow["Valor"];
 
                 $arrRet[] = $arrItem;
             }
@@ -59,8 +62,9 @@ class DecoratumShipping{
 
         return $arrRet;
     }
-    
-    public function  execConsultaFrete($arrProdutos, $cep){
+
+    public function execConsultaFrete($arrProdutos, $cep)
+    {
         // https://www.correios.com.br/para-voce/correios-de-a-a-z/pdf/calculador-remoto-de-precos-e-prazos/manual-de-implementacao-do-calculo-remoto-de-precos-e-prazos
 
         $data['nCdEmpresa']          = ''; // Código da sua empresa, se você tiver contrato com os correios saberá qual é esse código. (opcional)
@@ -82,21 +86,22 @@ class DecoratumShipping{
         $data['nCdServico']          = $this->getCodigosTxt(); // '00000,11111,22222'
         $data                        = http_build_query($data);
 
-        $url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx';
-        $curl = curl_init($url . '?' . $data);
+        $url  = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx';
+        $curl = curl_init($url.'?'.$data);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-        $result = curl_exec($curl);
+        $result    = curl_exec($curl);
         $resultXML = simplexml_load_string($result);
-        
+
         $arrResult = $this->processArrRet($resultXML);
         return $arrResult;
     }
 }
-// ===================================
 
+// ===================================
 // classe de Produto =================
-class DecoratumProduct{
+class DecoratumProduct
+{
     private $_id;
     private $_title;
     private $_description;
@@ -112,189 +117,282 @@ class DecoratumProduct{
     private $_galleryIds;
     private $_reviewCount;
     private $_reviewAvg;
+    private $_slug;
     private $_wcProduct;
 
-    private function getImageUrl($imageId, $size="shop_single"){
+    private function getImageUrl($imageId, $size = "shop_single")
+    {
         // shop_single | shop_catalog | shop_thumbnail
-        $arrRet = wp_get_attachment_image_src( $imageId, $size );
+        $arrRet = wp_get_attachment_image_src($imageId, $size);
         return $arrRet[0];
     }
-    private function getGalleryUrl($galleryIds, $size="shop_single"){
+
+    private function getGalleryUrl($galleryIds, $size = "shop_single")
+    {
         $retArray = array();
-        foreach($galleryIds as $imageId){
+        foreach ($galleryIds as $imageId) {
             $retArray[] = $this->getImageUrl($imageId, $size);
         }
 
         return $retArray;
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->_id;
     }
-    public function getTitle(){
+
+    public function getTitle()
+    {
         return $this->_title;
     }
-    public function getDescription(){
+
+    public function getDescription()
+    {
         return $this->_description;
     }
-    public function getShortDescription(){
+
+    public function getShortDescription()
+    {
         return $this->_shortDescription;
     }
-    public function getPrice(){
+
+    public function getPrice()
+    {
         return $this->_price;
     }
-    public function getRegularPrice(){
+
+    public function getRegularPrice()
+    {
         return $this->_regularPrice;
     }
-    public function getSalePrice(){
+
+    public function getSalePrice()
+    {
         return $this->_salePrice;
     }
-    public function getWeight(){
+
+    public function getWeight()
+    {
         return $this->_weight;
     }
-    public function getLength(){
+
+    public function getLength()
+    {
         return $this->_length;
     }
-    public function getWidth(){
+
+    public function getWidth()
+    {
         return $this->_width;
     }
-    public function getHeight(){
+
+    public function getHeight()
+    {
         return $this->_height;
     }
-    public function getImageId(){
+
+    public function getImageId()
+    {
         return $this->_imageId;
     }
-    public function getImageThumbUrl(){
-        return $this->getImageUrl( $this->_imageId, "shop_thumbnail" );
+
+    public function getImageThumbUrl()
+    {
+        return $this->getImageUrl($this->_imageId, "shop_thumbnail");
     }
-    public function getImageCatalogUrl(){
-        return $this->getImageUrl( $this->_imageId, "shop_catalog" );
+
+    public function getImageCatalogUrl()
+    {
+        return $this->getImageUrl($this->_imageId, "shop_catalog");
     }
-    public function getImageSingleUrl(){
-        return $this->getImageUrl( $this->_imageId, "shop_single" );
+
+    public function getImageSingleUrl()
+    {
+        return $this->getImageUrl($this->_imageId, "shop_single");
     }
-    public function getGalleryIds(){
+
+    public function getGalleryIds()
+    {
         return $this->_galleryIds;
     }
-    public function getGallerySingleUrl(){
+
+    public function getGallerySingleUrl()
+    {
         return $this->getGalleryUrl($this->_galleryIds, "shop_single");
     }
-    public function getWcProduct(){
+
+    public function getWcProduct()
+    {
         return $this->_wcProduct;
     }
-    public function getWcProductArray(){
+
+    public function getWcProductArray()
+    {
         return (array) $this->_wcProduct;
     }
-    public function getReviewCount(){
+
+    public function getReviewCount()
+    {
         return $this->_reviewCount;
     }
-    public function getReviewAvg(){
+
+    public function getReviewAvg()
+    {
         return $this->_reviewAvg;
     }
 
-    public function setId($value){
+    public function getSlug()
+    {
+        return $this->_slug;
+    }
+
+    public function getProductURL()
+    {
+        return "http://decoratum.com.br/produto/".$this->_slug;
+    }
+
+    public function setId($value)
+    {
         $this->_id = $value;
         return $this;
     }
-    public function setTitle($value){
+
+    public function setTitle($value)
+    {
         $this->_title = $value;
         return $this;
     }
-    public function setDescription($value){
+
+    public function setDescription($value)
+    {
         $this->_description = $value;
         return $this;
     }
-    public function setShortDescription($value){
+
+    public function setShortDescription($value)
+    {
         $this->_shortDescription = $value;
         return $this;
     }
-    public function setPrice($value){
+
+    public function setPrice($value)
+    {
         $this->_price = $value;
         return $this;
     }
-    public function setRegularPrice($value){
+
+    public function setRegularPrice($value)
+    {
         $this->_regularPrice = $value;
         return $this;
     }
-    public function setSalePrice($value){
+
+    public function setSalePrice($value)
+    {
         $this->_salePrice = $value;
         return $this;
     }
-    public function setWeight($value){
+
+    public function setWeight($value)
+    {
         $this->_weight = $value;
         return $this;
     }
-    public function setLength($value){
+
+    public function setLength($value)
+    {
         $this->_length = $value;
         return $this;
     }
-    public function setWidth($value){
+
+    public function setWidth($value)
+    {
         $this->_width = $value;
         return $this;
     }
-    public function setHeight($value){
+
+    public function setHeight($value)
+    {
         $this->_height = $value;
         return $this;
     }
-    public function setImageId($value){
+
+    public function setImageId($value)
+    {
         $this->_imageId = $value;
         return $this;
     }
-    public function setGalleryIds($value){
+
+    public function setGalleryIds($value)
+    {
         $this->_galleryIds = $value;
         return $this;
     }
-    public function setWcProduct($value){
+
+    public function setWcProduct($value)
+    {
         $this->_wcProduct = $value;
         return $this;
     }
-    public function setReviewCount($value){
+
+    public function setReviewCount($value)
+    {
         $this->_reviewCount = $value;
         return $this;
     }
-    public function setReviewAvg($value){
+
+    public function setReviewAvg($value)
+    {
         $this->_reviewAvg = $value;
         return $this;
     }
-    
+
+    public function setSlug($value)
+    {
+        $this->_slug = $value;
+        return $this;
+    }
 }
 // ===================================
 
 function getAllProducts($category = "", $productId = "")
 {
     $arrProducts = array();
-    
-    $args = array();
-    $args["post_type"] = "product";
+
+    $args                   = array();
+    $args["post_type"]      = "product";
     $args["posts_per_page"] = -1;
-    if($category != ""){
+    if ($category != "") {
         $args["product_cat"] = $category;
     }
-    if(is_numeric($productId) && $productId > 0){
+    if (is_numeric($productId) && $productId > 0) {
         $args["ID"] = $productId;
     }
     $args["orderby"] = "title";
 
-    $loop = new WP_Query( $args );
-    while ( $loop->have_posts() ) : $loop->the_post(); global $product;
+    $loop = new WP_Query($args);
+    while ($loop->have_posts()) : $loop->the_post();
+        global $product;
 
         $DecoratumProduct = new DecoratumProduct();
-        $DecoratumProduct->setId( $product->get_id() );
-        $DecoratumProduct->setTitle( $product->get_name() );
-        $DecoratumProduct->setDescription( $product->get_description() );
-        $DecoratumProduct->setShortDescription( $product->get_short_description() );
-        $DecoratumProduct->setPrice( $product->get_price() );
-        $DecoratumProduct->setRegularPrice( $product->get_regular_price() );
-        $DecoratumProduct->setSalePrice( $product->get_sale_price() );
-        $DecoratumProduct->setWeight( $product->get_weight() );
-        $DecoratumProduct->setLength( $product->get_length() );
-        $DecoratumProduct->setWidth( $product->get_width() );
-        $DecoratumProduct->setHeight( $product->get_height() );
-        $DecoratumProduct->setImageId( $product->get_image_id() );
-        $DecoratumProduct->setGalleryIds( $product->get_gallery_image_ids() );
-        $DecoratumProduct->setWcProduct( $product );
-        $DecoratumProduct->setReviewCount( count($product->get_rating_counts()) );
-        $DecoratumProduct->setReviewAvg( $product->get_average_rating() );
+        $DecoratumProduct->setId($product->get_id());
+        $DecoratumProduct->setTitle($product->get_name());
+        $DecoratumProduct->setDescription($product->get_description());
+        $DecoratumProduct->setShortDescription($product->get_short_description());
+        $DecoratumProduct->setPrice($product->get_price());
+        $DecoratumProduct->setRegularPrice($product->get_regular_price());
+        $DecoratumProduct->setSalePrice($product->get_sale_price());
+        $DecoratumProduct->setWeight($product->get_weight());
+        $DecoratumProduct->setLength($product->get_length());
+        $DecoratumProduct->setWidth($product->get_width());
+        $DecoratumProduct->setHeight($product->get_height());
+        $DecoratumProduct->setImageId($product->get_image_id());
+        $DecoratumProduct->setGalleryIds($product->get_gallery_image_ids());
+        $DecoratumProduct->setWcProduct($product);
+        $DecoratumProduct->setReviewCount(count($product->get_rating_counts()));
+        $DecoratumProduct->setReviewAvg($product->get_average_rating());
+        $DecoratumProduct->setSlug($product->get_slug());
 
         // echo "<pre>";
         // print_r($DecoratumProduct);
@@ -308,10 +406,11 @@ function getAllProducts($category = "", $productId = "")
     return $arrProducts;
 }
 
-function ratingToString($rating){
+function ratingToString($rating)
+{
     $strRating = "*";
 
-    switch ($rating){
+    switch ($rating) {
         case "5":
             $strRating = "Perfeito";
             break;
@@ -330,4 +429,63 @@ function ratingToString($rating){
     }
 
     return $strRating;
+}
+
+function getCartProducts()
+{
+    global $woocommerce;
+
+    $items   = $woocommerce->cart->get_cart();
+    $arrCart = array();
+
+    foreach ($items as $values) {
+        // $_product =  wc_get_product( $values['data']->get_id());
+        $productId = $values['data']->get_id();
+        $ret       = getAllProducts("", $productId);
+        $Product   = $ret[0];
+
+        $arrItem            = array();
+        $arrItem["product"] = $Product;
+        $arrItem["qty"]     = $values['quantity'];
+        $arrItem["price"]   = $Product->getPrice();
+
+        $arrCart[] = $arrItem;
+    }
+
+    return $arrCart;
+}
+
+function getCartURL()
+{
+    return "http://decoratum.com.br/carrinho";
+}
+
+function clearCart()
+{
+    global $woocommerce;
+    $woocommerce->cart->empty_cart();
+}
+
+function removeCartItem($productId)
+{
+    global $woocommerce;
+
+    foreach ($woocommerce->cart->get_cart() as $cart_item_key => $cart_item) {
+        /*if ($cart_item['variation_id'] == $productId) {*/
+        if ($cart_item['product_id'] == $productId) {
+            //remove single product
+            $woocommerce->cart->remove_cart_item($cart_item_key);
+        }
+    }
+}
+
+function changeCartItem($productId, $qty)
+{
+    global $woocommerce;
+
+    foreach ($woocommerce->cart->get_cart() as $cart_item_key => $cart_item) {
+        if ($cart_item['product_id'] == $productId) {
+            $woocommerce->cart->set_quantity($cart_item_key, $qty);
+        }
+    }
 }
