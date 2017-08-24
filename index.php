@@ -31,6 +31,55 @@ $DecoratumProduct = $retProducts[0];
             </h2>
         </div>
         <!-- Product Content -->
+        <?php
+        $arrProducts = getAllProducts("", "", "produto_destaque_home");
+        if(count($arrProducts) > 0){
+            ?>
+
+            <div class="product-content">
+                <div class="row">
+                    <?php
+                    foreach($arrProducts as $Product){
+                        ?>
+
+                        <div class="col-sm-4">
+                            <div class="wrap-product">
+                                <div class="top-product">
+                                    <a href="<?php echo $Product->getProductURL(); ?>">
+                                        <img class="img-produto" src="<?php echo $Product->getImageCatalogUrl(); ?>">
+                                    </a>
+                                </div>
+                                <div class="bottom-product bottom-red">
+                                    <div class="bottom-product-abs pink-dot">
+                                        <div class="button-cake">
+                                            <div class="blue-button-cake">
+                                                <button class="button-d-cake pink-button-cake" onclick="addToCart_HOME(<?php echo $Product->getId(); ?>)">Comprar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wrap-bottom-cake">
+                                        <p>
+                                            <?php echo $Product->getShortDescription(); ?>
+                                        </p>
+                                        <div class="red-line"></div>
+                                        <br />
+                                        <span class="preco-produto">R$<?php echo number_format($Product->getPrice(), 2, ",", "."); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <?php
+        }
+        ?>
+
+        <!--
         <div class="product-content">
             <div class="row">
                 <div class="col-sm-4">
@@ -287,6 +336,7 @@ $DecoratumProduct = $retProducts[0];
              */
             ?>
         </div>
+        -->
     </div>
 </section>
 <!-- End Product Cake -->

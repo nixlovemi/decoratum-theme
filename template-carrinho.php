@@ -22,7 +22,7 @@ get_header();
             <p>Você ainda não escolheu nenhum produto.</p>
 
             <div style="width: 100%;" class="ft-l">
-                <button style="width: 50%; font-size:18px;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20 ft-l" id="btn-cons-frete" onclick="alert(2)">
+                <button style="width: 50%; font-size:18px;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20 ft-l" id="btn-cons-frete" onclick="document.location.href = 'http://decoratum.com.br'">
                     Voltar ao site
                 </button>
             </div>

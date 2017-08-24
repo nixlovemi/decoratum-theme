@@ -421,7 +421,7 @@ class DecoratumProduct
 }
 // ===================================
 
-function getAllProducts($category = "", $productId = "")
+function getAllProducts($category = "", $productId = "", $tag = "")
 {
     $arrProducts = array();
 
@@ -430,6 +430,9 @@ function getAllProducts($category = "", $productId = "")
     $args["posts_per_page"] = -1;
     if ($category != "") {
         $args["product_cat"] = $category;
+    }
+    if ($tag != "") {
+        $args["product_tag"] = $tag;
     }
     if (is_numeric($productId) && $productId > 0) {
         $args["ID"] = $productId;
