@@ -34,6 +34,25 @@ $(document).on("click", ".rad-slc-frete", function(){
     });
 });
 
+function execProdFilter(categoryId, orderBy){
+    categoryId = (typeof categoryId === 'undefined') ? '' : categoryId;
+    orderBy = (typeof orderBy === 'undefined') ? '' : orderBy;
+    
+    var hddn_cat = $("#hddn-filters-category-id").val();
+    var hddn_ord = $("#hddn-filters-order-by").val();
+    
+    if(categoryId != ""){
+        hddn_cat = categoryId;
+    }
+    
+    if(orderBy != ""){
+        hddn_ord = orderBy;
+    }
+    
+    var arrHref = document.location.href.split("?");
+    document.location.href = arrHref[0] + '?categoryId='+categoryId+'&orderBy=' + orderBy;
+}
+
 function addToCart(productId, qty){
     var arrHref = document.location.href.split("?");
     document.location.href = arrHref[0] + '?add-to-cart='+productId+'&quantity=' + qty;

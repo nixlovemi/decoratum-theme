@@ -482,6 +482,9 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 .sec-produtos #categoria-produtos li{
     margin-bottom: 10px;
 }
+.sec-produtos #categoria-produtos li a{
+    color: inherit;
+}
 .sec-produtos #categoria-produtos li ul{
     margin-top: 10px;
     margin-left: 10px;

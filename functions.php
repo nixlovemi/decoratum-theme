@@ -421,15 +421,37 @@ class DecoratumProduct
 }
 // ===================================
 
-function getAllProducts($category = "", $productId = "", $tag = "")
+function getProductCategories($args)
 {
+    $args['taxonomy'] = 'product_cat';
+    
+    $all_categories = get_categories( $args );
+    return $all_categories;
+}
+
+function catIdToName($strCategoriesIds){
+    $arrCat = explode(",", $strCategoriesIds);
+    $arrCatNames = array();
+
+    foreach($arrCat as $catId){
+        $catName = get_cat_name( $catId );
+        $arrCatNames[] = $catName;
+    }
+
+    return implode(",", $arrCatNames);
+}
+
+function getAllProducts($category = "", $productId = "", $tag = "", $orderBy = "title")
+{
+    //orderBy: title|price|priceDesc
     $arrProducts = array();
 
     $args                   = array();
     $args["post_type"]      = "product";
     $args["posts_per_page"] = -1;
     if ($category != "") {
-        $args["product_cat"] = $category;
+        $strCatNames = catIdToName($category);
+        $args["product_cat"] = $strCatNames;
     }
     if ($tag != "") {
         $args["product_tag"] = $tag;
@@ -437,7 +459,17 @@ function getAllProducts($category = "", $productId = "", $tag = "")
     if (is_numeric($productId) && $productId > 0) {
         $args["ID"] = $productId;
     }
-    $args["orderby"] = "title";
+    
+    if($orderBy == "price"){
+        $args["orderby"]  = "meta_value_num";
+        $args["meta_key"] = "_$orderBy";
+    } else if($orderBy == "priceDesc"){
+        $args["orderby"]  = "meta_value_num";
+        $args["meta_key"] = "_price";
+        $args["order"]    = "desc";
+    } else {
+       $args["orderby"] = $orderBy;
+    }
 
     $loop = new WP_Query($args);
     while ($loop->have_posts()) : $loop->the_post();
