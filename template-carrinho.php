@@ -141,14 +141,25 @@ get_header();
                                         <td class="texto">Cupom</td>
                                         <td class="">
                                             <div style="float: right;">
-                                                <input style="width: 100%" id="cupom_carrinho" name="cupom_carrinho" class="inpt-frete" value="" maxlength="14" title="" type="text">
+                                                <?php
+                                                $arrCoupons = getCartCoupon();
+                                                $vCode      = "";
+                                                $vTotal     = "";
+                                                
+                                                if(count($arrCoupons) > 0){
+                                                    $vCode  = $arrCoupons["code"];
+                                                    $vTotal = "Desconto: R$" . number_format($arrCoupons["value"], 2, ",", ".");
+                                                }
+                                                ?>
+                                                
+                                                <input style="width: 100%" id="cupom_carrinho" name="cupom_carrinho" class="inpt-frete" value="<?php echo $vCode; ?>" maxlength="14" title="" type="text" />
                                                 <br />
-                                                <button style="width: 100%;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="alert(2)">
+                                                <button style="width: 100%;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="addCoupon_Cart();" />
                                                     &nbsp;
                                                     Adicionar
                                                 </button>
                                                 <br />
-                                                <small style="width:100%; text-align:center; display:block;">Desconto -R$5,00</small>
+                                                <small id="ret-ajax-coupon" style="width:100%; text-align:center; display:block;"><?php echo $vTotal; ?></small>
                                             </div>
                                         </td>
                                     </tr>
@@ -163,7 +174,7 @@ get_header();
                                 <tbody>
                                     <tr>
                                         <td class="texto">TOTAL</td>
-                                        <td class="valor" style="font-weight:bold;"><span id="spn-cart-total">R$<?php echo number_format($cartTotal, 2, ",", "."); ?></span></td>
+                                        <td class="valor" style="font-weight:bold;"><span id="spn-cart-total">R$<?php echo number_format(getCartTotal(), 2, ",", "."); ?></span></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="texto">

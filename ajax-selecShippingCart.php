@@ -9,9 +9,7 @@ if( count($_POST) > 0 ){
         $valor      = isset($arrValueRd[0]) ? $arrValueRd[0]: 0;
         $name       = $arrValueRd[1];
 
-        $subtotal = getCartSubtotal();
-        $totalCart = $subtotal + $valor;
-
+        $totalCart = getCartTotal() + $valor;
         echo "R$" . number_format($totalCart, 2, ",", ".");
     }
 }

@@ -20,11 +20,12 @@ class DecoratumShipping
     private $_correiosCodPac   = '41106';
     private $_cepOrigem        = '13477708';
 
-    private function getTotalFromArrProd($arrProdutos){
+    private function getTotalFromArrProd($arrProdutos)
+    {
         $totM3 = 0;
         $totKG = 0;
 
-        foreach($arrProdutos as $item){
+        foreach ($arrProdutos as $item) {
             $Product = $item["Product"];
             $qty     = $item["qty"];
 
@@ -37,7 +38,7 @@ class DecoratumShipping
             $totKG += $Product->getWeight() * $qty;
         }
 
-        $arrTot = array();
+        $arrTot          = array();
         $arrTot["totM3"] = $totM3;
         $arrTot["totKG"] = $totKG;
 
@@ -91,13 +92,14 @@ class DecoratumShipping
         return $arrRet;
     }
 
-    public function generateArrProducts($productIds, $qtys, $fromCart="N"){
+    public function generateArrProducts($productIds, $qtys, $fromCart = "N")
+    {
         $arrProducts = array();
-        
-        if($fromCart == "S"){
+
+        if ($fromCart == "S") {
             $cartProd = getCartProducts();
-            foreach($cartProd as $item){
-                $arrItem = array();
+            foreach ($cartProd as $item) {
+                $arrItem            = array();
                 $arrItem["Product"] = $item["product"];
                 $arrItem["qty"]     = (int) $item["qty"];
 
@@ -107,11 +109,11 @@ class DecoratumShipping
             $arrProdIds = explode(",", $productIds);
             $arrQtys    = explode(",", $qtys);
 
-            for($i=0; $i < count($arrProdIds); $i++){
-                $ret = getAllProducts("", $arrProdIds[$i]);
+            for ($i = 0; $i < count($arrProdIds); $i++) {
+                $ret     = getAllProducts("", $arrProdIds[$i]);
                 $Product = $ret[0];
 
-                $arrItem = array();
+                $arrItem            = array();
                 $arrItem["Product"] = $Product;
                 $arrItem["qty"]     = (int) $arrQtys[$i];
 
@@ -129,7 +131,8 @@ class DecoratumShipping
         // 2 forma: passar sempre as medidas minimas e somar o peso dos itens;
 
         $arrTotProducts = $this->getTotalFromArrProd($arrProdutos);
-        $vTotKG         = (isset($arrTotProducts["totKG"])) ? $arrTotProducts["totKG"]: 1;
+        $vTotKG         = (isset($arrTotProducts["totKG"])) ? $arrTotProducts["totKG"]
+                : 1;
         //$vTotM3       = $arrTotProducts["totM3"];
 
         $data['nCdEmpresa']          = ''; // Código da sua empresa, se você tiver contrato com os correios saberá qual é esse código. (opcional)
@@ -419,29 +422,148 @@ class DecoratumProduct
         return $this;
     }
 }
+
 // ===================================
+// classe de Cupom
+class DecoratumCoupon
+{
+    private $_wc_coupon;
+    private $_coupon_code;
+
+    public function __construct($vCouponCode)
+    {
+        $this->_coupon_code = $vCouponCode;
+        $this->_wc_coupon   = new WC_Coupon($vCouponCode);
+    }
+
+    private function getCouponData()
+    {
+        $coupon = $this->_wc_coupon;
+
+        /*
+          array(43) {
+
+          string(13) "discount_type"
+          [23]=>
+          string(13) "coupon_amount"
+          [24]=>
+          string(11) "expiry_date"
+          [25]=>
+          string(12) "date_expires"
+          [26]=>
+          string(11) "usage_count"
+          [27]=>
+          string(14) "individual_use"
+          [28]=>
+          string(11) "product_ids"
+          [29]=>
+          string(19) "exclude_product_ids"
+          [30]=>
+          string(11) "usage_limit"
+          [31]=>
+          string(20) "usage_limit_per_user"
+          [32]=>
+          string(22) "limit_usage_to_x_items"
+          [33]=>
+          string(13) "free_shipping"
+          [34]=>
+          string(18) "product_categories"
+          [35]=>
+          string(26) "exclude_product_categories"
+          [36]=>
+          string(18) "exclude_sale_items"
+          [37]=>
+          string(14) "minimum_amount"
+          [38]=>
+          string(14) "maximum_amount"
+          [39]=>
+          string(14) "customer_email"
+          [40]=>
+          string(8) "_used_by"
+          [41]=>
+          string(10) "_edit_lock"
+          [42]=>
+          string(10) "_edit_last"
+          }
+         */
+
+        $coupon_post = get_post($coupon->id);
+        $coupon_data = array(
+            'id' => $coupon->id,
+            'code' => $coupon->code,
+            'type' => $coupon->type,
+            'created_at' => (isset($coupon_post)) ? $coupon_post->post_date_gmt : null,
+            'updated_at' => (isset($coupon_post)) ? $coupon_post->post_modified_gmt
+                : null,
+            'amount' => wc_format_decimal($coupon->coupon_amount, 2),
+            'individual_use' => ( 'yes' === $coupon->individual_use ),
+            'product_ids' => array_map('absint', (array) $coupon->product_ids),
+            'exclude_product_ids' => array_map('absint',
+                (array) $coupon->exclude_product_ids),
+            'usage_limit' => (!empty($coupon->usage_limit) ) ? $coupon->usage_limit
+                : null,
+            'usage_limit_user' => (!empty($coupon->usage_limit_per_user) ) ? $coupon->usage_limit_per_user
+                : null,
+            'usage_count' => (int) $coupon->usage_count,
+            'expiry_date' => (!empty($coupon->expiry_date) ) ? date('Y-m-d',
+                strtotime($coupon->expiry_date)) : null,
+            'enable_free_shipping' => $coupon->enable_free_shipping(),
+            'product_category_ids' => array_map('absint',
+                (array) $coupon->product_categories),
+            'exclude_product_category_ids' => array_map('absint',
+                (array) $coupon->exclude_product_categories),
+            'exclude_sale_items' => $coupon->exclude_sale_items(),
+            'minimum_amount' => wc_format_decimal($coupon->minimum_amount, 2),
+            'maximum_amount' => wc_format_decimal($coupon->maximum_amount, 2),
+            'customer_emails' => $coupon->customer_email,
+            'description' => (isset($coupon_post)) ? $coupon_post->post_excerpt : null,
+        );
+
+        return $coupon_data;
+    }
+
+    public function isValid()
+    {
+        $coupon = $this->_wc_coupon;
+        return $coupon->is_valid();
+    }
+
+    public function addCouponToCart()
+    {
+        if ($this->isValid()) {
+            $coupon_code = $this->_coupon_code;
+            $ret         = WC()->cart->add_discount($coupon_code);
+
+            return $ret;
+        } else {
+            return false;
+        }
+    }
+}
 
 function getProductCategories($args)
 {
     $args['taxonomy'] = 'product_cat';
-    
-    $all_categories = get_categories( $args );
+
+    $all_categories = get_categories($args);
     return $all_categories;
 }
 
-function catIdToName($strCategoriesIds){
-    $arrCat = explode(",", $strCategoriesIds);
+function catIdToName($strCategoriesIds)
+{
+    $arrCat      = explode(",", $strCategoriesIds);
     $arrCatNames = array();
 
-    foreach($arrCat as $catId){
-        $catName = get_cat_name( $catId );
+    foreach ($arrCat as $catId) {
+        $catName       = get_cat_name($catId);
         $arrCatNames[] = $catName;
     }
 
     return implode(",", $arrCatNames);
 }
 
-function getAllProducts($category = "", $productId = "", $tag = "", $orderBy = "title")
+function getAllProducts($category = "", $productId = "", $tag = "",
+                        $orderBy = "title")
 {
     //orderBy: title|price|priceDesc
     $arrProducts = array();
@@ -450,7 +572,7 @@ function getAllProducts($category = "", $productId = "", $tag = "", $orderBy = "
     $args["post_type"]      = "product";
     $args["posts_per_page"] = -1;
     if ($category != "") {
-        $strCatNames = catIdToName($category);
+        $strCatNames         = catIdToName($category);
         $args["product_cat"] = $strCatNames;
     }
     if ($tag != "") {
@@ -459,16 +581,16 @@ function getAllProducts($category = "", $productId = "", $tag = "", $orderBy = "
     if (is_numeric($productId) && $productId > 0) {
         $args["ID"] = $productId;
     }
-    
-    if($orderBy == "price"){
+
+    if ($orderBy == "price") {
         $args["orderby"]  = "meta_value_num";
         $args["meta_key"] = "_$orderBy";
-    } else if($orderBy == "priceDesc"){
+    } else if ($orderBy == "priceDesc") {
         $args["orderby"]  = "meta_value_num";
         $args["meta_key"] = "_price";
         $args["order"]    = "desc";
     } else {
-       $args["orderby"] = $orderBy;
+        $args["orderby"] = $orderBy;
     }
 
     $loop = new WP_Query($args);
@@ -506,6 +628,24 @@ function getAllProducts($category = "", $productId = "", $tag = "", $orderBy = "
     return $arrProducts;
 }
 
+function moneyToFloat($str)
+{
+    $str = trim($str);
+
+    if (strlen($str) <= 0) {
+        return null;
+    }
+
+    $str = str_replace(".", "", $str);
+    $str = str_replace(",", ".", $str);
+    $str = str_replace("R$", "", $str);
+    $str = str_replace("US$", "", $str);
+    $str = str_replace("U$", "", $str);
+    $str = str_replace("$", "", $str);
+    $str = str_replace(" ", "", $str);
+    return (float) $str;
+}
+
 function ratingToString($rating)
 {
     $strRating = "*";
@@ -533,20 +673,71 @@ function ratingToString($rating)
 
 function getCartSubtotal()
 {
+    /* global $woocommerce;
+
+      $items    = $woocommerce->cart->get_cart();
+      $subtotal = 0;
+
+      foreach ($items as $values) {
+      $productId = $values['data']->get_id();
+      $ret       = getAllProducts("", $productId);
+      $Product   = $ret[0];
+
+      $subtotal += $Product->getPrice() * $values['quantity'];
+      } */
+
+    $subtotal = number_format((float) WC()->cart->subtotal, 2, ".", "");
+    return $subtotal;
+}
+
+function getCartTotal()
+{
+    /* global $woocommerce;
+
+      $items    = $woocommerce->cart->get_cart();
+      $subtotal = 0;
+
+      foreach ($items as $values) {
+      $productId = $values['data']->get_id();
+      $ret       = getAllProducts("", $productId);
+      $Product   = $ret[0];
+
+      $subtotal += $Product->getPrice() * $values['quantity'];
+      } */
+
+    //$total = strip_tags(WC()->cart->get_cart_total());
+    // echo "<pre>";
+    // var_dump($total);
+    // echo "</pre>";
+
     global $woocommerce;
 
-    $items    = $woocommerce->cart->get_cart();
-    $subtotal = 0;
+    $total  = $woocommerce->cart->cart_contents_total+$woocommerce->cart->tax_total;
+    $total2 = number_format((float) $total, 2, ".", "");
+    return $total2;
+}
 
-    foreach ($items as $values) {
-        $productId = $values['data']->get_id();
-        $ret       = getAllProducts("", $productId);
-        $Product   = $ret[0];
-
-        $subtotal += $Product->getPrice() * $values['quantity'];
+function getCartCoupon()
+{
+    $arrCartCoupon = array();
+    $cartCoupons = WC()->cart->get_coupons();
+    
+    if( count($cartCoupons) > 0 ){
+        foreach($cartCoupons as $code => $coupon){
+            $arrCartCoupon["code"]  = strtoupper($code);
+            $arrCartCoupon["WC_coupon"] = $coupon;
+        }
+        
+        $vCouponValue = getTotalCoupon();
+        $arrCartCoupon["value"] = $vCouponValue;
     }
+    
+    return $arrCartCoupon;
+}
 
-    return $subtotal;
+function getTotalCoupon()
+{
+    return number_format((float) getCartSubtotal() - getCartTotal(), 2, ".", "");
 }
 
 function getCartProducts()
@@ -589,7 +780,7 @@ function removeCartItem($productId)
     global $woocommerce;
 
     foreach ($woocommerce->cart->get_cart() as $cart_item_key => $cart_item) {
-        /*if ($cart_item['variation_id'] == $productId) {*/
+        /* if ($cart_item['variation_id'] == $productId) { */
         if ($cart_item['product_id'] == $productId) {
             //remove single product
             $woocommerce->cart->remove_cart_item($cart_item_key);

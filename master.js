@@ -53,6 +53,47 @@ function execProdFilter(categoryId, orderBy){
     document.location.href = arrHref[0] + '?categoryId='+categoryId+'&orderBy=' + orderBy;
 }
 
+function addCoupon_Cart(){
+    var couponCode = $("#cupom_carrinho").val();
+    var idResp = "ret-ajax-coupon";
+    var idTot  = "spn-cart-total";
+    
+    $.ajax({
+        type: "POST",
+        url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaCupom.php',
+        data: 'couponCode=' + couponCode,
+        beforeSend: function () {
+            $("#" + idResp).html("Processando...");
+            $("#" + idTot).html("Processando...");
+        },
+        error: function (a, b, c) {
+            $("#" + idResp).html("Erro ao calcular cupom. Tente novamente mais tarde!");
+        },
+        success: function (retorno) {
+            $("#" + idResp).html(retorno);
+            getCartTotal(idTot);
+        }
+    });
+}
+
+function getCartTotal(dvResp)
+{
+    $.ajax({
+        type: "POST",
+        url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaCartTotal.php',
+        data: 'exec=1',
+        beforeSend: function () {
+            $("#" + dvResp).html("Processando...");
+        },
+        error: function (a, b, c) {
+            $("#" + dvResp).html("Erro ao calcular total. Tente novamente mais tarde!");
+        },
+        success: function (retorno) {
+            $("#" + dvResp).html(retorno);
+        }
+    });
+}
+
 function addToCart(productId, qty){
     var arrHref = document.location.href.split("?");
     document.location.href = arrHref[0] + '?add-to-cart='+productId+'&quantity=' + qty;
