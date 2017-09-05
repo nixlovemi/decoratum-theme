@@ -11,14 +11,14 @@ $(document).ready(function () {
         fade: true,
         cssEase: 'linear'
     });
-    
+
     initPlugins();
 });
 
-$(document).on("click", ".rad-slc-frete", function(){
-   var value = $(this).val();
-   
-   $.ajax({
+$(document).on("click", ".rad-slc-frete", function () {
+    var value = $(this).val();
+
+    $.ajax({
         type: "POST",
         url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-selecShippingCart.php',
         data: 'valueRd=' + value,
@@ -34,30 +34,30 @@ $(document).on("click", ".rad-slc-frete", function(){
     });
 });
 
-function execProdFilter(categoryId, orderBy){
+function execProdFilter(categoryId, orderBy) {
     categoryId = (typeof categoryId === 'undefined') ? '' : categoryId;
     orderBy = (typeof orderBy === 'undefined') ? '' : orderBy;
-    
+
     var hddn_cat = $("#hddn-filters-category-id").val();
     var hddn_ord = $("#hddn-filters-order-by").val();
-    
-    if(categoryId != ""){
+
+    if (categoryId != "") {
         hddn_cat = categoryId;
     }
-    
-    if(orderBy != ""){
+
+    if (orderBy != "") {
         hddn_ord = orderBy;
     }
-    
+
     var arrHref = document.location.href.split("?");
-    document.location.href = arrHref[0] + '?categoryId='+categoryId+'&orderBy=' + orderBy;
+    document.location.href = arrHref[0] + '?categoryId=' + categoryId + '&orderBy=' + orderBy;
 }
 
-function addCoupon_Cart(){
+function addCoupon_Cart() {
     var couponCode = $("#cupom_carrinho").val();
     var idResp = "ret-ajax-coupon";
-    var idTot  = "spn-cart-total";
-    
+    var idTot = "spn-cart-total";
+
     $.ajax({
         type: "POST",
         url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaCupom.php',
@@ -76,8 +76,7 @@ function addCoupon_Cart(){
     });
 }
 
-function getCartTotal(dvResp)
-{
+function getCartTotal(dvResp){
     $.ajax({
         type: "POST",
         url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaCartTotal.php',
@@ -94,52 +93,52 @@ function getCartTotal(dvResp)
     });
 }
 
-function addToCart(productId, qty){
+function addToCart(productId, qty) {
     var arrHref = document.location.href.split("?");
-    document.location.href = arrHref[0] + '?add-to-cart='+productId+'&quantity=' + qty;
+    document.location.href = arrHref[0] + '?add-to-cart=' + productId + '&quantity=' + qty;
 }
 
-function addToCart_HOME(productId){
+function addToCart_HOME(productId) {
     addToCart(productId, 1);
 }
 
-function addToCart_SP(){
+function addToCart_SP() {
     var proId = $("#hddnSpProId").val();
-    var qtde  = $("#qtdeItem").val();
-    
-    if(!proId > 0){
+    var qtde = $("#qtdeItem").val();
+
+    if (!proId > 0) {
         alert("Erro ao inserir produto no carrinho. Tente novamente em breve!");
         return;
     }
-    
-    if(!qtde > 0){
+
+    if (!qtde > 0) {
         alert("Por favor, digite uma quantidade entre 01 e 99!");
         return;
     }
-    
+
     addToCart(proId, qtde);
 }
 
-function changeCartItem(productId){
+function changeCartItem(productId) {
     var qty = $("#qty_" + productId).val();
-    
-    if(!productId > 0){
+
+    if (!productId > 0) {
         alert("Erro ao alterar quantidade. Tente novamente em breve!");
         return;
     }
-    
-    if(!qty > 0){
+
+    if (!qty > 0) {
         alert("Por favor, digite uma quantidade entre 01 e 99!");
         return;
     }
-    
+
     var arrHref = document.location.href.split("?");
-    document.location.href = arrHref[0] + '?change-qty='+productId+'&quantity=' + qty;
+    document.location.href = arrHref[0] + '?change-qty=' + productId + '&quantity=' + qty;
 }
 
 function calculaFrete(produtoIds, quantidades, cepDestino, idResp, freteCarrinho) {
     freteCarrinho = typeof freteCarrinho !== 'undefined' ? freteCarrinho : 'N';
-    
+
     $.ajax({
         type: "POST",
         url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaFrete.php',
@@ -154,6 +153,14 @@ function calculaFrete(produtoIds, quantidades, cepDestino, idResp, freteCarrinho
             $("#" + idResp).html(retorno);
         }
     });
+}
+
+function goToShopping(){
+    document.location.href = 'http://decoratum.com.br/produtos';
+}
+
+function clearCart() {
+    document.location.href = 'http://decoratum.com.br/produtos/?a=clearCart';
 }
 
 function valida_cpf(strCPF) {
@@ -198,160 +205,172 @@ function initPlugins() {
     $(".mask-qty-prod").mask("99");
 }
 
-function clearCart() {
-    /*var url = document.location.href;
-    var idx = url.indexOf('?');
-
-    if (idx > 0) {
-        var url_split = url.split('?');
-        url = url_split[0];
+function goToCheckout() {
+    var freteSel = typeof $("#rd-slc-frete:checked").val() !== "undefined";
+    if (!freteSel) {
+        alert("Para finalizar, selecione o frete!");
+        return;
     }
 
-    url = url + '?a=clearCart';
-    document.location.href = url;*/
+    var cepValue = $("#frete_carrinho").val();
+    var freteArr = $("#rd-slc-frete:checked").val().split("|");
+    var freteValue = freteArr[0];
+    var freteName = freteArr[1];
+    
+    var html = '<form id="frmCheckout" method="post" action="http://decoratum.com.br/checkout/">';
+    html += '<input type="hidden" name="freteValue" value="'+freteValue+'">';
+    html += '<input type="hidden" name="freteName" value="'+freteName+'">';
+    html += '<input type="hidden" name="cepValue" value="'+cepValue+'">';
+    html += '</form>';
+    $("body").append(html);
+    
+    setTimeout(" $('#frmCheckout').submit(); ", 200);
 }
 
+/* old functions
+================*/
 function continueShop() {
     /*var href = '';
-    $('a[href*="/produtos"]').each(function (index, element) {
-        href = $(this).attr("href");
-    });
-
-    if (href != '') {
-        document.location.href = href;
-    }*/
+     $('a[href*="/produtos"]').each(function (index, element) {
+     href = $(this).attr("href");
+     });
+     
+     if (href != '') {
+     document.location.href = href;
+     }*/
 }
 
 function removeCartItem(id_prod) {
     /*if (confirm('Deseja retirar esse item do carrinho?')) {
-        var htmlForm = '<form action="" method="POST" id="frmDeletaItemCarrinho">';
-        htmlForm += "  <input type='hidden' name='ID_PROD_DEL' value='" + id_prod + "' />";
-        htmlForm += '</form>';
-
-        $('body').append(htmlForm);
-        setTimeout(" $('form#frmDeletaItemCarrinho').submit(); ", 500);
-    }*/
+     var htmlForm = '<form action="" method="POST" id="frmDeletaItemCarrinho">';
+     htmlForm += "  <input type='hidden' name='ID_PROD_DEL' value='" + id_prod + "' />";
+     htmlForm += '</form>';
+     
+     $('body').append(htmlForm);
+     setTimeout(" $('form#frmDeletaItemCarrinho').submit(); ", 500);
+     }*/
 }
 
 function updateCart() {
     /*
-    // pega todas as selects com a qtdes
-    var arr_valores = new Array();
-
-    $(".qtd-item-carrinho").each(function (index) {
-        var id_prod = $(this).attr('data-id-prod');
-        var qtde = $(this).val();
-
-        var array = new Array();
-        array["id_prod"] = id_prod;
-        array["qtde"] = qtde;
-
-        arr_valores.push($.extend({}, array));
-    });
-
-    var JSONResp = {
-        "produtos": $.extend({}, arr_valores)
-    };
-    var StringJSONResp = JSON.stringify(JSONResp);
-
-    var htmlForm = '<form action="" method="POST" id="frmAtualizaCarrinho">';
-    htmlForm += "  <input type='hidden' name='stringfyJSON' value='" + encodeURIComponent(StringJSONResp) + "' />";
-    htmlForm += '</form>';
-
-    $('body').append(htmlForm);
-    setTimeout(" $('form#frmAtualizaCarrinho').submit(); ", 500);
-    */
+     // pega todas as selects com a qtdes
+     var arr_valores = new Array();
+     
+     $(".qtd-item-carrinho").each(function (index) {
+     var id_prod = $(this).attr('data-id-prod');
+     var qtde = $(this).val();
+     
+     var array = new Array();
+     array["id_prod"] = id_prod;
+     array["qtde"] = qtde;
+     
+     arr_valores.push($.extend({}, array));
+     });
+     
+     var JSONResp = {
+     "produtos": $.extend({}, arr_valores)
+     };
+     var StringJSONResp = JSON.stringify(JSONResp);
+     
+     var htmlForm = '<form action="" method="POST" id="frmAtualizaCarrinho">';
+     htmlForm += "  <input type='hidden' name='stringfyJSON' value='" + encodeURIComponent(StringJSONResp) + "' />";
+     htmlForm += '</form>';
+     
+     $('body').append(htmlForm);
+     setTimeout(" $('form#frmAtualizaCarrinho').submit(); ", 500);
+     */
 }
 
 function finishShop(pg) {
     /*
-    $.ajax({
-        type: "POST",
-        url: 'http://crochepassoapasso.com.br/sonhodetrufa/wp-content/themes/sonhodetrufa-v1/ajax-finalizaModalPg.php',
-        data: 'pg=1',
-        success: function (msg) {
-            $.pgwModal({
-                title: 'Finalizar Pedido',
-                content: msg,
-                maxWidth: 800,
-                closeOnBackgroundClick: false,
-            });
-            setTimeout("initPlugins();", 500);
-        }
-    });
-    */
+     $.ajax({
+     type: "POST",
+     url: 'http://crochepassoapasso.com.br/sonhodetrufa/wp-content/themes/sonhodetrufa-v1/ajax-finalizaModalPg.php',
+     data: 'pg=1',
+     success: function (msg) {
+     $.pgwModal({
+     title: 'Finalizar Pedido',
+     content: msg,
+     maxWidth: 800,
+     closeOnBackgroundClick: false,
+     });
+     setTimeout("initPlugins();", 500);
+     }
+     });
+     */
 }
 
 function finishNextPage(pg_atual) {
     /*
-    if (pg_atual == 1) {
-        // checa se está na prim pg
-        var div_1_visible = $('div#compraModal-1').is(':visible');
-        if (div_1_visible) {
-            // valida nome
-            var nome = $('#finaliza-nome').val();
-            if (nome.length < 3) {
-                alert('Por favor, informe o nome com mais de 3 caracteres!');
-                $('#finaliza-nome').focus();
-                return;
-            }
-            // ===========
-
-            // valida sobrenome
-            var sobrenome = $('#finaliza-sobrenome').val();
-            if (sobrenome.length < 3) {
-                alert('Por favor, informe o sobrenome com mais de 3 caracteres!');
-                $('#finaliza-sobrenome').focus();
-                return;
-            }
-            // ================
-
-            // valida cpf
-            var cpf = $('#finaliza-cpf').val();
-            if (!valida_cpf(cpf)) {
-                alert('Por favor, informe um CPF válido!');
-                $('#finaliza-cpf').focus();
-                return;
-            }
-            // ==========
-
-            // valida email
-            var email = $('#finaliza-email').val();
-            if (!valida_email(email)) {
-                alert('Por favor, informe um email válido!');
-                $('#finaliza-email').focus();
-                return;
-            }
-            // ============
-
-            // vai para a próxima aba
-            $('div#compraModal-1').hide();
-            $('div#compraModal-2').show();
-            $('div#compraModal-3').hide();
-        }
-        // ========================
-    }
-    */
+     if (pg_atual == 1) {
+     // checa se está na prim pg
+     var div_1_visible = $('div#compraModal-1').is(':visible');
+     if (div_1_visible) {
+     // valida nome
+     var nome = $('#finaliza-nome').val();
+     if (nome.length < 3) {
+     alert('Por favor, informe o nome com mais de 3 caracteres!');
+     $('#finaliza-nome').focus();
+     return;
+     }
+     // ===========
+     
+     // valida sobrenome
+     var sobrenome = $('#finaliza-sobrenome').val();
+     if (sobrenome.length < 3) {
+     alert('Por favor, informe o sobrenome com mais de 3 caracteres!');
+     $('#finaliza-sobrenome').focus();
+     return;
+     }
+     // ================
+     
+     // valida cpf
+     var cpf = $('#finaliza-cpf').val();
+     if (!valida_cpf(cpf)) {
+     alert('Por favor, informe um CPF válido!');
+     $('#finaliza-cpf').focus();
+     return;
+     }
+     // ==========
+     
+     // valida email
+     var email = $('#finaliza-email').val();
+     if (!valida_email(email)) {
+     alert('Por favor, informe um email válido!');
+     $('#finaliza-email').focus();
+     return;
+     }
+     // ============
+     
+     // vai para a próxima aba
+     $('div#compraModal-1').hide();
+     $('div#compraModal-2').show();
+     $('div#compraModal-3').hide();
+     }
+     // ========================
+     }
+     */
 }
 
 function finishPrevPage(pg_atual) {
     /*if (pg_atual == 2) {
-        $('div#compraModal-1').show();
-        $('div#compraModal-2').hide();
-        $('div#compraModal-3').hide();
-    }*/
+     $('div#compraModal-1').show();
+     $('div#compraModal-2').hide();
+     $('div#compraModal-3').hide();
+     }*/
 }
 
 function buscaCep(cep) {
     /*$.ajax({
-        type: "POST",
-        url: 'http://crochepassoapasso.com.br/sonhodetrufa/wp-content/themes/sonhodetrufa-v1/ajax-pesquisaCep.php',
-        data: 'cep=' + cep,
-        beforeSend: function () {
-            $('#tb-endereco-completo').show(1000);
-        },
-        success: function (msg) {
-            console.log(msg);
-        }
-    });*/
+     type: "POST",
+     url: 'http://crochepassoapasso.com.br/sonhodetrufa/wp-content/themes/sonhodetrufa-v1/ajax-pesquisaCep.php',
+     data: 'cep=' + cep,
+     beforeSend: function () {
+     $('#tb-endereco-completo').show(1000);
+     },
+     success: function (msg) {
+     console.log(msg);
+     }
+     });*/
 }
+/*==============*/

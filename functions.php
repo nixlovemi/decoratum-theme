@@ -73,6 +73,7 @@ class DecoratumShipping
 
     private function processArrRet($returnCurl)
     {
+        // se quiser blocar cep q nao existe, eh aqui que valida
         $arrRet = array();
 
         foreach ($returnCurl->cServico as $row) {
@@ -712,7 +713,7 @@ function getCartTotal()
 
     global $woocommerce;
 
-    $total  = $woocommerce->cart->cart_contents_total+$woocommerce->cart->tax_total;
+    $total  = $woocommerce->cart->cart_contents_total + $woocommerce->cart->tax_total;
     $total2 = number_format((float) $total, 2, ".", "");
     return $total2;
 }
@@ -720,18 +721,18 @@ function getCartTotal()
 function getCartCoupon()
 {
     $arrCartCoupon = array();
-    $cartCoupons = WC()->cart->get_coupons();
-    
-    if( count($cartCoupons) > 0 ){
-        foreach($cartCoupons as $code => $coupon){
-            $arrCartCoupon["code"]  = strtoupper($code);
+    $cartCoupons   = WC()->cart->get_coupons();
+
+    if (count($cartCoupons) > 0) {
+        foreach ($cartCoupons as $code => $coupon) {
+            $arrCartCoupon["code"]      = strtoupper($code);
             $arrCartCoupon["WC_coupon"] = $coupon;
         }
-        
-        $vCouponValue = getTotalCoupon();
+
+        $vCouponValue           = getTotalCoupon();
         $arrCartCoupon["value"] = $vCouponValue;
     }
-    
+
     return $arrCartCoupon;
 }
 
@@ -797,4 +798,279 @@ function changeCartItem($productId, $qty)
             $woocommerce->cart->set_quantity($cart_item_key, $qty);
         }
     }
+}
+
+function findCep($cep)
+{
+    $arrRet = array();
+    $vCep   = str_replace(array(".", "-"), "", $cep);
+
+    $data['cep']     = $vCep;
+    $data['formato'] = "query_string";
+    $data            = http_build_query($data);
+
+    $url  = 'http://cep.republicavirtual.com.br/web_cep.php';
+    $curl = curl_init($url.'?'.$data);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    $resultado = curl_exec($curl);
+    if (!$resultado) {
+        $resultado = "&resultado=0&resultado_txt=erro+ao+buscar+cep";
+    }
+
+    parse_str($resultado, $arrRet);
+    $arrRet = array_map('trim', $arrRet);
+    $arrRet = array_map('utf8_encode', $arrRet);
+
+    $arrRetorno                  = array();
+    $arrRetorno["ok"]            = $arrRet["resultado"] != 0;
+    $arrRetorno["msg"]           = $arrRet["resultado_txt"];
+    $arrRetorno["completo"]      = $arrRet["resultado_txt"] == "sucesso - cep completo";
+    $arrRetorno["uf"]            = $arrRet["uf"];
+    $arrRetorno["cidade"]        = $arrRet["cidade"];
+    $arrRetorno["bairro"]        = $arrRet["bairro"];
+    $arrRetorno["tp_logradouro"] = $arrRet["tipo_logradouro"];
+    $arrRetorno["logradouro"]    = $arrRet["logradouro"];
+    $arrRetorno["endereco"]      = $arrRet["tipo_logradouro"]." ".$arrRet["logradouro"];
+
+    return $arrRetorno;
+}
+
+function getHtmlTbCart($cartItens, $isCheckout=false)
+{
+    $cartTotal = 0;
+    ?>
+
+    <small class="mb-5" id="label-deslize">Deslize para ver a tabela</small>
+    <div id="holder-tb-carrinho">
+        <table id="tb-carrinho" class="mb-25">
+            <thead>
+                <tr>
+                    <th style="text-align:center;">Produto</th>
+                    <th style="width:16%; text-align:center;">Preço</th>
+                    <th style="width:16%; text-align:center;">Quantidade</th>
+                    <th style="width:16%; text-align:center;">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($cartItens as $item) {
+                    $Produto = $item["product"];
+                    $qty     = (int) $item["qty"];
+                    $price   = $item["price"];
+                    $total   = $price * $qty;
+
+                    $strQty    = ($qty < 9) ? '0'.$qty : $qty;
+                    $cartTotal += $total;
+                    ?>
+
+                    <tr>
+                        <td>
+                            <a href="<?php echo $Produto->getProductURL(); ?>">
+                                <img style="float: left; margin-right: 15px; width: 78px; height: 62px;" alt="Decoratum - <?php echo $Produto->getTitle(); ?>" src="<?php echo $Produto->getImageThumbUrl() ?>">
+                            </a>
+                            <a class="prod-title-cart" href="<?php echo $Produto->getProductURL(); ?>">
+                                <?php echo $Produto->getTitle(); ?>
+                            </a>
+                            <br />
+                            Entrega em até 7 dias úteis para São Paulo.
+                        </td>
+                        <td class="product-price">
+                            R$<?php echo number_format($price, 2, ",", "."); ?>
+                        </td>
+                        <td class="product-price">
+                            <?php
+                            if($isCheckout){
+                                echo $strQty;
+                            } else {
+                                ?>
+                                <input id="qty_<?php echo $Produto->getId(); ?>" name="qty" class="qntdd_prod qtde_carrinho mask-qty-prod" value="<?php echo $strQty; ?>" maxlength="2" title="O campo de quantidade aceita apenas números, de 1 até 99." type="text" />
+                                <center class="mt-5">
+                                    <a title="Remover do Carrinho" href="javascript:;" onClick="changeCartItem(<?php echo $Produto->getId(); ?>)">
+                                        <img alt="Alterar Quantidade" width="13" height="18" src="<?php bloginfo('template_url'); ?>/images/icon-loop.png" />
+                                    </a>
+                                    &nbsp;
+                                    <a title="Remover do Carrinho" href="<?php echo esc_url(home_url('/')).'?remove_cart='.$Produto->getId(); ?>">
+                                        <img alt="Remover do Carrinho" width="18" height="18" src="<?php bloginfo('template_url'); ?>/images/icon-trash.png" />
+                                    </a>
+                                </center>
+                                <?php
+                            }
+                            ?>
+                        </td>
+                        <td class="product-price">
+                            R$<?php echo number_format($total, 2, ",", "."); ?>
+                        </td>
+                    </tr>
+
+                <?php
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+
+    <ul class="ul-subtotal-list">
+        <li>
+            <div class="subtotal">
+                <table class="tb-subtotal">
+                    <tbody>
+                        <?php
+                        if(!$isCheckout){
+                            ?>
+                            <tr>
+                                <td width="50%" align="right">
+                                    <button style="width: 80%;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="goToShopping()">
+                                        Continuar Compra
+                                    </button>
+                                </td>
+                                <td width="50%" align="right">
+                                    <button style="width: 80%;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="clearCart()">
+                                        Limpar Carrinho
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        <tr>
+                            <td class="texto">Subtotal</td>
+                            <td class="valor">R$<?php echo number_format($cartTotal, 2, ",", "."); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+
+        <li>
+            <div class="subtotal">
+                <table class="tb-subtotal">
+                    <tbody>
+                        <tr>
+                            <td class="texto">Frete</td>
+                            <td class="">
+                                <div style="float: right; text-align: right; font-size: 15px;">
+                                    <?php
+                                    if($isCheckout){
+                                        $vCepValue = (isset($_SESSION["cepValue"])) ? $_SESSION["cepValue"]: "";
+                                        $vFreteStr = (isset($_SESSION["freteStr"])) ? $_SESSION["freteStr"]: "";
+
+                                        echo "CEP: $vCepValue";
+                                        echo "<br />";
+                                        echo $vFreteStr;
+                                    } else {
+                                        ?>
+                                        <input style="width: 100%" id="frete_carrinho" name="frete_carrinho" class="inpt-frete mask-cep" value="" maxlength="8" title="" type="text">
+                                        <br />
+                                        <button style="width: 100%;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="calculaFrete('', '', $('#frete_carrinho').val(), 'ret-frete-cart', 'S')">
+                                            &nbsp;
+                                            Consultar
+                                        </button>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php
+                        if(!$isCheckout){
+                            ?>
+                            <tr>
+                                <td colspan="2">
+                                    <small id="ret-frete-cart" style="width:100%; text-align:center; display:block;"></small>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+
+        <li>
+            <div class="subtotal">
+                <table class="tb-subtotal">
+                    <tbody>
+                        <tr>
+                            <td class="texto">Cupom</td>
+                            <td class="">
+                                <div style="float: right; text-align: right; font-size: 15px;">
+                                    <?php
+                                    $arrCoupons = getCartCoupon();
+                                    $vCode      = "";
+                                    $vTotal     = "";
+
+                                    if($isCheckout){
+                                        if (count($arrCoupons) > 0) {
+                                            $vCode  = $arrCoupons["code"];
+                                            $vTotal = "Desconto: R$".number_format($arrCoupons["value"], 2, ",", ".");
+
+                                            echo "Cupom: $vCode";
+                                            echo "<br />";
+                                            echo $vTotal;
+                                        } else {
+                                            echo "Nenhum cupom vinculado";
+                                        }
+                                    } else {
+                                        if (count($arrCoupons) > 0) {
+                                            $vCode  = $arrCoupons["code"];
+                                            $vTotal = "Desconto: R$".number_format($arrCoupons["value"], 2, ",", ".");
+                                        }
+                                        ?>
+                                    
+                                        <input style="width: 100%" id="cupom_carrinho" name="cupom_carrinho" class="inpt-frete" value="<?php echo $vCode; ?>" maxlength="14" title="" type="text" />
+                                        <br />
+                                        <button style="width: 100%;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="addCoupon_Cart();" />
+                                        &nbsp;
+                                        Adicionar
+                                        </button>
+                                        <br />
+                                        <small id="ret-ajax-coupon" style="width:100%; text-align:center; display:block;"><?php echo $vTotal; ?></small>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+
+        <li>
+            <div class="subtotal">
+                <table class="tb-subtotal">
+                    <tbody>
+                        <tr>
+                            <td class="texto">TOTAL</td>
+                            <td class="valor" style="font-weight:bold;">
+                                <?php
+                                $vFreteVlr = (isset($_SESSION["freteVlr"])) ? $_SESSION["freteVlr"]: 0;
+                                $vTotal = ($isCheckout) ? getCartTotal() + $vFreteVlr: getCartTotal();
+                                ?>
+                                <span id="spn-cart-total">R$<?php echo number_format($vTotal, 2, ",", "."); ?></span>
+                            </td>
+                        </tr>
+                        <?php
+                        if(!$isCheckout){
+                            ?>
+                            <tr>
+                                <td colspan="2" class="texto">
+                                    <button style="width: 60%; float:right; font-size:18px;" type="button" title="Consultar" class="button btn-frete mt-10 mb-20" id="btn-cons-frete" onclick="goToCheckout()">
+                                        &nbsp;
+                                        Finalizar Compra
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
+
+    <?php
 }

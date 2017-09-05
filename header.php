@@ -344,8 +344,20 @@ $class_wrap_header = "";
                               &nbsp;
                               </div>
                              */
-                        } else if ($current_page_slug == 'produtos' || $current_page_slug
-                            == 'carrinho' || $current_page_slug == 'produto' || $current_post_type == 'product') {
+                        } else {
+                            $strHeader = ($current_post_type == 'product') ? "Produto": $current_page_slug;
+                            ?>
+                            <div class="tittle-sub-top pad-top-150">
+                                <div class="container">
+                                    <a href="<?php echo esc_url(home_url('/')); ?>">Home</a> /
+                                    <h1>
+                                        <?php echo ucfirst($strHeader); ?>
+                                    </h1>
+                                </div>
+                            </div>
+                            <?php
+                        } /*else if ($current_page_slug == 'produtos' || $current_page_slug
+                            == 'carrinho' || $current_page_slug == 'produto' || $current_post_type == 'product' || $current_page_slug == 'produtos') {
 
                             $strHeader = ($current_post_type == 'product') ? "Produto": $current_page_slug;
                             ?>
@@ -358,6 +370,6 @@ $class_wrap_header = "";
                                 </div>
                             </div>
                             <?php
-                        }
+                        }*/
                         ?>
                     </header>

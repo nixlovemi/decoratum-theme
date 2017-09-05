@@ -36,7 +36,7 @@ if( count($_POST) > 0 ){
                 echo "<tr>";
 
                 if( $vFreteCarrinho == "S" ){
-                    echo "<td><input class='rad-slc-frete' type='radio' name='rd-slc-frete' value='$strValor|$vNome' /></td>";
+                    echo "<td><input class='rad-slc-frete' type='radio' name='rd-slc-frete' id='rd-slc-frete' value='$strValor|$vNome' /></td>";
                 }
 
                 echo "  <td>$vNome</td>";

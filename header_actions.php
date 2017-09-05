@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET["a"]) && $_GET["a"] != "") {
     if ($_GET["a"] == "clearCart") {
-        limparCarrinho();
+        clearCart();
 
         $redirect = esc_url(home_url('/')).'produtos';
         header("location:$redirect");
