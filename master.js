@@ -1,3 +1,5 @@
+var template_url = "http://decoratum.com.br/wp-content/themes/decoratum-theme/";
+
 $(document).ready(function () {
     $('.slider-cake2 .center2').slick({
         infinite: true,
@@ -20,7 +22,7 @@ $(document).on("click", ".rad-slc-frete", function () {
 
     $.ajax({
         type: "POST",
-        url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-selecShippingCart.php',
+        url: template_url + 'ajax-selecShippingCart.php',
         data: 'valueRd=' + value,
         beforeSend: function () {
             $("#spn-cart-total").html("Calculando...");
@@ -33,6 +35,22 @@ $(document).on("click", ".rad-slc-frete", function () {
         }
     });
 });
+
+function closeMessage(){
+    $.pgwModal('close');
+}
+
+function showMessage(title, msg, close){
+    if (typeof close === 'undefined') {
+        close = true;
+    }
+    
+    $.pgwModal({
+        title: title,
+        content: msg,
+        closable: close
+    });
+}
 
 function execProdFilter(categoryId, orderBy) {
     categoryId = (typeof categoryId === 'undefined') ? '' : categoryId;
@@ -60,7 +78,7 @@ function addCoupon_Cart() {
 
     $.ajax({
         type: "POST",
-        url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaCupom.php',
+        url: template_url + 'ajax-calculaCupom.php',
         data: 'couponCode=' + couponCode,
         beforeSend: function () {
             $("#" + idResp).html("Processando...");
@@ -76,11 +94,47 @@ function addCoupon_Cart() {
     });
 }
 
-function getCartTotal(dvResp){
+function execCheckout(){
+    var formVars = $("#frm-checkout").serialize();
+    
     $.ajax({
         type: "POST",
-        url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaCartTotal.php',
-        data: 'exec=1',
+        url: template_url + 'ajax-checkout.php',
+        data: 'exec=1&' + formVars,
+        dataType: 'json',
+        beforeSend: function () {
+            showMessage("ALERTA", "Processando pedido, por favor aguarde e não atualize o navegador.<br /><center><img src='"+template_url+"images/ajax-loader.gif'></center>", false);
+        },
+        error: function (a, b, c) {
+            showMessage("ERRO", "Erro ao finalizar compra. Por favor entre em contato!");
+        },
+        success: function (retorno) {
+            if(retorno.ok){
+                showMessage("SUCESSO", retorno.msg + "<br /><center><img src='"+template_url+"images/ajax-loader.gif'></center>", false);
+                
+                // redirect pro pagseguro
+                // ??????????????????????
+            } else {
+                showMessage("ERRO", retorno.msg);
+                return;
+            }
+        }
+    });
+}
+
+function getCartTotal(dvResp){
+    // se tiver frete selecionado
+    var vlrFrete = 0;
+    var slcFrete = $("#rd-slc-frete").val();
+    if(typeof slcFrete !== "undefined"){
+        slcFrete = slcFrete.split("|");
+        vlrFrete = slcFrete[0];
+    }
+    
+    $.ajax({
+        type: "POST",
+        url: template_url + 'ajax-calculaCartTotal.php',
+        data: 'exec=1&vlrFrete=' + vlrFrete,
         beforeSend: function () {
             $("#" + dvResp).html("Processando...");
         },
@@ -107,12 +161,12 @@ function addToCart_SP() {
     var qtde = $("#qtdeItem").val();
 
     if (!proId > 0) {
-        alert("Erro ao inserir produto no carrinho. Tente novamente em breve!");
+        showMessage("ERRO", "Erro ao inserir produto no carrinho. Tente novamente em breve!");
         return;
     }
 
     if (!qtde > 0) {
-        alert("Por favor, digite uma quantidade entre 01 e 99!");
+        showMessage("ALERTA", "Por favor, digite uma quantidade entre 01 e 99!");
         return;
     }
 
@@ -123,12 +177,12 @@ function changeCartItem(productId) {
     var qty = $("#qty_" + productId).val();
 
     if (!productId > 0) {
-        alert("Erro ao alterar quantidade. Tente novamente em breve!");
+        showMessage("ERRO", "Erro ao alterar quantidade. Tente novamente em breve!");
         return;
     }
 
     if (!qty > 0) {
-        alert("Por favor, digite uma quantidade entre 01 e 99!");
+        showMessage("ALERTA", "Por favor, digite uma quantidade entre 01 e 99!");
         return;
     }
 
@@ -141,7 +195,7 @@ function calculaFrete(produtoIds, quantidades, cepDestino, idResp, freteCarrinho
 
     $.ajax({
         type: "POST",
-        url: 'http://decoratum.com.br/wp-content/themes/decoratum-theme/ajax-calculaFrete.php',
+        url: template_url + 'ajax-calculaFrete.php',
         data: 'produtoIds=' + produtoIds + '&quantidades=' + quantidades + '&cepDestino=' + cepDestino + '&freteCarrinho=' + freteCarrinho,
         beforeSend: function () {
             $("#" + idResp).html("Processando...");
@@ -208,7 +262,7 @@ function initPlugins() {
 function goToCheckout() {
     var freteSel = typeof $("#rd-slc-frete:checked").val() !== "undefined";
     if (!freteSel) {
-        alert("Para finalizar, selecione o frete!");
+        showMessage("ALERTA", "Para finalizar, selecione o frete!");
         return;
     }
 
@@ -297,58 +351,6 @@ function finishShop(pg) {
      setTimeout("initPlugins();", 500);
      }
      });
-     */
-}
-
-function finishNextPage(pg_atual) {
-    /*
-     if (pg_atual == 1) {
-     // checa se está na prim pg
-     var div_1_visible = $('div#compraModal-1').is(':visible');
-     if (div_1_visible) {
-     // valida nome
-     var nome = $('#finaliza-nome').val();
-     if (nome.length < 3) {
-     alert('Por favor, informe o nome com mais de 3 caracteres!');
-     $('#finaliza-nome').focus();
-     return;
-     }
-     // ===========
-     
-     // valida sobrenome
-     var sobrenome = $('#finaliza-sobrenome').val();
-     if (sobrenome.length < 3) {
-     alert('Por favor, informe o sobrenome com mais de 3 caracteres!');
-     $('#finaliza-sobrenome').focus();
-     return;
-     }
-     // ================
-     
-     // valida cpf
-     var cpf = $('#finaliza-cpf').val();
-     if (!valida_cpf(cpf)) {
-     alert('Por favor, informe um CPF válido!');
-     $('#finaliza-cpf').focus();
-     return;
-     }
-     // ==========
-     
-     // valida email
-     var email = $('#finaliza-email').val();
-     if (!valida_email(email)) {
-     alert('Por favor, informe um email válido!');
-     $('#finaliza-email').focus();
-     return;
-     }
-     // ============
-     
-     // vai para a próxima aba
-     $('div#compraModal-1').hide();
-     $('div#compraModal-2').show();
-     $('div#compraModal-3').hide();
-     }
-     // ========================
-     }
      */
 }
 

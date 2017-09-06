@@ -754,10 +754,11 @@ function getCartProducts()
         $ret       = getAllProducts("", $productId);
         $Product   = $ret[0];
 
-        $arrItem            = array();
-        $arrItem["product"] = $Product;
-        $arrItem["qty"]     = $values['quantity'];
-        $arrItem["price"]   = $Product->getPrice();
+        $arrItem              = array();
+        $arrItem["productID"] = $productId;
+        $arrItem["product"]   = $Product;
+        $arrItem["qty"]       = $values['quantity'];
+        $arrItem["price"]     = $Product->getPrice();
 
         $arrCart[] = $arrItem;
     }
