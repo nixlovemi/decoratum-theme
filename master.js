@@ -36,6 +36,10 @@ $(document).on("click", ".rad-slc-frete", function () {
     });
 });
 
+function redirectURL(url){
+    document.location.href = url;
+}
+
 function closeMessage(){
     $.pgwModal('close');
 }
@@ -113,7 +117,10 @@ function execCheckout(){
                 showMessage("SUCESSO", retorno.msg + "<br /><center><img src='"+template_url+"images/ajax-loader.gif'></center>", false);
                 
                 // redirect pro pagseguro
-                // ??????????????????????
+                // var html = "<form method='' id='frmCheckoutPagseguro' action='https://pagseguro.uol.com.br/v2/checkout/payment.html?code="+retorno.pagSeguroKey+"'></form>";
+                // $("body").append(html);
+                
+                setTimeout(" redirectURL('https://pagseguro.uol.com.br/v2/checkout/payment.html?code="+retorno.pagSeguroKey+"') ", 1800);
             } else {
                 showMessage("ERRO", retorno.msg);
                 return;

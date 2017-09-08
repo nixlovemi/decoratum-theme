@@ -7,8 +7,10 @@ require($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
 if (@session_id() == "") @session_start();
 
 $arrRet = array();
-$arrRet["ok"] = false;
-$arrRet["msg"] = "Erro ao finalizar compra! Se o problema persistir, entre em contato conosco!";
+$arrRet["ok"]           = false;
+$arrRet["msg"]          = "Erro ao finalizar compra! Se o problema persistir, entre em contato conosco!";
+$arrRet["pagSeguroKey"] = "";
+
 $arrSiglas = array("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RR", "RO", "RJ", "RN", "RS", "SC", "SP", "SE", "TO");
 
 if( count($_POST) > 0 ){
@@ -88,14 +90,14 @@ if( count($_POST) > 0 ){
 
     // td ok, gera a compra =====
     $address = array(
-        'first_name' => ucfirst($name),
+        'first_name' => utf8_decode(ucfirst($name)),
         'last_name'  => "",
         'company'    => "",
         'email'      => $mail,
         'phone'      => "($ddd) $phone",
-        'address_1'  => "$tLogr. $logr, $numLogr",
-        'address_2'  => "Bairro $bairrLogr",
-        'city'       => $cityLogr,
+        'address_1'  => utf8_decode("$tLogr. $logr, $numLogr"),
+        'address_2'  => utf8_decode("Bairro $bairrLogr"),
+        'city'       => utf8_decode($cityLogr),
         'state'      => strtoupper($estLogr),
         'postcode'   => $cep,
         'country'    => "BR"
@@ -155,24 +157,6 @@ if( count($_POST) > 0 ){
             $order->add_product( get_product( $productId ), $qty, array("totals" => $arrProInfo) );
         }
 
-        /*$cartSubTotal = getCartSubtotal();
-        $discountAux  = $couponTot; //10.00
-        foreach ($cartItens as $item) {
-            $productId = $item["productID"];
-            $qty       = (int) $item["qty"];
-            $price     = $item["price"]; //39.90
-
-            $percPrice    = $price / $cartSubTotal;
-            $descPrice    = number_format($couponTot * $percPrice, 2, ".", "");
-            $discountAux -= $descPrice;
-
-            $arrProInfo = array();
-            $arrProInfo["subtotal"] = $price;
-            $arrProInfo["total"] = ;
-
-            $order->add_product( get_product( $productId ), $qty );
-        }*/
-
         $shipping_tax = array();
         $shipping_rate = new WC_Shipping_Rate('', $freteName,
                                           $freteVlr, $shipping_tax,
@@ -181,12 +165,86 @@ if( count($_POST) > 0 ){
 
         $order->calculate_shipping();
         $order->calculate_totals();
-
-        $arrRet["ok"] = true;
-        $arrRet["msg"] = "Pedido efetuado com sucesso. Você será redirecionado para o PagSeguro para efetuar o pagamento! Por favor não atualize seu navegador durante esse processo!";
-    } catch (Exception $e) {
         $order_id = trim(str_replace('#', '', $order->get_order_number()));
-        wp_delete_post($order_id,true);
+
+        // cria o pagamento no PagSeguro e registra a key
+        $pagSegInfo = getPagSeguroInfo();
+
+        $data['email']    = $pagSegInfo["mail"];
+        $data['token']    = $pagSegInfo["secret"];
+        $data['currency'] = 'BRL';
+
+        for($i=0; $i<count($cartItens); $i++){
+            $item = $cartItens[$i];
+            $itemNro = $i + 1;
+
+            $productId = $item["productID"];
+            $product   = $item["product"]->getTitle();
+            $qty       = (int) $item["qty"];
+            $price     = $item["price"];
+
+            $data["itemId$itemNro"] = $productId;
+            $data["itemDescription$itemNro"] = utf8_decode($product);
+            $data["itemAmount$itemNro"] = $price;
+            $data["itemQuantity$itemNro"] = $qty;
+        }
+        
+        // $data['encoding'] = "UTF-8";
+        $data['reference'] = $order_id;
+        $data['senderName'] = utf8_decode(ucfirst($name));
+        $data['senderAreaCode'] = preg_replace("/[^0-9]/", "", $ddd);
+        $data['senderPhone'] = preg_replace("/[^0-9]/", "", $phone);
+        $data['senderEmail'] = $mail;
+        $data['shippingType'] = '3';
+        $data['shippingCost'] = number_format($freteVlr, 2, ".", "");
+        $data['shippingAddressStreet'] = utf8_decode("$tLogr. $logr");
+        $data['shippingAddressNumber'] = utf8_decode($numLogr);
+        $data['shippingAddressComplement'] = '';
+        $data['shippingAddressDistrict'] = utf8_decode($bairrLogr);
+        $data['shippingAddressPostalCode'] = str_replace(array(".", "-"), "", $cep);
+        $data['shippingAddressCity'] = utf8_decode($cityLogr);
+        $data['shippingAddressState'] = strtoupper($estLogr);
+        $data['shippingAddressCountry'] = 'BRA';
+        $data['redirectURL'] = 'http://decoratum.com.br/retorno/';
+
+        // array_map("utf8_encode", $data);
+
+        $data = http_build_query($data);
+        $curl = curl_init('https://ws.pagseguro.uol.com.br/v2/checkout');
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        $xml = curl_exec($curl);
+        curl_close($curl);
+        
+        if($xml == 'Unauthorized'){
+            $arrRet["ok"] = false;
+            $arrRet["msg"] = "Erro ao enviar pagamento ao Pag Seguro. Tente mais tarde!";
+
+            wp_delete_post($order_id,true);
+        } else {
+            //$xml = simplexml_load_string($xml);
+
+            $xml   = simplexml_load_string($xml, "SimpleXMLElement", LIBXML_NOCDATA);
+            $json  = json_encode($xml);
+            $array = json_decode($json,TRUE);
+
+            setPagSeguroKey($array["code"], $order_id);
+
+            $arrRet["ok"]           = true;
+            $arrRet["msg"]          = "Pedido efetuado com sucesso.<br />Você será redirecionado para o PagSeguro para efetuar o pagamento!<br />Por favor não atualize seu navegador durante esse processo!<br />";
+            $arrRet["pagSeguroKey"] = $array["code"];
+
+            // finalizando limpa o carrinho
+            clearCart();
+        }
+    } catch (Exception $e) {
+        $arrRet["msg"] .= ">>" . $e->getMessage();
+        
+        $order_id = trim(str_replace('#', '', $order->get_order_number()));
+        wp_delete_post($order_id, true);
     }
     // ==========================
 }

@@ -1075,3 +1075,15 @@ function getHtmlTbCart($cartItens, $isCheckout=false)
 
     <?php
 }
+
+function setPagSeguroKey($keyValue, $postID){
+    return add_post_meta( $postID, 'pagseguro_key', $keyValue );
+}
+
+function getPagSeguroInfo(){
+    $arrInfo = array();
+    $arrInfo["mail"]   = "carla@decoratum.com.br";
+    $arrInfo["secret"] = "2B205FD423A14C7EB1E499C4247FE3D7";
+
+    return $arrInfo;
+}

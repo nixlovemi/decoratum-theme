@@ -78,7 +78,7 @@ get_header();
                 </div>
                 <div class="col-sm-4">
                     <?php
-                    $infoCep    = findCep("13.477-708"); // $vCepValue
+                    $infoCep    = findCep($vCepValue);
                     $isCompleto = $infoCep["completo"];
                     $tpLogr     = (isset($infoCep["tp_logradouro"])) ? $infoCep["tp_logradouro"]: "";
                     $Ende       = (isset($infoCep["logradouro"])) ? $infoCep["logradouro"]: "";
