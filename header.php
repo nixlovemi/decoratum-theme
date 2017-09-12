@@ -90,14 +90,14 @@ $class_wrap_header = "";
                                             <span class="icon-bar"></span>
                                             <span class="icon-bar"></span>
                                         </button>
-                                        <a class="navbar-brand navbar-cake" href="#">
+                                        <a class="navbar-brand navbar-cake" href="<?php echo esc_url(home_url('/')); ?>">
                                             <img id="logo-decoratum-mobile" alt="Logo Decoratum" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-188-105.png" />
                                         </a>
                                     </div>
                                     <nav>
                                         <ul class="header-nav hidden-xs">
                                             <li class="pad-top-0i">
-                                                <img alt="Logo Decoratum" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-188-105.png" />
+                                                <a href="<?php echo esc_url(home_url('/')); ?>"><img alt="Logo Decoratum" src="<?php bloginfo('template_url'); ?>/images/logo-decoratum-188-105.png" /></a>
                                             </li>
 
                                             <li>
@@ -265,76 +265,116 @@ $class_wrap_header = "";
                                     ?>
                                 </div>
                             </div>
+
+                            <?php
+                            global $wpdb;
+                            $arrSlider = array();
+
+                            $sql = "SELECT post_id, meta_value
+                                    FROM wp_postmeta
+                                    WHERE meta_key = 'slider_home_url_image'
+                                    ORDER BY meta_id";
+                            $conn = $wpdb->get_results($sql);
+                            foreach($conn as $row){
+                                $vPostId = $row->post_id;
+                                $vMetaId = $row->meta_value;
+
+                                $productId = $vPostId;
+                                $arrProd = getAllProducts("", $productId);
+                                if(count($arrProd) > 0){
+                                   $Produto = $arrProd[0];
+                                   $prodUrl = $Produto->getProductURL();
+                                   $htmlImg = wp_get_attachment_image( $vMetaId, 'full' );
+
+                                   if(!array_key_exists($vPostId, $arrSlider)){
+                                        $arrSlider[$vPostId] = array();
+                                        $arrSlider[$vPostId]["htmlImg"] = $htmlImg;
+                                        $arrSlider[$vPostId]["urlLink"] = $prodUrl;
+                                    }
+                                }
+                            }
+
+                            if( count($arrSlider) >= 0 ){
+                                ?>
+
+                                <div class="slider-cake2">
+
+                                    <div class="container pad-md-100">
+                                        <div class="center2">
+                                            <?php
+                                            foreach($arrSlider as $slider){
+                                                ?>
+
+                                                <div class="img-relative">
+                                                    <a href="<?php echo $slider["urlLink"] ?>">
+                                                        <?php echo $slider["htmlImg"] ?>
+                                                    </a>
+                                                </div>
+
+                                                <!--
+                                                <div class="img-relative">
+                                                    <a href="<?php echo $slider["urlLink"] ?>">
+                                                        <?php echo $slider["htmlImg"] ?>
+                                                    </a>
+                                                </div>
+
+                                                <div class="img-relative">
+                                                    <a href="<?php echo $slider["urlLink"] ?>">
+                                                        <?php echo $slider["htmlImg"] ?>
+                                                    </a>
+                                                </div>
+                                                -->
+
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <?php
+                            }
+                            ?>
+
+                            <?php
+                            /*
                             <div class="slider-cake2">
                                 <div class="container pad-md-100">
                                     <div class="center2">
                                         <div class="img-relative">
                                             <img alt="Trufa Tradicional" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" />
-                                            <?php
-                                            /*
+
                                               <div class="price-cake hidden-xs">
                                               <p>
                                               R$3,50
                                               </p>
                                               </div>
-                                             */
-                                            ?>
                                         </div>
                                         <div class="img-relative">
                                             <img alt="Trufa Tradicional - Menta" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2.png" />
-                                            <?php
-                                            /*
+
                                               <div class="price-cake hidden-xs">
                                               <p>
                                               R$3,50
                                               </p>
                                               </div>
-                                             */
-                                            ?>
                                         </div>
                                         <div class="img-relative">
                                             <img alt="Trufa Tradicional - Cereja" src="<?php bloginfo('template_url'); ?>/images/cartonagem-3.png" />
-                                            <?php
-                                            /*
+
                                               <div class="price-cake hidden-xs">
                                               <p>
                                               R$3,50
                                               </p>
                                               </div>
-                                             */
-                                            ?>
                                         </div>
-                                        <?php
-                                        /*
-                                          <div class="img-relative">
-                                          <img alt="Trufa Tradicional - Côco" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1.png" />
-
-                                          <div class="price-cake hidden-xs">
-                                          <p>
-                                          R$3,50
-                                          </p>
-                                          </div>
-                                          </div>
-
-                                          <div>
-                                          <img alt="Cake-Two" src="images/cake-two.png" />
-                                          </div>
-                                          <div>
-                                          <img alt="Cake-Three" src="images/cake-three.png" />
-                                          </div>
-                                          <div>
-                                          <img alt="Cake-Four" src="images/cake-four.png" />
-                                          </div>
-
-                                          <div>
-                                          <img alt="Cake-Five" src="images/cake-five.png" />
-                                          </div>
-                                         */
-                                        ?>
                                     </div>
                                 </div>
                             </div>
-                            <?php
+                            */
+
+                            
                             /*
                               <div class="gray-table mar-to-top border-brown">
                               &nbsp;
@@ -343,7 +383,7 @@ $class_wrap_header = "";
                               <div class="green-arrow">
                               &nbsp;
                               </div>
-                             */
+                            */
                         } else {
                             $strHeader = ($current_post_type == 'product') ? "Produto": $current_page_slug;
                             ?>
