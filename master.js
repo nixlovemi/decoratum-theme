@@ -36,6 +36,32 @@ $(document).on("click", ".rad-slc-frete", function () {
     });
 });
 
+function sendContact_Home(){
+    var name = $("#name-cont-home").val();
+    var mail = $("#mail-cont-home").val();
+    var msg  = $("#msg-cont-home").val();
+    
+    $.ajax({
+        type: "POST",
+        url: template_url + 'ajax-sendContact.php',
+        data: 'exec=1&name='+name+'&mail='+mail+'&msg='+msg,
+        dataType: 'json',
+        beforeSend: function () {
+            showMessage("AGUARDE", "Enviando mensagem ...<br /><center><img src='"+template_url+"images/ajax-loader.gif'></center>", false);
+        },
+        error: function (a, b, c) {
+            showMessage("ERRO", "Erro ao enviar mensagem. Se o problema persistir, nos avise em contato@decoratum.com.br.");
+        },
+        success: function (retorno) {
+            if(retorno.ok){
+                showMessage("SUCESSO", retorno.msg);
+            } else {
+                showMessage("ERRO", retorno.msg);
+            }
+        }
+    });
+}
+
 function redirectURL(url){
     document.location.href = url;
 }

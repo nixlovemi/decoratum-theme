@@ -643,16 +643,16 @@ $DecoratumProduct = $retProducts[0];
     <div class="container mar-top-20" id="home-contato">
         <div class="col-sm-offset-3 col-sm-6">
             <div class="form-group">
-                <input class="form-control form-default-cakes" placeholder="Nome Completo" type="text" />
+                <input id="name-cont-home" class="form-control form-default-cakes" placeholder="Nome Completo" type="text" />
             </div>
             <div class="form-group">
-                <input class="form-control form-default-cakes" placeholder="Email" type="email" />
+                <input id="mail-cont-home" class="form-control form-default-cakes" placeholder="Email" type="email" />
             </div>
             <div class="form-group">
-                <textarea class="form-control form-default-cakes" placeholder="Sua Mensagem"></textarea>
+                <textarea id="msg-cont-home" class="form-control form-default-cakes" placeholder="Sua Mensagem"></textarea>
             </div>
             <div class="form-group">
-                <button class="btn btn-lg btn-pink-cake btn-send mar-top-20">Enviar</button>
+                <button onclick="sendContact_Home()" class="btn btn-lg btn-pink-cake btn-send mar-top-20">Enviar</button>
             </div>
         </div>
     </div>

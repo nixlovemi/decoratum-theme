@@ -239,7 +239,7 @@ if( count($_POST) > 0 ){
             setPagSeguroKey($array["code"], $order_id);
 
             $arrRet["ok"]           = true;
-            $arrRet["msg"]          = "Pedido efetuado com sucesso.<br />Você será redirecionado para o PagSeguro para efetuar o pagamento!<br />Por favor não atualize seu navegador durante esse processo!<br />";
+            $arrRet["msg"]          = "Pedido efetuado com sucesso. Você será redirecionado para o PagSeguro para efetuar o pagamento!<br /><br />Por favor não atualize seu navegador durante esse processo!<br />";
             $arrRet["pagSeguroKey"] = $array["code"];
 
             // finalizando limpa o carrinho
