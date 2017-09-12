@@ -143,10 +143,10 @@ if( count($_POST) > 0 ){
 
             if(!$lastItem){
                 $percPrice    = $price / $cartSubTotal;
-                $descPrice    = number_format($couponTot * $percPrice, 2, ".", "");
+                $descPrice    = number_format(($couponTot * $percPrice) / $qty, 2, ".", "");
                 $discountAux -= $descPrice;
             } else {
-                $descPrice   = $discountAux;
+                $descPrice   = $discountAux / $qty;
                 $discountAux = 0;
             }
 
@@ -207,10 +207,15 @@ if( count($_POST) > 0 ){
         $data['shippingAddressCountry'] = 'BRA';
         $data['redirectURL'] = 'http://decoratum.com.br/retorno/';
 
+        if($couponTot > 0){
+            $data['extraAmount'] = number_format(-1 * $couponTot, 2, ".", "");
+        }
+
         // array_map("utf8_encode", $data);
 
         $data = http_build_query($data);
         $curl = curl_init('https://ws.pagseguro.uol.com.br/v2/checkout');
+        // $curl = curl_init('https://ws.sandbox.pagseguro.uol.com.br/v2/checkout');
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);

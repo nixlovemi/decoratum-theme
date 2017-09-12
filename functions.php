@@ -1076,14 +1076,398 @@ function getHtmlTbCart($cartItens, $isCheckout=false)
     <?php
 }
 
-function setPagSeguroKey($keyValue, $postID){
-    return add_post_meta( $postID, 'pagseguro_key', $keyValue );
+function setPagSeguroKey($keyValue, $postID)
+{
+    $ret = add_post_meta( $postID, 'pagseguro_key', $keyValue, true );
+
+    if ( !$ret ) {
+        $ret = update_post_meta( $postID, 'pagseguro_key', $keyValue );
+    }
+    
+    return $ret;
 }
 
-function getPagSeguroInfo(){
+function setPagSeguroTransCode($transCode, $postID)
+{
+    $ret = add_post_meta( $postID, 'pagseguro_transactionCode', $transCode, true );
+
+    if ( !$ret ) {
+        $ret = update_post_meta( $postID, 'pagseguro_transactionCode', $transCode );
+    }
+
+    return $ret;
+}
+
+function setPagSeguroPaymentUrl($paymentUrl, $postID)
+{
+    $ret = add_post_meta( $postID, 'pagseguro_paymentLink', $paymentUrl, true );
+
+    if ( !$ret ) {
+        $ret = update_post_meta( $postID, 'pagseguro_paymentLink', $paymentUrl );
+    }
+
+    return $ret;
+}
+
+function setPagSeguroPaymentStatus($paymentStatus, $postID)
+{
+    $ret = add_post_meta( $postID, 'pagseguro_paymentStatus', $paymentStatus, true );
+
+    if ( !$ret ) {
+        $ret = update_post_meta( $postID, 'pagseguro_paymentStatus', $paymentStatus );
+    }
+
+    return $ret;
+}
+
+function setPagSeguroDtUpdate($dtUpdate, $postID)
+{
+    $ret = add_post_meta( $postID, 'pagseguro_dtUpdate', $dtUpdate, true );
+
+    if ( !$ret ) {
+        $ret = update_post_meta( $postID, 'pagseguro_dtUpdate', $dtUpdate );
+    }
+
+    return $ret;
+}
+
+function getPagSeguroInfo()
+{
     $arrInfo = array();
     $arrInfo["mail"]   = "carla@decoratum.com.br";
     $arrInfo["secret"] = "2B205FD423A14C7EB1E499C4247FE3D7";
 
     return $arrInfo;
+}
+
+function getStatusPagSeguro($transactionCode="", $referenceCode="", $notificationCode="")
+{
+    /*
+    Array
+    (
+        [date] => 2017-09-11T10:43:44.000-03:00
+        [code] => F262D215-F1CE-4F40-A394-85B16FB64873
+        [reference] => 196
+        [type] => 1
+        [status] => 1
+        [lastEventDate] => 2017-09-11T10:47:27.000-03:00
+        [paymentMethod] => Array
+            (
+                [type] => 2
+                [code] => 202
+            )
+
+        [paymentLink] => https://pagseguro.uol.com.br/checkout/payment/booklet/print.jhtml?c=18a5435a0e410a8e00e3be18ab9c327eb7dc295751697585a79bc063a3d0f7c0c7ea92eddcc85add
+        [grossAmount] => 46.00
+        [discountAmount] => 0.00
+        [creditorFees] => Array
+            (
+                [intermediationRateAmount] => 0.40
+                [intermediationFeeAmount] => 1.84
+            )
+
+        [netAmount] => 43.76
+        [extraAmount] => -10.00
+        [installmentCount] => 1
+        [itemCount] => 1
+        [items] => Array
+            (
+                [item] => Array
+                    (
+                        [id] => 123
+                        [description] => Capa Caderneta de Vacinação
+                        [quantity] => 1
+                        [amount] => 39.90
+                    )
+
+            )
+
+        [sender] => Array
+            (
+                [name] => Leandro Parra
+                [email] => nixlovemi@gmail.com
+                [phone] => Array
+                    (
+                        [areaCode] => 19
+                        [number] => 34683244
+                    )
+
+            )
+
+        [shipping] => Array
+            (
+                [address] => Array
+                    (
+                        [street] => Av. Carlos Rosenfeld
+                        [number] => 185
+                        [complement] => Array
+                            (
+                            )
+
+                        [district] => Cachoeira
+                        [city] => Nova Odessa
+                        [state] => SP
+                        [country] => BRA
+                        [postalCode] => 13477780
+                    )
+
+                [type] => 3
+                [cost] => 16.10
+            )
+
+        [primaryReceiver] => Array
+            (
+                [publicKey] => PUB3587E34560E6409E93B2E6666A422325
+            )
+
+    )
+    */
+
+    $infoPS   = getPagSeguroInfo();
+    $mailPS   = $infoPS["mail"];
+    $secretPS = $infoPS["secret"];
+    
+    if($transactionCode != ""){
+       $url = "https://ws.pagseguro.uol.com.br/v3/transactions/$transactionCode/?email=$mailPS&token=$secretPS";
+    } elseif($referenceCode != ""){
+       $url = "https://ws.pagseguro.uol.com.br/v2/transactions/?email=$mailPS&token=$secretPS&reference=$referenceCode";
+    } elseif($notificationCode != ""){
+        $url = "https://ws.pagseguro.uol.com.br/v3/transactions/notifications/$notificationCode/?email=$mailPS&token=$secretPS";
+    } else {
+        return false;
+    }
+
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $xml = curl_exec($curl);
+    curl_close($curl);
+
+    $arrRet["ok"]             = false;
+    $arrRet["retPS"]          = array();
+    $arrRet["typeStr"]        = "";
+    $arrRet["statusStr"]      = "";
+    $arrRet["paymentTypeStr"] = "";
+    $arrRet["paymentCodeStr"] = "";
+
+    if($xml == 'Unauthorized'){
+        $arrRet["ok"] = false;
+    } else {
+        $arrRet["ok"] = true;
+
+        $xml   = simplexml_load_string($xml, "SimpleXMLElement", LIBXML_NOCDATA);
+        $json  = json_encode($xml);
+        $array = json_decode($json,TRUE);
+        $arrRet["retPS"] = $array;
+
+        switch($array["type"]){
+            case 1:
+                $arrRet["typeStr"] = "Pagamento";
+                break;
+            default:
+                $arrRet["typeStr"] = "**";
+                break;
+        }
+
+        switch($array["status"]){
+            case 1:
+                $arrRet["statusStr"] = "Aguardando pagamento";
+                break;
+            case 2:
+                $arrRet["statusStr"] = "Em análise";
+                break;
+            case 3:
+                $arrRet["statusStr"] = "Paga";
+                break;
+            case 4:
+                $arrRet["statusStr"] = "Disponível";
+                break;
+            case 5:
+                $arrRet["statusStr"] = "Em disputa";
+                break;
+            case 6:
+                $arrRet["statusStr"] = "Devolvida";
+                break;
+            case 7:
+                $arrRet["statusStr"] = "Cancelada";
+                break;
+            default:
+                $arrRet["statusStr"] = "**";
+                break;
+        }
+
+        switch($array["paymentMethod"]["type"]){
+            case 1:
+                $arrRet["paymentTypeStr"] = "Cartão de crédito";
+                break;
+            case 2:
+                $arrRet["paymentTypeStr"] = "Boleto";
+                break;
+            case 3:
+                $arrRet["paymentTypeStr"] = "Débito online (TEF)";
+                break;
+            case 4:
+                $arrRet["paymentTypeStr"] = "Saldo PagSeguro";
+                break;
+            case 5:
+                $arrRet["paymentTypeStr"] = "Oi Paggo";
+                break;
+            case 7:
+                $arrRet["paymentTypeStr"] = "Depósito em conta";
+                break;
+            default:
+                $arrRet["paymentTypeStr"] = "**";
+                break;
+        }
+
+        switch($array["paymentMethod"]["code"]){
+            case 101:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Visa";
+                break;
+            case 102:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito MasterCard";
+                break;
+            case 103:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito American Express";
+                break;
+            case 104:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Diners";
+                break;
+            case 105:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Hipercard.";
+                break;
+            case 106:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Aura";
+                break;
+            case 107:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Elo";
+                break;
+            case 108:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito PLENOCard";
+                break;
+            case 109:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito PersonalCard";
+                break;
+            case 110:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito JCB";
+                break;
+            case 111:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Discover";
+                break;
+            case 112:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito BrasilCard";
+                break;
+            case 113:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito FORTBRASIL";
+                break;
+            case 114:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito CARDBAN";
+                break;
+            case 115:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito VALECARD";
+                break;
+            case 116:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Cabal";
+                break;
+            case 117:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Mais!";
+                break;
+            case 118:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Avista";
+                break;
+            case 119:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito GRANDCARD";
+                break;
+            case 120:
+                $arrRet["paymentCodeStr"] = "Cartão de crédito Sorocred";
+                break;
+            case 201:
+                $arrRet["paymentCodeStr"] = "Boleto Bradesco";
+                break;
+            case 202:
+                $arrRet["paymentCodeStr"] = "Boleto Santander";
+                break;
+            case 301:
+                $arrRet["paymentCodeStr"] = "Débito online Bradesco";
+                break;
+            case 302:
+                $arrRet["paymentCodeStr"] = "Débito online Itaú";
+                break;
+            case 303:
+                $arrRet["paymentCodeStr"] = "Débito online Unibanco";
+                break;
+            case 304:
+                $arrRet["paymentCodeStr"] = "Débito online Banco do Brasil";
+                break;
+            case 305:
+                $arrRet["paymentCodeStr"] = "Débito online Banco Real";
+                break;
+            case 306:
+                $arrRet["paymentCodeStr"] = "Débito online Banrisul";
+                break;
+            case 307:
+                $arrRet["paymentCodeStr"] = "Débito online HSBC";
+                break;
+            case 401:
+                $arrRet["paymentCodeStr"] = "Saldo PagSeguro";
+                break;
+            case 501:
+                $arrRet["paymentCodeStr"] = "Oi Paggo";
+                break;
+            case 701:
+                $arrRet["paymentCodeStr"] = "Depósito em conta - Banco do Brasil";
+                break;
+            case 702:
+                $arrRet["paymentCodeStr"] = "Depósito em conta - HSBC";
+                break;
+            default:
+                $arrRet["paymentCodeStr"] = "**";
+                break;
+        }
+    }
+
+    return $arrRet;
+}
+
+function orderGetStatus($orderId)
+{
+    global $woocommerce;
+
+    try {
+       $order = new WC_Order( $orderId );
+       return $order->status;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+function orderChangeStatus($orderId, $newStatus, $obs="")
+{
+    /*
+    1) pending: Pagamento pendente
+    2) processing: Processando
+    3) on-hold: Aguardando
+    4) completed: Concluído
+    5) cancelled: Cancelado
+    6) refunded: Reembolsado
+    7) failed: Falhado
+    */
+    
+    global $woocommerce;
+
+    try {
+       $order = new WC_Order( $orderId );
+       $order->update_status( $newStatus, $obs);
+       //$order->update_status( string $new_status, string $note = '' )
+
+       return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+function sendMail($to, $subject, $body)
+{
+    $headers = array("Content-Type: text/html; charset=UTF-8", "From: Decoratum <contato@decoratum.com.br>");
+    return wp_mail( $to, $subject, $body, $headers );
 }
