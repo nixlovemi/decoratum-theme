@@ -80,6 +80,29 @@
               </div>
               <!-- Column -->
               <div class="col-sm-4 hidden-xs">
+                <?php
+                $arrProducts = getAllProducts("", "", "produto_footer");
+                if(count($arrProducts) > 0){
+                    ?>
+                    <ul class="list-picture-footer">
+                        <?php
+                        foreach($arrProducts as $Product){
+                            ?>
+                            <li>
+                                <a class="" href="<?php echo $Product->getProductURL(); ?>">
+                                    <img alt="Img-sm-picture" class="img-100" src="<?php echo $Product->getImageThumbUrl(); ?>" />
+                                </a>
+                            </li>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+                    <?php
+                }
+                ?>
+
+                <?php
+                /*
                 <ul class="list-picture-footer">
                   <li>
                     <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-1-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-1-footer.png" /></a>
@@ -106,10 +129,13 @@
                     <a class="fancybox" data-fancybox-group="contentgallery" href="<?php bloginfo('template_url'); ?>/images/cartonagem-2-footer.png"><img alt="Img-sm-picture" class="img-100" src="<?php bloginfo('template_url'); ?>/images/cartonagem-2-footer.png" /></a>
                   </li>
                 </ul>
+                
                 <div class="clear"></div>
                 <p style="text-align:center;">
-                  Galeria de fotos
+                  Veja também
                 </p>
+                */
+                ?>
               </div>
               <!-- Column -->
               <div class="col-sm-4">
