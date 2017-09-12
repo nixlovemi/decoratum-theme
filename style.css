@@ -1431,8 +1431,8 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
     content: '';
     position: absolute;
     background-color: #ffffff;
-    width: 10px;
-    height: 10px;
+    width: 0;
+    height: 0;
     top: 20px;
     border-radius: 50px;
   }

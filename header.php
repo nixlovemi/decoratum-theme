@@ -116,7 +116,7 @@ $class_wrap_header = "";
                                                 <a href="<?php echo esc_url(home_url('/')).'carrinho'; ?>">Carrinho</a>
                                             </li>
                                             <li>
-                                                <a href="blog-center.html">Contato</a>
+                                                <a href="<?php echo esc_url(home_url('/')).'contato'; ?>">Contato</a>
                                             </li>
                                         </ul>
 
@@ -165,7 +165,7 @@ $class_wrap_header = "";
                                                             <a href="<?php echo esc_url(home_url('/')).'carrinho'; ?>">Carrinho</a>
                                                         </li>
                                                         <li>
-                                                            <a href="blog-center.html">Contato</a>
+                                                            <a href="<?php echo esc_url(home_url('/')).'carrinho'; ?>">Contato</a>
                                                         </li>
                                                     </ul>
                                                 </div>
