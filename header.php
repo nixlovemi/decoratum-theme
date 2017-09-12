@@ -11,9 +11,16 @@ include("header_actions.php");
 
 // get current page slug
 global $post;
-$current_page_slug = get_post($post)->post_name;
-$current_post_type = get_post($post)->post_type;
-$class_wrap_header = "";
+
+if( $post === null ){
+    $current_page_slug = "Página não encontrada";
+    $current_post_type = "";
+    $class_wrap_header = "";
+} else {
+    $current_page_slug = get_post($post)->post_name;
+    $current_post_type = get_post($post)->post_type;
+    $class_wrap_header = "";
+}
 
 /* switch ($current_page_slug) {
   case 'produtos':
