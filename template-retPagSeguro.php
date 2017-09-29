@@ -47,6 +47,9 @@ switch($pagSegStatus){
             orderChangeStatus($orderId, "processing");
         }
         break;
+    case 7:
+        orderChangeStatus($orderId, "pending");
+        break;
 }
 
 sendMail("carla@decoratum.com.br,nixlovemi@gmail.com", "Pedido #$orderId", "O pedido número $orderId está com o status $paymentStatus no PagSeguro.");

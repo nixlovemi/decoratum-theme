@@ -124,6 +124,37 @@ function addCoupon_Cart() {
     });
 }
 
+function execConsultaPedido(){
+    var formVars = $("#frm-consulta-pedido").serialize();
+    
+    $.ajax({
+        type: "POST",
+        url: template_url + 'ajax-consulta-pedido.php',
+        data: 'exec=1&' + formVars,
+        dataType: 'json',
+        beforeSend: function () {
+            showMessage("ALERTA", "Realizando pesquisa ...<br /><center><img src='"+template_url+"images/ajax-loader.gif'></center>", false);
+        },
+        error: function (a, b, c) {
+            showMessage("ERRO", "Erro ao pesquisar pedido. Por favor entre em contato!");
+        },
+        success: function (retorno) {
+            if(retorno.ok){
+                closeMessage();
+                $("#dv-ret-pesquisa-pedido").html(retorno.html);
+            } else {
+                showMessage("ERRO", retorno.msg);
+                return;
+            }
+        }
+    });
+}
+
+function execPgtoPagSeguro(pagSeguroKey)
+{
+    setTimeout(" redirectURL('https://pagseguro.uol.com.br/v2/checkout/payment.html?code="+pagSeguroKey+"') ", 250);
+}
+
 function execCheckout(){
     var formVars = $("#frm-checkout").serialize();
     

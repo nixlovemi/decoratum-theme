@@ -150,6 +150,9 @@
                     <a href="<?php echo esc_url(home_url( '/' )) . 'carrinho'; ?>">Carrinho</a>
                   </li>
                   <li>
+                    <a href="<?php echo esc_url(home_url( '/' )) . 'meus-pedidos'; ?>">Meus Pedidos</a>
+                  </li>
+                  <li>
                     <a href="javascript:;">Política de privacidade</a>
                   </li>
                   <li>

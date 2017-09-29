@@ -629,6 +629,611 @@ function getAllProducts($category = "", $productId = "", $tag = "",
     return $arrProducts;
 }
 
+function getOrderById($orderId)
+{
+    /*
+     *
+    object(WC_Order)#9767 (14) {
+        ["status_transition":protected]=>
+        bool(false)
+        ["data":protected]=>
+        array(28) {
+          ["parent_id"]=>
+          int(0)
+          ["status"]=>
+          string(10) "processing"
+          ["currency"]=>
+          string(3) "BRL"
+          ["version"]=>
+          string(5) "3.1.2"
+          ["prices_include_tax"]=>
+          bool(false)
+          ["date_created"]=>
+          object(WC_DateTime)#9774 (4) {
+            ["utc_offset":protected]=>
+            int(-10800)
+            ["date"]=>
+            string(26) "2017-09-12 12:50:54.000000"
+            ["timezone_type"]=>
+            int(1)
+            ["timezone"]=>
+            string(6) "+00:00"
+          }
+          ["date_modified"]=>
+          object(WC_DateTime)#9775 (4) {
+            ["utc_offset":protected]=>
+            int(-10800)
+            ["date"]=>
+            string(26) "2017-09-12 12:51:39.000000"
+            ["timezone_type"]=>
+            int(1)
+            ["timezone"]=>
+            string(6) "+00:00"
+          }
+          ["discount_total"]=>
+          string(4) "39.5"
+          ["discount_tax"]=>
+          string(1) "0"
+          ["shipping_total"]=>
+          string(4) "16.1"
+          ["shipping_tax"]=>
+          string(1) "0"
+          ["cart_tax"]=>
+          string(1) "0"
+          ["total"]=>
+          string(5) "16.50"
+          ["total_tax"]=>
+          string(1) "0"
+          ["customer_id"]=>
+          int(0)
+          ["order_key"]=>
+          string(22) "wc_order_59b7d82eef740"
+          ["billing"]=>
+          array(11) {
+            ["first_name"]=>
+            string(13) "Leandro Parra"
+            ["last_name"]=>
+            string(0) ""
+            ["company"]=>
+            string(0) ""
+            ["address_1"]=>
+            string(25) "Av. Carlos Rosenfeld, 185"
+            ["address_2"]=>
+            string(16) "Bairro Cachoeira"
+            ["city"]=>
+            string(11) "Nova Odessa"
+            ["state"]=>
+            string(2) "SP"
+            ["postcode"]=>
+            string(9) "01254-200"
+            ["country"]=>
+            string(2) "BR"
+            ["email"]=>
+            string(19) "nixlovemi@gmail.com"
+            ["phone"]=>
+            string(14) "(19) 981324148"
+          }
+          ["shipping"]=>
+          array(9) {
+            ["first_name"]=>
+            string(13) "Leandro Parra"
+            ["last_name"]=>
+            string(0) ""
+            ["company"]=>
+            string(0) ""
+            ["address_1"]=>
+            string(25) "Av. Carlos Rosenfeld, 185"
+            ["address_2"]=>
+            string(16) "Bairro Cachoeira"
+            ["city"]=>
+            string(11) "Nova Odessa"
+            ["state"]=>
+            string(2) "SP"
+            ["postcode"]=>
+            string(9) "01254-200"
+            ["country"]=>
+            string(2) "BR"
+          }
+          ["payment_method"]=>
+          string(0) ""
+          ["payment_method_title"]=>
+          string(0) ""
+          ["transaction_id"]=>
+          string(0) ""
+          ["customer_ip_address"]=>
+          string(12) "192.168.0.79"
+          ["customer_user_agent"]=>
+          string(82) "mozilla/5.0 (macintosh; intel mac os x 10.12; rv:55.0) gecko/20100101 firefox/55.0"
+          ["created_via"]=>
+          string(0) ""
+          ["customer_note"]=>
+          string(0) ""
+          ["date_completed"]=>
+          NULL
+          ["date_paid"]=>
+          object(WC_DateTime)#9828 (4) {
+            ["utc_offset":protected]=>
+            int(-10800)
+            ["date"]=>
+            string(26) "2017-09-12 09:51:39.000000"
+            ["timezone_type"]=>
+            int(1)
+            ["timezone"]=>
+            string(6) "+00:00"
+          }
+          ["cart_hash"]=>
+          string(0) ""
+        }
+        ["items":protected]=>
+        array(0) {
+        }
+        ["items_to_delete":protected]=>
+        array(0) {
+        }
+        ["cache_group":protected]=>
+        string(6) "orders"
+        ["data_store_name":protected]=>
+        string(5) "order"
+        ["object_type":protected]=>
+        string(5) "order"
+        ["id":protected]=>
+        int(200)
+        ["changes":protected]=>
+        array(0) {
+        }
+        ["object_read":protected]=>
+        bool(true)
+        ["extra_data":protected]=>
+        array(0) {
+        }
+        ["default_data":protected]=>
+        array(28) {
+          ["parent_id"]=>
+          int(0)
+          ["status"]=>
+          string(0) ""
+          ["currency"]=>
+          string(0) ""
+          ["version"]=>
+          string(0) ""
+          ["prices_include_tax"]=>
+          bool(false)
+          ["date_created"]=>
+          NULL
+          ["date_modified"]=>
+          NULL
+          ["discount_total"]=>
+          int(0)
+          ["discount_tax"]=>
+          int(0)
+          ["shipping_total"]=>
+          int(0)
+          ["shipping_tax"]=>
+          int(0)
+          ["cart_tax"]=>
+          int(0)
+          ["total"]=>
+          int(0)
+          ["total_tax"]=>
+          int(0)
+          ["customer_id"]=>
+          int(0)
+          ["order_key"]=>
+          string(0) ""
+          ["billing"]=>
+          array(11) {
+            ["first_name"]=>
+            string(0) ""
+            ["last_name"]=>
+            string(0) ""
+            ["company"]=>
+            string(0) ""
+            ["address_1"]=>
+            string(0) ""
+            ["address_2"]=>
+            string(0) ""
+            ["city"]=>
+            string(0) ""
+            ["state"]=>
+            string(0) ""
+            ["postcode"]=>
+            string(0) ""
+            ["country"]=>
+            string(0) ""
+            ["email"]=>
+            string(0) ""
+            ["phone"]=>
+            string(0) ""
+          }
+          ["shipping"]=>
+          array(9) {
+            ["first_name"]=>
+            string(0) ""
+            ["last_name"]=>
+            string(0) ""
+            ["company"]=>
+            string(0) ""
+            ["address_1"]=>
+            string(0) ""
+            ["address_2"]=>
+            string(0) ""
+            ["city"]=>
+            string(0) ""
+            ["state"]=>
+            string(0) ""
+            ["postcode"]=>
+            string(0) ""
+            ["country"]=>
+            string(0) ""
+          }
+          ["payment_method"]=>
+          string(0) ""
+          ["payment_method_title"]=>
+          string(0) ""
+          ["transaction_id"]=>
+          string(0) ""
+          ["customer_ip_address"]=>
+          string(0) ""
+          ["customer_user_agent"]=>
+          string(0) ""
+          ["created_via"]=>
+          string(0) ""
+          ["customer_note"]=>
+          string(0) ""
+          ["date_completed"]=>
+          NULL
+          ["date_paid"]=>
+          NULL
+          ["cart_hash"]=>
+          string(0) ""
+        }
+        ["data_store":protected]=>
+        object(WC_Data_Store)#9768 (4) {
+          ["instance":"WC_Data_Store":private]=>
+          object(WC_Order_Data_Store_CPT)#9769 (3) {
+            ["internal_meta_keys":protected]=>
+            array(77) {
+              [0]=>
+              string(10) "_parent_id"
+              [1]=>
+              string(7) "_status"
+              [2]=>
+              string(9) "_currency"
+              [3]=>
+              string(8) "_version"
+              [4]=>
+              string(19) "_prices_include_tax"
+              [5]=>
+              string(13) "_date_created"
+              [6]=>
+              string(14) "_date_modified"
+              [7]=>
+              string(15) "_discount_total"
+              [8]=>
+              string(13) "_discount_tax"
+              [9]=>
+              string(15) "_shipping_total"
+              [10]=>
+              string(13) "_shipping_tax"
+              [11]=>
+              string(9) "_cart_tax"
+              [12]=>
+              string(6) "_total"
+              [13]=>
+              string(10) "_total_tax"
+              [14]=>
+              string(12) "_customer_id"
+              [15]=>
+              string(10) "_order_key"
+              [16]=>
+              string(8) "_billing"
+              [17]=>
+              string(9) "_shipping"
+              [18]=>
+              string(15) "_payment_method"
+              [19]=>
+              string(21) "_payment_method_title"
+              [20]=>
+              string(15) "_transaction_id"
+              [21]=>
+              string(20) "_customer_ip_address"
+              [22]=>
+              string(20) "_customer_user_agent"
+              [23]=>
+              string(12) "_created_via"
+              [24]=>
+              string(14) "_customer_note"
+              [25]=>
+              string(15) "_date_completed"
+              [26]=>
+              string(10) "_date_paid"
+              [27]=>
+              string(10) "_cart_hash"
+              [28]=>
+              string(14) "_customer_user"
+              [29]=>
+              string(10) "_order_key"
+              [30]=>
+              string(15) "_order_currency"
+              [31]=>
+              string(19) "_billing_first_name"
+              [32]=>
+              string(18) "_billing_last_name"
+              [33]=>
+              string(16) "_billing_company"
+              [34]=>
+              string(18) "_billing_address_1"
+              [35]=>
+              string(18) "_billing_address_2"
+              [36]=>
+              string(13) "_billing_city"
+              [37]=>
+              string(14) "_billing_state"
+              [38]=>
+              string(17) "_billing_postcode"
+              [39]=>
+              string(16) "_billing_country"
+              [40]=>
+              string(14) "_billing_email"
+              [41]=>
+              string(14) "_billing_phone"
+              [42]=>
+              string(20) "_shipping_first_name"
+              [43]=>
+              string(19) "_shipping_last_name"
+              [44]=>
+              string(17) "_shipping_company"
+              [45]=>
+              string(19) "_shipping_address_1"
+              [46]=>
+              string(19) "_shipping_address_2"
+              [47]=>
+              string(14) "_shipping_city"
+              [48]=>
+              string(15) "_shipping_state"
+              [49]=>
+              string(18) "_shipping_postcode"
+              [50]=>
+              string(17) "_shipping_country"
+              [51]=>
+              string(15) "_completed_date"
+              [52]=>
+              string(10) "_paid_date"
+              [53]=>
+              string(10) "_edit_lock"
+              [54]=>
+              string(10) "_edit_last"
+              [55]=>
+              string(14) "_cart_discount"
+              [56]=>
+              string(18) "_cart_discount_tax"
+              [57]=>
+              string(15) "_order_shipping"
+              [58]=>
+              string(19) "_order_shipping_tax"
+              [59]=>
+              string(10) "_order_tax"
+              [60]=>
+              string(12) "_order_total"
+              [61]=>
+              string(15) "_payment_method"
+              [62]=>
+              string(21) "_payment_method_title"
+              [63]=>
+              string(15) "_transaction_id"
+              [64]=>
+              string(20) "_customer_ip_address"
+              [65]=>
+              string(20) "_customer_user_agent"
+              [66]=>
+              string(12) "_created_via"
+              [67]=>
+              string(14) "_order_version"
+              [68]=>
+              string(19) "_prices_include_tax"
+              [69]=>
+              string(15) "_date_completed"
+              [70]=>
+              string(10) "_date_paid"
+              [71]=>
+              string(15) "_payment_tokens"
+              [72]=>
+              string(22) "_billing_address_index"
+              [73]=>
+              string(23) "_shipping_address_index"
+              [74]=>
+              string(15) "_recorded_sales"
+              [75]=>
+              string(29) "_recorded_coupon_usage_counts"
+              [76]=>
+              string(16) "_shipping_method"
+            }
+            ["meta_type":protected]=>
+            string(4) "post"
+            ["object_id_field_for_meta":protected]=>
+            string(0) ""
+          }
+          ["stores":"WC_Data_Store":private]=>
+          array(18) {
+            ["coupon"]=>
+            string(24) "WC_Coupon_Data_Store_CPT"
+            ["customer"]=>
+            string(22) "WC_Customer_Data_Store"
+            ["customer-download"]=>
+            string(31) "WC_Customer_Download_Data_Store"
+            ["customer-session"]=>
+            string(30) "WC_Customer_Data_Store_Session"
+            ["order"]=>
+            string(23) "WC_Order_Data_Store_CPT"
+            ["order-refund"]=>
+            string(30) "WC_Order_Refund_Data_Store_CPT"
+            ["order-item"]=>
+            string(24) "WC_Order_Item_Data_Store"
+            ["order-item-coupon"]=>
+            string(31) "WC_Order_Item_Coupon_Data_Store"
+            ["order-item-fee"]=>
+            string(28) "WC_Order_Item_Fee_Data_Store"
+            ["order-item-product"]=>
+            string(32) "WC_Order_Item_Product_Data_Store"
+            ["order-item-shipping"]=>
+            string(33) "WC_Order_Item_Shipping_Data_Store"
+            ["order-item-tax"]=>
+            string(28) "WC_Order_Item_Tax_Data_Store"
+            ["payment-token"]=>
+            string(27) "WC_Payment_Token_Data_Store"
+            ["product"]=>
+            string(25) "WC_Product_Data_Store_CPT"
+            ["product-grouped"]=>
+            string(33) "WC_Product_Grouped_Data_Store_CPT"
+            ["product-variable"]=>
+            string(34) "WC_Product_Variable_Data_Store_CPT"
+            ["product-variation"]=>
+            string(35) "WC_Product_Variation_Data_Store_CPT"
+            ["shipping-zone"]=>
+            string(27) "WC_Shipping_Zone_Data_Store"
+          }
+          ["current_class_name":"WC_Data_Store":private]=>
+          string(23) "WC_Order_Data_Store_CPT"
+          ["object_type":"WC_Data_Store":private]=>
+          string(5) "order"
+        }
+        ["meta_data":protected]=>
+        array(7) {
+          [0]=>
+          object(stdClass)#9830 (3) {
+            ["id"]=>
+            int(2986)
+            ["key"]=>
+            string(15) "_shipping_email"
+            ["value"]=>
+            string(19) "nixlovemi@gmail.com"
+          }
+          [1]=>
+          object(stdClass)#9829 (3) {
+            ["id"]=>
+            int(2987)
+            ["key"]=>
+            string(15) "_shipping_phone"
+            ["value"]=>
+            string(14) "(19) 981324148"
+          }
+          [2]=>
+          object(stdClass)#9831 (3) {
+            ["id"]=>
+            int(2988)
+            ["key"]=>
+            string(13) "pagseguro_key"
+            ["value"]=>
+            string(32) "7CD1900BEDED449664D80FB335A4E57C"
+          }
+          [3]=>
+          object(stdClass)#9832 (3) {
+            ["id"]=>
+            int(2990)
+            ["key"]=>
+            string(29) "_download_permissions_granted"
+            ["value"]=>
+            string(3) "yes"
+          }
+          [4]=>
+          object(stdClass)#9833 (3) {
+            ["id"]=>
+            int(2994)
+            ["key"]=>
+            string(23) "pagseguro_paymentStatus"
+            ["value"]=>
+            string(9) "Cancelada"
+          }
+          [5]=>
+          object(stdClass)#9834 (3) {
+            ["id"]=>
+            int(2995)
+            ["key"]=>
+            string(18) "pagseguro_dtUpdate"
+            ["value"]=>
+            string(19) "25/09/2017 07:30:46"
+          }
+          [6]=>
+          object(stdClass)#9835 (3) {
+            ["id"]=>
+            int(3019)
+            ["key"]=>
+            string(25) "pagseguro_transactionCode"
+            ["value"]=>
+            string(39) "C3BF69-CC92649264B6-26649BCFBD4D-694A9C"
+          }
+        }
+      }
+    */
+
+    $arrOrder = array();
+
+    $order   = new WC_Order( $orderId );
+    $version = trim($order->version);
+    
+    if($version != ""){
+        $orderItens = $order->get_items();
+        $order      = $order->data;
+
+        $arrOrder["orderID"]     = $orderId;
+        $arrOrder["status"]      = $order["status"];
+        $arrOrder["date"]        = date("Y-m-d H:i:s", $order["date_created"]->getOffsetTimestamp());
+        $arrOrder["discountVal"] = $order["discount_total"];
+        $arrOrder["shippingVal"] = $order["shipping_total"];
+        $arrOrder["total"]       = $order["total"];
+        
+        $arrOrder["cliName"]     = $order["billing"]["first_name"];
+        $arrOrder["cliAddress"]  = $order["billing"]["address_1"];
+        $arrOrder["cliDistrict"] = $order["billing"]["address_2"];
+        $arrOrder["cliCity"]     = $order["billing"]["city"];
+        $arrOrder["cliState"]    = $order["billing"]["state"];
+        $arrOrder["cliPostcode"] = $order["billing"]["postcode"];
+        $arrOrder["cliEmail"]    = $order["billing"]["email"];
+        $arrOrder["cliPhone"]    = $order["billing"]["phone"];
+
+        foreach($order["meta_data"] as $metaItem){
+            $key   = $metaItem->key;
+            $value = $metaItem->value;
+
+            switch($key){
+                case "pagseguro_key":
+                    $arrOrder["pagseguroKey"] = $value;
+                    break;
+                case "pagseguro_paymentStatus":
+                    $arrOrder["pagseguroPaymentStatus"] = $value;
+                    break;
+                case "pagseguro_dtUpdate":
+                    $arrOrder["pagseguroDtUpdate"] = $value;
+                    break;
+                case "pagseguro_transactionCode":
+                    $arrOrder["pagseguroTransCode"] = $value;
+                    break;
+            }
+        }
+
+        $arrOrder["products"] = array();
+        foreach($orderItens as $orderItem => $arrOrderItem){
+            $arrItem = array();
+            $arrItem["name"]   = $arrOrderItem["name"];
+            $arrItem["prodId"] = $arrOrderItem["product_id"];
+
+            $arrRet = getAllProducts("", $arrItem["prodId"]);
+            $arrItem["DecoratumProduct"] = null;
+            if( count($arrRet) > 0 ){
+                $arrItem["DecoratumProduct"] = $arrRet[0];
+            }
+
+            $arrItem["qty"]      = $arrOrderItem["quantity"];
+            $arrItem["subTotal"] = $arrOrderItem["subtotal"];
+            $arrItem["total"]    = $arrOrderItem["total"];
+            
+            $arrOrder["products"][] = $arrItem;
+        }
+    }
+
+    return $arrOrder;
+}
+
 function moneyToFloat($str)
 {
     $str = trim($str);
