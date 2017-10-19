@@ -1681,6 +1681,62 @@ function getHtmlTbCart($cartItens, $isCheckout=false)
     <?php
 }
 
+function getHtmlProdDestHome($qtyItens=-1)
+{
+    $htmlRet     = "";
+    $arrProducts = getAllProducts("", "", "produto_destaque_home");
+
+    if(count($arrProducts) > 0){
+        shuffle($arrProducts);
+
+        if($qtyItens > 0){
+            $arrProducts = array_slice($arrProducts, 0, $qtyItens);
+        }
+
+        $htmlRet .= "<div class='product-content'>";
+        $htmlRet .= "  <div class='row'>";
+
+        foreach($arrProducts as $Product){
+            $vProdUrl       = $Product->getProductURL();
+            $vProdImgUrl    = $Product->getImageCatalogUrl();
+            $vProdId        = $Product->getId();
+            $vProdShortDesc = $Product->getShortDescription();
+            $vStrProdPrice  = number_format($Product->getPrice(), 2, ',', '.');
+            
+            $htmlRet .= " <div class='col-sm-4'>
+                            <div class='wrap-product'>
+                                <div class='top-product'>
+                                    <a href='$vProdUrl'>
+                                        <img class='img-produto' src='$vProdImgUrl'>
+                                    </a>
+                                </div>
+                                <div class='bottom-product bottom-red'>
+                                    <div class='bottom-product-abs pink-dot'>
+                                        <div class='button-cake'>
+                                            <div class='blue-button-cake'>
+                                                <button class='button-d-cake pink-button-cake' onclick='addToCart_HOME($vProdId)'>Comprar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='wrap-bottom-cake'>
+                                        <p>$vProdShortDesc</p>
+                                        <div class='red-line'></div>
+                                        <br />
+                                        <span class='preco-produto'>R$$vStrProdPrice</span>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>";
+        }
+
+        $htmlRet .= "  </div>";
+        $htmlRet .= "</div>";
+    }
+
+    return $htmlRet;
+
+}
+
 function setPagSeguroKey($keyValue, $postID)
 {
     $ret = add_post_meta( $postID, 'pagseguro_key', $keyValue, true );

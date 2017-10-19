@@ -6,9 +6,11 @@ get_header();
 
 <section class="product-cake sec-carrinho">
     <div class="container">
+        <!--
         <div style="width:100%; height: 170px; background-color:#abc2e8; color: #000; margin-bottom:30px;">
             TALVEZ COLOCAR UM BANNER AQUI
         </div>
+        -->
 
         <?php
         $cartItens = getCartProducts();
@@ -25,7 +27,9 @@ get_header();
                 </button>
             </div>
 
+            <h3 class="mt-40 mb-40">Aproveite e veja nossas ofertas!</h3>
             <?php
+            echo getHtmlProdDestHome(6);
         } else {
             getHtmlTbCart($cartItens);
         }
