@@ -2599,6 +2599,7 @@ footer {
   /*background-color: #f88c91;*/
   background-color: #ff726e;
   color: #ffffff;
+  padding-bottom: 25px;
 }
 footer .abs-logo-footer {
   display: block;
