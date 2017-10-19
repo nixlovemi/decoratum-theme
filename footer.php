@@ -153,15 +153,16 @@
                     <a href="<?php echo esc_url(home_url( '/' )) . 'meus-pedidos'; ?>">Meus Pedidos</a>
                   </li>
                   <li>
-                    <a href="javascript:;">Política de privacidade</a>
+                    <a href="<?php echo esc_url(home_url( '/' )) . 'politica-de-privacidade'; ?>">Política de privacidade</a>
                   </li>
                   <li>
-                    <a href="javascript:;">Trocas e Devoluções</a>
+                    <a href="<?php echo esc_url(home_url( '/' )) . 'trocas-e-devolucoes'; ?>">Trocas e Devoluções</a>
                   </li>
+                  <!--
                   <li>
                     <a href="javascript:;">Prazo de Entrega</a>
                   </li>
-                  <!--
+                  
                   <li>
                     <a href="blog-center.html">Blog</a>
                   </li>
